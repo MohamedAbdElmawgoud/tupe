@@ -36,6 +36,15 @@ const routes: Routes = [
               import('../tab3/tab3.module').then(m => m.Tab3PageModule)
           }
         ]
+      },{
+        path: 'currency',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../currency/currency.module').then(m => m.CurrencyPageModule)
+          }
+        ]
       },
       {
         path: '',
@@ -47,6 +56,11 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/tabs/tab1',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/currency',
     pathMatch: 'full'
   }
 ];
