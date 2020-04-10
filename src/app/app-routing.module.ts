@@ -9,6 +9,34 @@ const routes: Routes = [
   {
     path: 'tabs/currency',
     loadChildren: () => import('./currency/currency.module').then( m => m.CurrencyPageModule)
+  },
+  {
+    path: 'invite-friends',
+    loadChildren: () => import('./invite-friends/invite-friends.module').then( m => m.InviteFriendsPageModule)
+  },
+  {
+    path: 'buy-point',
+    loadChildren: () => import('./buy-point/buy-point.module').then( m => m.BuyPointPageModule)
+  },
+  {
+    path: 'subscription',
+    loadChildren: () => import('./subscription/subscription.module').then( m => m.SubscriptionPageModule)
+  },
+  {
+    path: 'create-comp',
+    loadChildren: () => import('./create-comp/create-comp.module').then( m => m.CreateCompPageModule)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule)
+  },
+  {
+    path: 'message',
+    loadChildren: () => import('./message/message.module').then( m => m.MessagePageModule)
+  },
+  {
+    path: 'vip-account',
+    loadChildren: () => import('./vip-account/vip-account.module').then( m => m.VipAccountPageModule)
   }
 ];
 @NgModule({

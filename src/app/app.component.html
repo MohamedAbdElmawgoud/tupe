@@ -1,20 +1,44 @@
 <ion-app>
-    <ion-icon name="menu" ></ion-icon>
     
     <ion-menu  side="start" menuId="first" contentId="menuContent">        
         <ion-header>
-             <ion-toolbar color="dark">
+             <ion-toolbar color="tertiary">
                  <ion-title>Start Menu</ion-title>
              </ion-toolbar>
             
          </ion-header>
          <ion-content>
              <ion-list>
-                 <ion-item>Menu Item</ion-item>
-                 <ion-item>Menu Item</ion-item>
-                 <ion-item>Menu Item</ion-item>
-                 <ion-item>Menu Item</ion-item>
-                 <ion-item>Menu Item</ion-item>
+                    
+                    
+                 <ion-item (click)="goTomessage()">
+                        <ion-icon name="chatbubbles"></ion-icon> 
+                    Message
+                </ion-item>
+                <ion-item (click)="goToVip()">
+                        <img src="assets\icon\vip.png">                        
+                    Vip Account
+                </ion-item>
+
+
+                 <ion-item (click)="goTofaq()">
+                        <ion-icon name="logo-buffer"></ion-icon>
+                        
+                    FAQ
+                </ion-item>
+                 <ion-item>
+                        <ion-icon name="log-out"></ion-icon>
+                        
+                    log out</ion-item>
+                 <ion-item (click)="goToinviteFreind()">
+                        <ion-icon name="link"></ion-icon>
+                        
+                   Invite Freind
+                </ion-item>
+                 <ion-item>  
+                     <ion-icon name="star-outline"></ion-icon>
+                    Rate
+                </ion-item>
              </ion-list>
          </ion-content>
      </ion-menu>

@@ -1,9 +1,39 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Currency</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header [translucent]="true" >
+    <ion-toolbar color="tertiary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Tube Mine</ion-title>
+      
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
+    <!--  -->
+    <ion-card (click)="share()">
+        <img src="assets\icon\share.png">
+        <ion-card-title>  invite friend</ion-card-title>
+        <p>Earn 1000 point from your friends</p>
+    </ion-card>
 
+
+    <ion-card>
+        <img src="assets\icon\play.png">
+        <ion-card-title>watch video</ion-card-title>
+        <p>watch video to earn point</p>
+    </ion-card>
+
+
+    <ion-card (click)="buy()">
+        <img src="assets\icon\cart.png">
+        <ion-card-title>buy points</ion-card-title>
+      
+    </ion-card>
+
+    
+    <ion-card (click)="subscribe()">
+        <img src="assets\icon\subscribe.png">
+        <ion-card-title>Review subscription</ion-card-title>
+        <p>Review subscription to channels</p>
+    </ion-card>
 </ion-content>

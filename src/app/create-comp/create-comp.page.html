@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>Create Compaign</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+
+
+  </ion-card>
+    <label class="header">Order Settings</label>
+    <hr>
+  <ion-item lines="none">
+    <label >Number Of Subscribers</label>
+    <div >
+  <input list="numberOfSubscribers" >
+    </div>
+  <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+</ion-item>
+  <datalist id="numberOfSubscribers">
+   
+    <option value={{numberOfSubscribers[0]}}>
+    <option value={{numberOfSubscribers[1]}}>
+    <option value={{numberOfSubscribers[2]}}>
+    <option value={{numberOfSubscribers[3]}}>
+    <option value={{numberOfSubscribers[4]}}>
+  </datalist>
+  
+
+  <ion-item lines="none">
+      <label >Number Of Likes</label>
+      <div >
+    <input list="numberOfSubscribers" >
+      </div>
+    <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+  </ion-item>
+    <datalist id="numberOfSubscribers">
+     
+      <option value={{numberOfSubscribers[0]}}>
+      <option value={{numberOfSubscribers[1]}}>
+      <option value={{numberOfSubscribers[2]}}>
+      <option value={{numberOfSubscribers[3]}}>
+      <option value={{numberOfSubscribers[4]}}>
+    </datalist>
+
+
+    <ion-item lines="none">
+        <label >Number Of views</label>
+        <div >
+      <input list="numberOfSubscribers" >
+        </div>
+      <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+    </ion-item>
+      <datalist id="numberOfSubscribers">
+       
+        <option value={{numberOfSubscribers[0]}}>
+        <option value={{numberOfSubscribers[1]}}>
+        <option value={{numberOfSubscribers[2]}}>
+        <option value={{numberOfSubscribers[3]}}>
+        <option value={{numberOfSubscribers[4]}}>
+      </datalist>
+      
+    
+      <ion-item lines="none">
+          <label >Time requird (second)</label>
+          <div >
+        <input list="numberOfSubscribers" >
+          </div>
+        <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+      </ion-item>
+        <datalist id="numberOfSubscribers">
+         
+          <option value={{numberOfSubscribers[0]}}>
+          <option value={{numberOfSubscribers[1]}}>
+          <option value={{numberOfSubscribers[2]}}>
+          <option value={{numberOfSubscribers[3]}}>
+          <option value={{numberOfSubscribers[4]}}>
+        </datalist>
+      <hr>
+      <ion-item lines="none">
+          <label >Vip account (reduce 10%)</label>
+         
+        <button >
+          Upgrade
+        
+        </button>
+        
+      </ion-item>
+       
+      <ion-item lines="none" style="color:#4458ba; font-style: bold; font-size: 18px;">
+          <label >Total coins</label>
+         
+        <button style="color:#4458ba ;font-style: bold">
+          1500
+        
+        </button>
+        
+      </ion-item>
+        
+      <button class="submit">
+         Done
+        
+        </button>
+</ion-content>
