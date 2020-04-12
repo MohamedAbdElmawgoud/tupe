@@ -22,5 +22,10 @@ buy(){
 subscribe(){
   this.router.navigate(['subscription']);
 }
+ShowVideo(){
+  this.router.navigate(['tabs/tab3']);
+  
+ }
+ 
 }
  

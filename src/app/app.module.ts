@@ -9,11 +9,31 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AngularFireModule } from '@angular/fire'; 
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+const config = {
+  apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
+  authDomain: "fir-7e3e0.firebaseapp.com",
+  databaseURL: "https://fir-7e3e0.firebaseio.com",
+  projectId: "fir-7e3e0",
+  storageBucket: "fir-7e3e0.appspot.com",
+  messagingSenderId: "941729484801",
+  appId: "1:941729484801:web:aabacc4af4907bc1203000",
+  measurementId: "G-TFXWLDL6QG"
+};
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), 
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule, // storage
+    AppRoutingModule],
   providers: [
     StatusBar,
     GooglePlus,

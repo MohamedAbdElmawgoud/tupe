@@ -11,10 +11,10 @@
 <ion-content [fullscreen]="true">
     <ion-icon name="person" class="icon"></ion-icon>
     <p> There is no channel</p>
-  <button>
+  <button (click)="Reload()">
       Reloading
   </button>
-  <button class="btn">
+  <button class="btn" (click)="ShowVideo()">
       Watch video to earn currency
     </button>
 </ion-content>

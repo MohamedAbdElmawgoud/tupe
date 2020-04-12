@@ -11,7 +11,7 @@
              <ion-list>
                     
                     
-                 <ion-item (click)="goTomessage()">
+                 <ion-item (click)="goTomessage()" lines="none">
                         <ion-icon name="chatbubbles"></ion-icon> 
                     Message
                 </ion-item>
@@ -21,16 +21,13 @@
                 </ion-item>
 
 
-                 <ion-item (click)="goTofaq()">
+                 <ion-item (click)="goTofaq()" lines="none">
                         <ion-icon name="logo-buffer"></ion-icon>
                         
                     FAQ
                 </ion-item>
-                 <ion-item>
-                        <ion-icon name="log-out"></ion-icon>
-                        
-                    log out</ion-item>
-                 <ion-item (click)="goToinviteFreind()">
+
+                <ion-item (click)="goToinviteFreind()" lines="none">
                         <ion-icon name="link"></ion-icon>
                         
                    Invite Freind
@@ -39,6 +36,13 @@
                      <ion-icon name="star-outline"></ion-icon>
                     Rate
                 </ion-item>
+                
+                 <ion-item lines="none">
+                        <ion-icon name="log-out"></ion-icon>
+                        
+                    log out
+                </ion-item>
+                
              </ion-list>
          </ion-content>
      </ion-menu>
