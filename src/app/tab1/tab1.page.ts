@@ -18,40 +18,40 @@ export class Tab1Page {
     public router: Router) {
     this.user = this.angularFireAuth.authState;
   }
-  login() {
-    if (this.platform.is('cordova')) {
-      this.nativeGoogleLogin();
-    }
-    else {
-      this.webGoogleLogin();
-    }
+  // login() {
+  //   if (this.platform.is('cordova')) {
+  //     this.nativeGoogleLogin();
+  //   }
+  //   else {
+  //     this.webGoogleLogin();
+  //   }
 
-  } 
+  // } 
 
-  async nativeGoogleLogin() {
-    try {
-      const user = await this.googlePlus.login({
+  // async nativeGoogleLogin() {
+  //   try {
+  //     const user = await this.googlePlus.login({
 
-        'webClientId': '941729484801-qjc4h0cv1b4d4c9s7ms7q8a48gie573e.apps.googleusercontent.com',
-        'offline': true
-      })
-      return await this.angularFireAuth.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idTocken))
-    }
-    catch (err) {
-      console.log(err)  
-    }
+  //       'webClientId': '941729484801-qjc4h0cv1b4d4c9s7ms7q8a48gie573e.apps.googleusercontent.com',
+  //       'offline': true
+  //     })
+  //     return await this.angularFireAuth.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idTocken))
+  //   }
+  //   catch (err) {
+  //     console.log(err)  
+  //   }
 
-  }
+  // }
 
-  webGoogleLogin() {
-    try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      const credential = new this.angularFireAuth.auth.signInWithPopup(provider)
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  // webGoogleLogin() {
+  //   try {
+  //     const provider = new firebase.auth.GoogleAuthProvider();
+  //     const credential = new this.angularFireAuth.auth.signInWithPopup(provider)
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // }
   createCompinge() {
     this.router.navigate(['create-comp']);
 
