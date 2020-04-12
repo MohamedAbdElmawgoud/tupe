@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Platform } from '@ionic/angular'
 @Component({
@@ -13,7 +13,7 @@ import { Platform } from '@ionic/angular'
 export class Tab1Page {
   user: Observable<firebase.User>;
   constructor(public googlePlus: GooglePlus,
-    private angularFireAuth,
+    private angularFireAuth:AngularFireAuth ,
     private platform: Platform,
     public router: Router) {
     this.user = this.angularFireAuth.authState;
@@ -35,7 +35,7 @@ export class Tab1Page {
         'webClientId': '941729484801-qjc4h0cv1b4d4c9s7ms7q8a48gie573e.apps.googleusercontent.com',
         'offline': true
       })
-      return await this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idTocken))
+      return await this.angularFireAuth.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idTocken))
     }
     catch (err) {
       console.log(err)  

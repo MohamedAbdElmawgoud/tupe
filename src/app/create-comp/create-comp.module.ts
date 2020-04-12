@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { CreateCompPageRoutingModule } from './create-comp-routing.module';
 
 import { CreateCompPage } from './create-comp.page';
+import { TranslateModule } from  '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule, 
     IonicModule,
     CreateCompPageRoutingModule
   ],

@@ -1,6 +1,6 @@
-<ion-app>
+<ion-app dir="{{textDir}}">
     
-    <ion-menu  side="start" menuId="first" contentId="menuContent">        
+    <ion-menu  side="start" menuId="first" contentId="menuContent" dir="{{textDir}}">        
         <ion-header>
              <ion-toolbar color="tertiary">
                  <ion-title>Start Menu</ion-title>
@@ -47,5 +47,5 @@
          </ion-content>
      </ion-menu>
      
-     <ion-router-outlet id="menuContent"></ion-router-outlet>
+     <ion-router-outlet id="menuContent" dir="{{textDir}}"></ion-router-outlet>
 </ion-app>
