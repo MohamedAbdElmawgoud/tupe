@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar color="tertiary">
-    <ion-title>Create Compaign</ion-title>
+    <ion-title>{{ 'Create Compaign' | translate}}</ion-title>
   </ion-toolbar> 
 </ion-header>
 
 <ion-content>
   <ion-card>
-
+   
 
   </ion-card>
-    <label class="header">Order Settings</label>
+    <label class="header"> {{ 'Order Settings' | translate}}</label>
     <hr>
   <ion-item lines="none">
-    <label >Number Of Subscribers</label>
+    <label >{{ 'Number Of Subscribers' | translate}}</label>
     <div >
   <input list="numberOfSubscribers" >
     </div>
@@ -29,14 +29,14 @@
   
 
   <ion-item lines="none">
-      <label >Number Of Likes</label>
+      <label >{{ 'Number Of Likes' | translate}}</label>
       <div >
     <input list="numberOfSubscribers" >
       </div>
     <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
   </ion-item>
     <datalist id="numberOfSubscribers">
-     
+      
       <option value={{numberOfSubscribers[0]}}>
       <option value={{numberOfSubscribers[1]}}>
       <option value={{numberOfSubscribers[2]}}>
@@ -46,7 +46,7 @@
 
     
     <ion-item lines="none">
-        <label >Number Of views</label>
+        <label >{{ 'Number Of views' | translate}}</label>
         <div >
       <input list="numberOfSubscribers" >
         </div>
@@ -63,7 +63,7 @@
       
     
       <ion-item lines="none">
-          <label >Time requird (second)</label>
+          <label >{{ 'Time requird (second)' | translate}}</label>
           <div >
         <input list="numberOfSubscribers" >
           </div>
@@ -79,17 +79,17 @@
         </datalist>
       <hr>
       <ion-item lines="none">
-          <label >Vip account (reduce 10%)</label>
+          <label >{{ 'Vip account (reduce 10%)' | translate}}</label>
          
         <button >
-          Upgrade  
-        
+            
+          {{ 'Upgrade' | translate}}
         </button>
         
       </ion-item>
        
       <ion-item lines="none" style="color:#4458ba; font-style: bold; font-size: 18px;">
-          <label >Total coins</label>
+          <label >{{ 'Total coins' | translate}}</label>
          
         <button style="color:#4458ba ;font-style: bold">
           1500
@@ -99,7 +99,7 @@
       </ion-item>
         
       <button class="submit">
-         Done
+        {{ 'Done' | translate}}
         
         </button>
 </ion-content>

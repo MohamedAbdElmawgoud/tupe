@@ -3,18 +3,18 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Tube Mine</ion-title>
+      <ion-title>{{ 'Tube Mine' | translate}}</ion-title>
       
     </ion-toolbar>
   </ion-header>
-
+  
 <ion-content [fullscreen]="true">
     <ion-icon name="person" class="icon"></ion-icon>
-    <p> There is no channel</p>
+    <p> {{ 'There is no channel' | translate}}</p>
   <button (click)="Reload()">
-      Reloading
+    {{ 'Reloading' | translate}}
   </button>
   <button class="btn" (click)="ShowVideo()">
-      Watch video to earn currency
+    {{ 'watch video to earn point' | translate}}
     </button>
 </ion-content>
