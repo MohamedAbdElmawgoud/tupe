@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -24,19 +25,21 @@ const config = {
 })
 
 export class AppComponent {
+  currentLanguage: string;
   textDir: string;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public translate:  TranslateService,    
-    public router : Router
+    public router : Router,
+    private menu: MenuController
     
   ) {
     this.initializeApp();
     firebase.initializeApp(config);    
-    const  currentLanguage  =  localStorage.getItem('lng') || 'en'
-    this.Translate(currentLanguage);
+    this.currentLanguage  =  localStorage.getItem('lng') || 'en'
+    this.Translate(this.currentLanguage);
     
     
     this.translate.onLangChange.subscribe((event: LangChangeEvent) =>
@@ -52,9 +55,11 @@ export class AppComponent {
     });
   
   }
-  changeLng(){
-    this.translate.use('ar');// ar or en
-
+ 
+  changeLng(type){
+    this.translate.use(type);// ar or en
+    this.currentLanguage =type;
+    localStorage.setItem('lng' ,type)
   }
   Translate(type: string){
     
@@ -71,15 +76,20 @@ export class AppComponent {
     });
   }
   goToinviteFreind(){
+    this.menu.close();
     this.router.navigate(['invite-friends']);
   }
   goTofaq(){
+    this.menu.close();
     this.router.navigate(['faq']);
   }
   goTomessage(){
+    this.menu.close();
     this.router.navigate(['message']);
+    
   }
   goToVip(){
+    this.menu.close();
     this.router.navigate(['vip-account']);
   }
 }

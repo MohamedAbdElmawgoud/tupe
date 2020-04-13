@@ -1,6 +1,6 @@
 <ion-app dir="{{textDir}}">
     
-    <ion-menu  side="start" menuId="first" contentId="menuContent">        
+    <ion-menu  side="end" menuId="End" contentId="menuContent">        
         <ion-header>
              <ion-toolbar color="tertiary">
                  <ion-title>{{ 'Menu' | translate}}</ion-title>
@@ -42,10 +42,14 @@
                         
                         {{ 'log out' | translate}}
                 </ion-item>
-                <ion-item lines="none" (click)="changeLng()" >
+                <ion-item lines="none"  *ngIf="currentLanguage == 'ar'" (click)="changeLng('en')" class="language">
                     
                     {{ 'lng' | translate}}
             </ion-item>
+            <ion-item lines="none"  *ngIf="currentLanguage == 'en'" (click)="changeLng('ar')" class="language">
+                
+                {{ 'lng' | translate}}
+        </ion-item>
                 
              </ion-list>
          </ion-content>

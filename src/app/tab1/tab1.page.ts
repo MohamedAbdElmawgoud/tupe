@@ -27,9 +27,9 @@ export class Tab1Page {
       }
     });
   }
-  loginUser(): void {
+  loginUser(): void {//myreversedclientid
     this.googlePlus.login({
-      'webClientId': '342715147609-3psrsiske23baerqie398prvu1sdjp8t.apps.googleusercontent.com',
+      'webClientId': '167757336992-0aqqo9rn80ledvcb2pmn3fqblb36oef6.apps.googleusercontent.com',
       'offline': true
     }).then( res => {
       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
