@@ -1,13 +1,13 @@
-<ion-app>
+<ion-app dir="{{textDir}}">
     
     <ion-menu  side="start" menuId="first" contentId="menuContent">        
         <ion-header>
              <ion-toolbar color="tertiary">
-                 <ion-title>Start Menu</ion-title>
+                 <ion-title>Menu</ion-title>
              </ion-toolbar>
             
          </ion-header>
-         <ion-content>
+         <ion-content dir="ltr">
              <ion-list>
                     
                     
@@ -47,5 +47,5 @@
          </ion-content>
      </ion-menu>
      
-     <ion-router-outlet id="menuContent"></ion-router-outlet>
+     <ion-router-outlet id="menuContent" dir="{{textDir}}"></ion-router-outlet>
 </ion-app>

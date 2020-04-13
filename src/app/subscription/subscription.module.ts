@@ -8,10 +8,13 @@ import { SubscriptionPageRoutingModule } from './subscription-routing.module';
 
 import { SubscriptionPage } from './subscription.page';
 
+import { TranslateModule } from  '@ngx-translate/core';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     IonicModule,
     SubscriptionPageRoutingModule
   ],

@@ -13,6 +13,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import { HttpClientModule, HttpClient } from  '@angular/common/http';
+
+import { TranslateModule, TranslateLoader, TranslateService } from  '@ngx-translate/core';
+import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
+export  function  HttpLoaderFactory(http:  HttpClient) {
+  return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
+}
 const config = {
   apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
   authDomain: "fir-7e3e0.firebaseapp.com",
@@ -33,13 +41,25 @@ const config = {
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    AppRoutingModule],
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide:  TranslateLoader,
+        useFactory:  HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule
+  ],
   providers: [
     StatusBar,
     GooglePlus,
     SplashScreen,
+    TranslateService,
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
+  exports: [TranslateModule],    
   bootstrap: [AppComponent]
 })
 export class AppModule {}
