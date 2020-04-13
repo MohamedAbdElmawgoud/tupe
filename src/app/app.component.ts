@@ -52,6 +52,10 @@ export class AppComponent {
     });
   
   }
+  changeLng(){
+    this.translate.use('ar');// ar or en
+
+  }
   Translate(type: string){
     
     
