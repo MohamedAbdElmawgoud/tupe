@@ -11,12 +11,39 @@ import { Platform } from '@ionic/angular'
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  userProfile: any = null;
   user: Observable<firebase.User>;
   constructor(public googlePlus: GooglePlus,
     private angularFireAuth:AngularFireAuth ,
     private platform: Platform,
     public router: Router) {
-    this.user = this.angularFireAuth.authState;
+    //this.user = this.angularFireAuth.authState;
+
+    firebase.auth().onAuthStateChanged( user => {
+      if (user){
+        this.userProfile = user;
+      } else {
+        this.userProfile = null;
+      }
+    });
+  }
+  loginUser(): void {
+    this.googlePlus.login({
+      'webClientId': '342715147609-3psrsiske23baerqie398prvu1sdjp8t.apps.googleusercontent.com',
+      'offline': true
+    }).then( res => {
+      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        .then( success => {
+          console.log("Firebase success: " + JSON.stringify(success));
+        })
+        .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
+      }).catch(err => console.error("Error: ", err));
+  }
+  
+  createCompinge() {
+    this.router.navigate(['create-comp']);
+
+    
   }
   // login() {
   //   if (this.platform.is('cordova')) {
@@ -52,16 +79,4 @@ export class Tab1Page {
   //     console.log(err)
   //   }
   // }
-  createCompinge() {
-    this.router.navigate(['create-comp']);
-
-    // this.googlePlus.login({
-
-
-    // })
-    // .then(res => console.log(res))
-    // .catch(err => console.error(err));
-    // 'webClientId': '941729484801-qjc4h0cv1b4d4c9s7ms7q8a48gie573e.apps.googleusercontent.com',
-    // 'offline': true
-  }
 }

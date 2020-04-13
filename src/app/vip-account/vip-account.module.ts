@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { VipAccountPageRoutingModule } from './vip-account-routing.module';
 
 import { VipAccountPage } from './vip-account.page';
+import { TranslateModule } from  '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     VipAccountPageRoutingModule
   ],
   declarations: [VipAccountPage]

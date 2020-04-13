@@ -3,7 +3,7 @@
     <ion-menu  side="start" menuId="first" contentId="menuContent">        
         <ion-header>
              <ion-toolbar color="tertiary">
-                 <ion-title>Menu</ion-title>
+                 <ion-title>{{ 'Menu' | translate}}</ion-title>
              </ion-toolbar>
             
          </ion-header>
@@ -13,34 +13,34 @@
                     
                  <ion-item (click)="goTomessage()" lines="none">
                         <ion-icon name="chatbubbles"></ion-icon> 
-                    Message
+                        {{ 'Message' | translate}}
                 </ion-item>
                 <ion-item (click)="goToVip()">
                         <img src="assets\icon\vip.png">                        
-                    Vip Account
+                        {{ 'Vip Account' | translate}}
                 </ion-item>
 
 
                  <ion-item (click)="goTofaq()" lines="none">
                         <ion-icon name="logo-buffer"></ion-icon>
                         
-                    FAQ
+                        {{ 'FAQ' | translate}}
                 </ion-item>
 
                 <ion-item (click)="goToinviteFreind()" lines="none">
                         <ion-icon name="link"></ion-icon>
                         
-                   Invite Freind
+                        {{ 'invite friend' | translate}}
                 </ion-item>
                  <ion-item>  
                      <ion-icon name="star-outline"></ion-icon>
-                    Rate
+                     {{ 'Rate' | translate}}
                 </ion-item>
                 
                  <ion-item lines="none">
                         <ion-icon name="log-out"></ion-icon>
                         
-                    log out
+                        {{ 'log out' | translate}}
                 </ion-item>
                 
              </ion-list>

@@ -31,6 +31,16 @@
     "invite Your Friends":"invite Your Friends",
     "copy link":"copy link",
     "channel":"channel",
-    "subscribe":"subscribe",
-    "unsubscribe":"unsubscribe"
+    "subscribe":"subscribe",          
+    "unsubscribe":"unsubscribe",
+    "log out":"log out",
+    "Rate":"Rate",
+    "FAQ":"FAQ",
+    "Vip Account":"Vip Account",
+    "Message":"Messages", 
+    "Menu":"Menu",
+    "A week":"A week",
+    "A month":"A month",
+    "3 month":"3 month",
+    "copy":"copy"
 }
