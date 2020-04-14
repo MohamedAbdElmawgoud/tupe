@@ -58,6 +58,8 @@ export class AppComponent {
   
   }
   async ngOnInit(){
+    console.log('user');
+    
      await this.getUser();
   }
   
@@ -69,9 +71,10 @@ export class AppComponent {
   }
 
   async getUser(){
-    console.log()
-    this.user= await this.firebaseService.getCurrentUser();
-    console.log('user is ', this.user)
+ this.firebaseService.getCurrentUser().subscribe(user=>{
+  console.log('user is ', user)
+   
+ })
   }
 
 

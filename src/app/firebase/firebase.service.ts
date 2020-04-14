@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import * as firebase from 'firebase';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { switchMap } from 'rxjs/operators';
 import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
@@ -15,6 +15,7 @@ import { StorageService } from "src/app/storageService/storage.service";
 export class FirebaseService {
   profileData: AngularFirestoreCollection<{}>;
   user$: Observable<User>;
+  user;
   constructor(public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -63,16 +64,7 @@ export class FirebaseService {
     this.afAuth.signOut();
   }
 
- async getCurrentUser() {
-    let id;
-    this.afAuth.authState.subscribe(data => {
-      console.log('A informacao de data ' ,  data.uid);
-
-      
-    });
-    this.profileData = await this.afs.collection("users").snapshotChanges().toPromise();
-
-   // console.log('A informacao de data ' ,  this.profileData);
-    return this.profileData;
+  getCurrentUser() {
+   return this.afAuth.authState
   }
 }
