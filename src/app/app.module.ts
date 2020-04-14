@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy ,NavParams} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -18,6 +18,8 @@ import { HttpClientModule, HttpClient } from  '@angular/common/http';
 
 import { TranslateModule, TranslateLoader, TranslateService } from  '@ngx-translate/core';
 import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
+import { IonicStorageModule } from "@ionic/storage";
+
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
 }
@@ -42,6 +44,7 @@ const config = {
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
     AppRoutingModule,
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide:  TranslateLoader,
@@ -54,6 +57,7 @@ const config = {
   providers: [
     StatusBar,
     GooglePlus,
+    NavParams,
     SplashScreen,
     TranslateService,
     

@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from "@angular/router";
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as firebase from 'firebase';
+import { FirebaseService } from "src/app/firebase/firebase.service";
+
 const config = {
   apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
   authDomain: "fir-7e3e0.firebaseapp.com",
@@ -27,21 +29,21 @@ const config = {
 export class AppComponent {
   currentLanguage: string;
   textDir: string;
+  user;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public translate:  TranslateService,    
     public router : Router,
+    private firebaseService:FirebaseService,
     private menu: MenuController
     
   ) {
     this.initializeApp();
-    firebase.initializeApp(config);    
+    //firebase.initializeApp(config);    
     this.currentLanguage  =  localStorage.getItem('lng') || 'en'
     this.Translate(this.currentLanguage);
-    
-    
     this.translate.onLangChange.subscribe((event: LangChangeEvent) =>
     {
       if(event.lang == 'ar')
@@ -55,26 +57,25 @@ export class AppComponent {
     });
   
   }
- 
-  changeLng(type){
-    this.translate.use(type);// ar or en
-    this.currentLanguage =type;
-    localStorage.setItem('lng' ,type)
+  async ngOnInit(){
+     await this.getUser();
   }
-  Translate(type: string){
-    
-    
-      this.translate.use(type);// ar or en
-      
-    
-    }
-
+  
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
+
+  async getUser(){
+    console.log()
+    this.user= await this.firebaseService.getCurrentUser();
+    console.log('user is ', this.user)
+  }
+
+
+
   goToinviteFreind(){
     this.menu.close();
     this.router.navigate(['invite-friends']);
@@ -92,4 +93,17 @@ export class AppComponent {
     this.menu.close();
     this.router.navigate(['vip-account']);
   }
+
+
+  changeLng(type){
+    this.translate.use(type);// ar or en
+    this.menu.close();
+    
+    this.currentLanguage =type;
+    localStorage.setItem('lng' ,type)
+  }
+  Translate(type: string){
+      this.translate.use(type);// ar or en    
+    }
+
 }

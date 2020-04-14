@@ -1,5 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="tertiary">
+    
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -11,7 +12,7 @@
   <ion-button
   expand="block"
   color="danger" 
-  (click)="loginUser()"
+  (click)="googleSignin()"
   *ngIf="!userProfile"
 >
   <ion-icon name="logo-google" style="margin-right:5px;"></ion-icon>
