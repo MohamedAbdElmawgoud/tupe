@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from "src/app/firebase/firebase.service";
 
 @Component({
   selector: 'app-create-comp',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateCompPage implements OnInit {
 numberOfSubscribers = [10,20,30,40,50,60,70,100,200,300,400,500,600,700,800,900,1000]
-  constructor() { }
-
+  constructor(private firebaseService:FirebaseService,) { }
+record ={numberOfSubscribers: 10, numberOfLikes:10} 
   ngOnInit() {
+    this.firebaseService.addCompaign(this.record);
   }
 
 }

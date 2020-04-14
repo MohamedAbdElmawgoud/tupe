@@ -18,7 +18,7 @@ export class FirebaseService {
   user;
   constructor(public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
+    private firestore: AngularFirestore,
     private storage: StorageService,
     
     public router: Router) {
@@ -27,7 +27,7 @@ export class FirebaseService {
       switchMap(user => {
         // Logged in
         if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
           return of(null);
@@ -46,7 +46,7 @@ export class FirebaseService {
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.firestore.doc(`users/${user.uid}`);
 
     const data = {
       uid: user.uid,
@@ -66,5 +66,10 @@ export class FirebaseService {
 
   getCurrentUser() {
    return this.afAuth.authState
+  }
+
+  addCompaign(record){
+    console.log(record);
+    this.firestore.collection('campaign').add(record);
   }
 }
