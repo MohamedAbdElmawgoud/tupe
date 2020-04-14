@@ -70,6 +70,11 @@ export class FirebaseService {
 
   addCompaign(record){
     console.log(record);
-    this.firestore.collection('campaign').add(record);
+    this.firestore.collection('campaign').add(record).then(e=>{
+      console.log(e);
+    }).catch(e=>{
+      console.log();
+      
+    })
   }
 }
