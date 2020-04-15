@@ -72,7 +72,7 @@ export class AppComponent {
 
   async getUser(){
  this.firebaseService.getCurrentUser().subscribe(user=>{
-  console.log('user is ', user)
+  //console.log('user is ', user)
    
  })
   }

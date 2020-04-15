@@ -7,13 +7,30 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
   styleUrls: ['./create-comp.page.scss'],
 })
 export class CreateCompPage implements OnInit {
-numberOfSubscribers = [10,20,30,40,50,60,70,100,200,300,400,500,600,700,800,900,1000]
+  id: string;
+  numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
   constructor(private firebaseService:FirebaseService,) { }
-record ={numberOfSubscribers: 10, numberOfLikes:10} 
-  ngOnInit() {
-    console.log('hi');
-    
-    this.firebaseService.addCompaign(this.record);
-  }
 
+  ngOnInit() {
+    
+  }
+async CreateCompaign(){
+  console.log('hi');
+  
+  await this.firebaseService.getCurrentUser().subscribe(user=>{
+    
+    this.id =   user.uid;
+   
+    let record ={numberOfSubscribers: 10, numberOfLikes:10 , uid: this.id} 
+  //  console.log('record is ',record);
+    this.firebaseService.addCompaign(record);
+   })
+   
+}
+
+ getCompaign(){
+   this.firebaseService.getCurrentUser().subscribe(user=>{
+  let test =this.firebaseService.getAllDocumentElement()
+});
+}
 }
