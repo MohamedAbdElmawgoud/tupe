@@ -75,58 +75,66 @@ UserId(){
    return user.uid
  })
 }
-  addCompaign(record){
-   // console.log(record);
-    this.firestore.collection('campaign').add(record).then(e=>{
-      //console.log(e);
-    }).catch(e=>{
-      console.log();
+
+
+
+
+
+
+
+
+  // addCompaign(record){
+  //  // console.log(record);
+  //   this.firestore.collection('campaign').add(record).then(e=>{
+  //     //console.log(e);
+  //   }).catch(e=>{
+  //     console.log();
       
-    })
-  }
+  //   })
+  // }
   
   
 
-  getDocumentsId(){
-    //let document= [];
+  // getDocumentsId(){
+  //   //let document= [];
     
-    let comp =this.firestore.collection('campaign').snapshotChanges().subscribe(e=>{
-     e.forEach(element => {
-       element.payload.doc.id;
-       this.document.push(element.payload.doc.id);
-      // 
+  //   let comp =this.firestore.collection('campaign').snapshotChanges().subscribe(e=>{
+  //    e.forEach(element => {
+  //      element.payload.doc.id;
+  //      this.document.push(element.payload.doc.id);
+  //     // 
       
-     });
-     console.log(this.document)
-    });
+  //    });
+  //    console.log(this.document)
+  //   });
   
-   // console.log(this.document)
-    return this.document;
+  //  // console.log(this.document)
+  //   return this.document;
    
-  }
-  getAllDocumentElement(){
-    console.log('hiiii')
-    let doc;
-    let docsId = this.getDocumentsId();
-  console.log('bm', docsId)
-    docsId.forEach(element => {
-       doc =this.firestore.collection('campaign').doc(element).valueChanges().subscribe(e=>{
-        console.log('as',e);
-        this.docs.push(e)
-        console.log(this.docs);
-      })
+  // }
+  // async getAllDocumentElement(){
+  //   console.log('hiiii')
+  //   let doc;
+  //   let docsId =await this.getDocumentsId();
+  // console.log('bm', docsId)
+  //   docsId.forEach(element => {
+  //      doc =this.firestore.collection('campaign').doc(element).valueChanges().subscribe(e=>{
+  //       console.log('as',e);
+  //       this.docs.push(e)
+  //       console.log(this.docs);
+  //     })
       
-    });
+  //   });
     
-   // console.log(this.docs);
-    return this.docs;
+  //  // console.log(this.docs);
+  //   return this.docs;
    
-  }
+  // }
 
-  getComaign(){
-    let compaigns = this.getAllDocumentElement();
-    let userid =this.UserId();
-    //console.log(compaigns)
+  // getComaign(){
+  //   let compaigns = this.getAllDocumentElement();
+  //   let userid =this.UserId();
+  //   //console.log(compaigns)
     
-  }
+  // }
 }
