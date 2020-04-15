@@ -23,7 +23,7 @@ async  ngOnInit() {
       Subscribe: 2,
       view: 2
     }
-await this.comp.getcampingsList().snapshotChanges().pipe(
+await this.comp.getcampingsList().query().pipe(
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
