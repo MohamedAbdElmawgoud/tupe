@@ -131,18 +131,10 @@ UserId(){
    
   // }
 
-<<<<<<< HEAD
   // getComaign(){
   //   let compaigns = this.getAllDocumentElement();
   //   let userid =this.UserId();
   //   //console.log(compaigns)
-=======
-  getComaign(){
-    // let compaigns = this.getAllDocumentElement();
-
-    let userid =this.UserId();
-    //console.log(compaigns)
->>>>>>> 9a09cec9399c4d777e7784c2812dbcfee5097b6b
     
   // }
 }
