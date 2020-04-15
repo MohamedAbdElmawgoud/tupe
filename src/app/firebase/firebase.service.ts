@@ -87,44 +87,23 @@ UserId(){
   
   
 
-  getDocumentsId(){
-    //let document= [];
+  getDocumentsCampaigns(){
     
-    let comp =this.firestore.collection('campaign').snapshotChanges().subscribe(e=>{
-     e.forEach(element => {
-       element.payload.doc.id;
-       this.document.push(element.payload.doc.id);
-      // 
-      
-     });
-     console.log(this.document)
-    });
+    return  this.firestore.collection('campaign').snapshotChanges()
   
-   // console.log(this.document)
-    return this.document;
+
    
   }
-  getAllDocumentElement(){
-    console.log('hiiii')
-    let doc;
-    let docsId = this.getDocumentsId();
-  console.log('bm', docsId)
-    docsId.forEach(element => {
-       doc =this.firestore.collection('campaign').doc(element).valueChanges().subscribe(e=>{
-        console.log('as',e);
-        this.docs.push(e)
-        console.log(this.docs);
-      })
-      
-    });
-    
-   // console.log(this.docs);
-    return this.docs;
+  getDocumentElement(docId){
+
+   return this.firestore.collection('campaign').doc(docId).valueChanges()
+
    
   }
 
   getComaign(){
-    let compaigns = this.getAllDocumentElement();
+    // let compaigns = this.getAllDocumentElement();
+
     let userid =this.UserId();
     //console.log(compaigns)
     
