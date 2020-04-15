@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { TranslateModule } from  '@ngx-translate/core';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    TranslateModule,        
+    TranslateModule,  
+    YouTubePlayerModule,      
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }])
   ],

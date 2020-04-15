@@ -15,7 +15,8 @@ import { TranslateModule } from  '@ngx-translate/core';
     FormsModule,
     TranslateModule, 
     IonicModule,
-    CreateCompPageRoutingModule
+    CreateCompPageRoutingModule,
+    
   ],
   declarations: [CreateCompPage]
 })

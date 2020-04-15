@@ -30,6 +30,7 @@ export class AppComponent {
   currentLanguage: string;
   textDir: string;
   user;
+  isLoggedIn= false;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -58,9 +59,16 @@ export class AppComponent {
   
   }
   async ngOnInit(){
-    console.log('user');
-    
-     await this.getUser();
+    if(!this.isLoggedIn){
+      
+      this.router.navigate(['log-in']);
+      this.isLoggedIn =true;
+    }
+    else{
+
+      await this.getUser();
+    }
+   
   }
   
   initializeApp() {
@@ -108,5 +116,9 @@ export class AppComponent {
   Translate(type: string){
       this.translate.use(type);// ar or en    
     }
-
+logout(){
+  this.firebaseService.logout();
+  this.isLoggedIn = false;
+  window.location.reload()
+}
 }

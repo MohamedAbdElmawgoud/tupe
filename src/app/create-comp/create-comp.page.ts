@@ -17,20 +17,20 @@ export class CreateCompPage implements OnInit {
   camping: camping;
   constructor(private firebaseService: FirebaseService, private comp: CampingsService) { }
 
-async  ngOnInit() {
+  ngOnInit() {
     this.camping = {
       likes: 5,
       Subscribe: 2,
       view: 2
     }
-await this.comp.getcampingsList().query().pipe(
-      map(changes =>
+ this.comp.getcampingsList((res=> res.orderByChild('likes').equalTo(2))).snapshotChanges().pipe(
+      map((changes : Array<any>) =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
     ).subscribe(camping => {
-      this.camping = camping;
+      // this.camping = camping;
       console.log(camping)
     });
   

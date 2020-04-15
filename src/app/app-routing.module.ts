@@ -37,6 +37,14 @@ const routes: Routes = [
   {
     path: 'vip-account',
     loadChildren: () => import('./vip-account/vip-account.module').then( m => m.VipAccountPageModule)
+  },
+  {
+    path: 'add-link',
+    loadChildren: () => import('./add-link/add-link.module').then( m => m.AddLinkPageModule)
+  },
+  {
+    path: 'log-in',
+    loadChildren: () => import('./log-in/log-in.module').then( m => m.LogInPageModule)
   }
 ];
 @NgModule({

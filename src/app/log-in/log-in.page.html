@@ -1,0 +1,15 @@
+<ion-header>
+  
+</ion-header>
+
+<ion-content>
+    <ion-button
+    expand="block"
+    color="danger" 
+    (click)="googleSignin()"
+    *ngIf="!userProfile"
+  >
+    <ion-icon name="logo-google" style="margin-right:5px;"></ion-icon>
+    Login with Google
+  </ion-button>
+</ion-content>

@@ -28,9 +28,9 @@ export class CampingsService {
      return this.campingsRef.remove(key);
    }
   
-   getcampingsList(): AngularFireList<camping> {
+   getcampingsList(query ): AngularFireList<camping> {
      
-     return this.campingsRef;
+     return this.db.list(this.dbPath , query);
    }
   
    deleteAll(): Promise<void> {
