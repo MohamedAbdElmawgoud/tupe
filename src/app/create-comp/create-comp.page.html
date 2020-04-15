@@ -14,6 +14,7 @@
   </ion-card>
     <label class="header"> {{ 'Order Settings' | translate}}</label>
     <hr>
+    <form >
   <ion-item lines="none">
     <label >{{ 'Number Of Subscribers' | translate}}</label>
     
@@ -92,8 +93,9 @@
         
       </ion-item>
         
-      <button class="submit" (click)="getCompaign()" >
+      <button class="submit" (click)="createComp()" >
         {{ 'Done' | translate}}
         
         </button>
+    </form>
 </ion-content>

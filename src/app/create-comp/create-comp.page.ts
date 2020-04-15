@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from "src/app/firebase/firebase.service";
+import { FirebaseService, } from "src/app/firebase/firebase.service";
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { CampingsService, camping } from "src/app/firebase/campings.service";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-create-comp',
@@ -9,28 +13,49 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 export class CreateCompPage implements OnInit {
   id: string;
   numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-  constructor(private firebaseService:FirebaseService,) { }
 
-  ngOnInit() {
-    
-  }
-async CreateCompaign(){
-  console.log('hi');
+  camping: camping;
+  constructor(private firebaseService: FirebaseService, private comp: CampingsService) { }
+
+async  ngOnInit() {
+    this.camping = {
+      likes: 5,
+      Subscribe: 2,
+      view: 2
+    }
+await this.comp.getcampingsList().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(camping => {
+      this.camping = camping;
+      console.log(camping)
+    });
   
-  await this.firebaseService.getCurrentUser().subscribe(user=>{
-    
-    this.id =   user.uid;
-   
-    let record ={numberOfSubscribers: 10, numberOfLikes:10 , uid: this.id} 
-  //  console.log('record is ',record);
-    this.firebaseService.addCompaign(record);
-   })
-   
-}
+  }
+  createComp() {
+    this.comp.createcamping(this.camping)
+  }
 
- getCompaign(){
-   this.firebaseService.getCurrentUser().subscribe(user=>{
-  let test =this.firebaseService.getAllDocumentElement()
-});
-}
+  // async CreateCompaign(){
+  //   console.log('hi');
+
+  //   await this.firebaseService.getCurrentUser().subscribe(user=>{
+
+  //     this.id =   user.uid;
+
+  //     let record ={numberOfSubscribers: 10, numberOfLikes:10 , uid: this.id} 
+  //   //  console.log('record is ',record);
+  //     this.firebaseService.getAllDocumentElement();
+  //    })
+
+  // }
+
+  //  getCompaign(){
+  //    this.firebaseService.getCurrentUser().subscribe(user=>{
+  //   let test =this.firebaseService.getAllDocumentElement()
+  // });
+  // }
 }
