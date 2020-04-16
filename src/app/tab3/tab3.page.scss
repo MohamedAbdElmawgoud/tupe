@@ -4,6 +4,8 @@ ion-content ion-toolbar {
 ion-card{
 height: 70%;
 --background: black;
+//pointer-events: none //This line is the key!
+
 }
 .vl {
   border-left: 2px solid #C6C6C6;

@@ -10,10 +10,12 @@
 
 <ion-content [fullscreen]="true">
   
-<ion-card (click)="startTime()">
+<ion-card click="StartTimer()">
     <youtube-player 
-    videoId="rRua0fc2gAo"
+    [videoId]="videoId"
     suggestedQuality="medium"
+    (ready)="play($event)"
+    (change)="change($event)"
     [height]="350"
     [width]="400"
     [startSeconds]="0"
@@ -28,6 +30,7 @@
 </label>
 <div class="vl"></div>
 <label class="right">
+    <p *ngIf="hidevalue==true" class="sec"> {{points}}</p>
   {{ 'Points' | translate}}
       </label>
 </ion-item>

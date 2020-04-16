@@ -13,7 +13,8 @@ import { StorageService } from "src/app/storageService/storage.service";
   providedIn: 'root'
 })
 export class FirebaseService {
-  document= [];
+  point= 0;
+  document = [];
   profileData: AngularFirestoreCollection<{}>;
   user$: Observable<User>;
   user;
@@ -30,13 +31,13 @@ export class FirebaseService {
         // Logged in
         if (user) {
           return this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
+          
         } else {
           // Logged out
           return of(null);
         }
       })
     )
-
   }
 
 
@@ -54,7 +55,8 @@ export class FirebaseService {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
+      point : this.point
     }
     this.storage.saveUserId(user.uid);
     return userRef.set(data, { merge: true })
@@ -67,7 +69,14 @@ export class FirebaseService {
   }
 
   getCurrentUser() {
+   
    return this.afAuth.authState
+  }
+
+  getDataOfUser(){
+
+  
+return this.user$
   }
 UserId(){
  this.getCurrentUser().subscribe(user=>{

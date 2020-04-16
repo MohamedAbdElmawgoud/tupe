@@ -11,6 +11,7 @@ import { CreateCompPage } from "src/app/create-comp/create-comp.page";
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  points: number;
   type: any;
   userProfile: any = null;
   
@@ -22,7 +23,16 @@ export class Tab1Page {
     public router: Router) {
   
   }
-
+  ngOnInit(){
+    
+   
+    this.firebase.getDataOfUser().subscribe(e=>{
+      this.points = e.point;
+      console.log('ee',this.points);
+    });
+      
+      
+  }
    googleSignin() {
     this.firebase.googleSignin();
    }

@@ -27,6 +27,7 @@ const config = {
 })
 
 export class AppComponent {
+  points: number;
   email: string;
   displayName: string;
   profilePhoto: string;
@@ -63,7 +64,6 @@ export class AppComponent {
    ngOnInit(){
     
    
-    
       this.getUser();
       
   }

@@ -6,12 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  hidevalue= false;
+  player: any;
+  points: number;
+  hidevalue = false;
   timer: NodeJS.Timer;
   maxTime =30;
-  videoId = "Qlq6fKG2L48";
+  time=30;
+  videoId = 'rRua0fc2gAo';
   
-  
+  play(player){
+    
+    this.player= player;
+    //this.StartTimer()
+    console.log('player is ',player)
+    }
+    
+    change(event){
+    console.log('player state is ',event.data)
+    }
   StartTimer(){
     this.timer = setTimeout(x => 
       {
@@ -24,6 +36,7 @@ export class Tab3Page {
           }
           
           else{
+            this.points = this.time *10;
               this.hidevalue = true;
           }
 
