@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from "@angular/router";
 import { FirebaseService } from "src/app/firebase/firebase.service";
+import { ModalController } from '@ionic/angular';
+import { CreateCompPage } from "src/app/create-comp/create-comp.page";
 
 @Component({
   selector: 'app-tab1',
@@ -9,12 +11,14 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  type: any;
   userProfile: any = null;
   
   
     constructor(
     private platform: Platform,
     private firebase:FirebaseService,
+    private modalController:ModalController,
     public router: Router) {
   
   }
@@ -25,12 +29,26 @@ export class Tab1Page {
   
   
   createCompinge() {
-    this.router.navigate(['create-comp']);
 
+  // this.presentModal();
+   this.router.navigate(['create-comp']);
+   
     
   }
-
-
+  // async presentModal() {
+  //   const modal = await this.modalController.create({
+  //     component: CreateCompPage,
+     
+  //   });
+  //   await modal.present()
+  //   modal.onDidDismiss().then(e => {
+  //     this.type
+  //   })
+      
+     
+  //   return await modal.present();
+    
+  // }
   // loginUser(): void {//myreversedclientid
   //   this.googlePlus.login({
   //     'webClientId': '167757336992-0aqqo9rn80ledvcb2pmn3fqblb36oef6.apps.googleusercontent.com',
@@ -41,7 +59,7 @@ export class Tab1Page {
   //         console.log("Firebase success: " + JSON.stringify(success));
   //       })
   //       .catch( error => console.log("Firebase failure: " + JSON.stringify(error)));
-  //     }).catch(err => console.error("Error: ", err));
+  //    }).catch(err => console.error("Error: ", err));
   // }
   // login() {
   //   if (this.platform.is('cordova')) {

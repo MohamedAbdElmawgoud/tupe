@@ -7,6 +7,7 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { TranslateModule } from  '@ngx-translate/core';
 import { AngularFireModule } from '@angular/fire'; 
+import { CreateCompPageModule } from "src/app/create-comp/create-comp.module";
 
 const config = {
   apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
@@ -24,6 +25,7 @@ const config = {
     IonicModule,
     CommonModule,
     FormsModule,
+   // CreateCompPageModule,
     TranslateModule,  
     AngularFireModule.initializeApp(config),  
     ExploreContainerComponentModule,

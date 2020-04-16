@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FirebaseService, } from "src/app/firebase/firebase.service";
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DatePipe } from '@angular/common';
+import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-comp',
   templateUrl: './create-comp.page.html',
   styleUrls: ['./create-comp.page.scss'],
 })
+
 export class CreateCompPage implements OnInit {
- 
+  @Input() TypeView: boolean;
+  @Input() TypeSubscribe: boolean;
   id: string;
  // numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
  likes =10;
@@ -26,9 +29,12 @@ export class CreateCompPage implements OnInit {
   point = this.view * this.sec;
   constructor(private firebaseService: FirebaseService,
     private datePipe: DatePipe,
-     private comp: CampingsService) { }
+     private comp: CampingsService,
+     private navParams: NavParams
+    ) { }
 
   ngOnInit() {
+    console.log(this.navParams.get('TypeView'));
     
   }
 
