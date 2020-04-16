@@ -1,59 +1,75 @@
 <ion-app dir="{{textDir}}">
-    
-    <ion-menu  side="end" menuId="End" contentId="menuContent">        
+
+    <ion-menu side="end" menuId="End" contentId="menuContent">
         <ion-header>
-             <ion-toolbar color="tertiary">
-                 <ion-title>{{ 'Menu' | translate}}</ion-title>
-             </ion-toolbar>
-            
-         </ion-header>
-         <ion-content >
-             <ion-list>
-                    
-                    
-                 <ion-item (click)="goTomessage()" lines="none">
-                        <ion-icon name="chatbubbles"></ion-icon> 
-                        {{ 'Message' | translate}}
+            <!-- <ion-toolbar color="tertiary">
+                <ion-title>{{ 'Menu' | translate}}</ion-title>
+            </ion-toolbar> -->
+
+        </ion-header>
+        <ion-content>
+
+            <ion-card>
+                <img src={{profilePhoto}} class="profilePhoto">
+                <br>
+                <ion-card-title >
+                    {{displayName}}
+                   
+                </ion-card-title >
+                <ion-card-title class="email">
+                     
+                        {{email}}
+                    </ion-card-title>
+            </ion-card>
+            <ion-list>
+
+
+                <ion-item (click)="goTomessage()" lines="none">
+                    <ion-icon name="chatbubbles"></ion-icon>
+                    {{ 'Message' | translate}}
                 </ion-item>
                 <ion-item (click)="goToVip()">
-                        <img src="assets\icon\vip.png">                        
-                        {{ 'Vip Account' | translate}}
+                    <img src="assets\icon\vip.png"> {{ 'Vip Account' | translate}}
                 </ion-item>
 
+               <ion-label> {{ 'Communicate' | translate}}</ion-label>
+                <ion-item (click)="goTofaq()" lines="none">
+                    <ion-icon name="logo-buffer"></ion-icon>
 
-                 <ion-item (click)="goTofaq()" lines="none">
-                        <ion-icon name="logo-buffer"></ion-icon>
-                        
-                        {{ 'FAQ' | translate}}
+                    {{ 'FAQ' | translate}}
                 </ion-item>
 
                 <ion-item (click)="goToinviteFreind()" lines="none">
-                        <ion-icon name="link"></ion-icon>
-                        
-                        {{ 'invite friend' | translate}}
+                    <ion-icon name="link"></ion-icon>
+
+                    {{ 'invite friend' | translate}}
                 </ion-item>
-                 <ion-item>  
-                     <ion-icon name="star-outline"></ion-icon>
-                     {{ 'Rate' | translate}}
+                <ion-item lines="none">
+                    <ion-icon name="star-outline"></ion-icon>
+                    {{ 'Rate' | translate}}
                 </ion-item>
-                
-                 <ion-item lines="none" (click)="logout()">
-                        <ion-icon name="log-out"></ion-icon>
-                        
-                        {{ 'log out' | translate}}
+                <ion-item>
+                        <ion-icon name="paper-plane"></ion-icon>
+                        {{ 'feedback' | translate}}
+                    </ion-item>
+                    <ion-label> {{ 'Account' | translate}}</ion-label>
+                <ion-item lines="none" (click)="logout()">
+                    <ion-icon name="log-out"></ion-icon>
+
+                    {{ 'log out' | translate}}
                 </ion-item>
-                <ion-item lines="none"  *ngIf="currentLanguage == 'ar'" (click)="changeLng('en')" class="language">
-                    
+                <ion-item lines="none" *ngIf="currentLanguage == 'ar'" (click)="changeLng('en')" class="language">
+
                     {{ 'lng' | translate}}
-            </ion-item>
-            <ion-item lines="none"  *ngIf="currentLanguage == 'en'" (click)="changeLng('ar')" class="language">
-                
-                {{ 'lng' | translate}}
-        </ion-item>
-                
-             </ion-list>
-         </ion-content>
-     </ion-menu>
-     
-     <ion-router-outlet id="menuContent" dir="{{textDir}}"></ion-router-outlet>
+                </ion-item>
+                <ion-item lines="none" *ngIf="currentLanguage == 'en'" (click)="changeLng('ar')" class="language">
+
+                    {{ 'lng' | translate}}
+                </ion-item>
+
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="menuContent" dir="{{textDir}}"></ion-router-outlet>
 </ion-app>

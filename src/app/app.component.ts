@@ -27,10 +27,12 @@ const config = {
 })
 
 export class AppComponent {
+  email: string;
+  displayName: string;
+  profilePhoto: string;
   currentLanguage: string;
   textDir: string;
   user;
-  isLoggedIn= false;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -58,17 +60,12 @@ export class AppComponent {
     });
   
   }
-  async ngOnInit(){
-    if(!this.isLoggedIn){
-      
-      this.router.navigate(['log-in']);
-      this.isLoggedIn =true;
-    }
-    else{
-
-      await this.getUser();
-    }
+   ngOnInit(){
+    
    
+    
+      this.getUser();
+      
   }
   
   initializeApp() {
@@ -78,11 +75,23 @@ export class AppComponent {
     });
   }
 
-  async getUser(){
+   getUser(){
+     
  this.firebaseService.getCurrentUser().subscribe(user=>{
-  //console.log('user is ', user)
-   
- })
+  if(user==null){
+    console.log('go to logIn')
+     this.router.navigate(['log-in']);
+     
+   }
+   else{
+     this.profilePhoto = user.photoURL;
+     this.displayName = user.displayName;
+     this.email = user.email
+     console.log('not going to logIn')
+   }
+  console.log('user is ', user)
+    //return user;
+  })
   }
 
 
@@ -118,7 +127,8 @@ export class AppComponent {
     }
 logout(){
   this.firebaseService.logout();
-  this.isLoggedIn = false;
   window.location.reload()
+  
+  
 }
 }

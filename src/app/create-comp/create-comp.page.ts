@@ -4,6 +4,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-comp',
@@ -11,19 +12,58 @@ import { map } from "rxjs/operators";
   styleUrls: ['./create-comp.page.scss'],
 })
 export class CreateCompPage implements OnInit {
+ 
   id: string;
-  numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-
+ // numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+ likes =10;
+ Subscribe=10;
+ view=10;
+ type: string;
+ needed: number;
+ ListOfUserDoneIt: string[];
   camping: camping;
-  constructor(private firebaseService: FirebaseService, private comp: CampingsService) { }
+  sec=10;
+  point = this.view * this.sec;
+  constructor(private firebaseService: FirebaseService,
+    private datePipe: DatePipe,
+     private comp: CampingsService) { }
 
   ngOnInit() {
-    this.camping = {
-      likes: 5,
-      Subscribe: 2,
-      view: 2
+    
+  }
+
+  Onlikes(event){
+    this.likes = event.target.value;
+  //  console.log('selecte is ', event.target.value)
+  }
+  OnSubscribe(event){
+    this.Subscribe = event.target.value;
+  //  console.log('selecte is ', event.target.value)
+  }
+  Onview(event){
+    this.view = event.target.value;
+    this.point = this.view * this.sec
+  //  console.log('selecte is ', event.target.value)
+  }
+  Onsec(event){
+    this.sec = event.target.value;
+    this.point = this.view * this.sec
+  //  console.log('selecte is ', event.target.value)
+  }
+  createComp() {
+this.camping = {
+      likes: this.likes,
+      Subscribe: this.Subscribe,
+      view: this.view,
+      type:'view',
+      needed:this.Subscribe,
+      ListOfUserDoneIt: [],
+      second:this.sec ,
+      point:this.point,
+      createdData: Date.now()
     }
- this.comp.getcampingsList((res=> res.orderByChild('likes').equalTo(2))).snapshotChanges().pipe(
+    console.log('comp',this.camping);
+ this.comp.getcampingsList((res=> res.orderByChild('type').equalTo('view'))).snapshotChanges().pipe(
       map((changes : Array<any>) =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
@@ -31,11 +71,10 @@ export class CreateCompPage implements OnInit {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      console.log(camping)
+      console.log('comping is ',camping)
     });
   
-  }
-  createComp() {
+
     this.comp.createcamping(this.camping)
   }
 

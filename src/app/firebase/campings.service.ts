@@ -42,5 +42,11 @@ export interface camping {
 Subscribe: number ;
 likes: number;
 view: number ;
+type: string;
+needed: number;
+ListOfUserDoneIt: string[];
+second: number;
+point: number,
+createdData: any
 
 }

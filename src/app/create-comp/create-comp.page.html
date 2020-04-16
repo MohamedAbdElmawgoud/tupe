@@ -20,13 +20,13 @@
     
   <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
 
-<ion-select value="10">
-  <ion-select-option value={{numberOfSubscribers[0]}}>{{numberOfSubscribers[0]}}</ion-select-option>
-  <ion-select-option value={{numberOfSubscribers[1]}}>{{numberOfSubscribers[1]}}</ion-select-option>
-  <ion-select-option value={{numberOfSubscribers[2]}}>{{numberOfSubscribers[2]}}</ion-select-option>
-  <ion-select-option value={{numberOfSubscribers[3]}}>{{numberOfSubscribers[3]}}</ion-select-option>
-  <ion-select-option value={{numberOfSubscribers[4]}}>{{numberOfSubscribers[4]}}</ion-select-option>
-  <ion-select-option value={{numberOfSubscribers[5]}}>{{numberOfSubscribers[5]}}</ion-select-option>
+<ion-select    ([ngModel])="Subscribe" (ionChange)=" OnSubscribe($event)" placeholder="10">
+  <ion-select-option value='10'>10</ion-select-option>
+  <ion-select-option value='20'>20</ion-select-option>
+  <ion-select-option value='30'>30</ion-select-option>
+  <ion-select-option value='40'>40</ion-select-option>
+  <ion-select-option value='50'>50</ion-select-option>
+  <ion-select-option value='60'>60</ion-select-option>
 </ion-select>
 </ion-item>
 
@@ -34,14 +34,14 @@
       <label >{{ 'Number Of Likes' | translate}}</label>
      
     <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
-    <ion-select value="10">
-      <ion-select-option value={{numberOfSubscribers[0]}}>{{numberOfSubscribers[0]}}</ion-select-option>
-      <ion-select-option value={{numberOfSubscribers[1]}}>{{numberOfSubscribers[1]}}</ion-select-option>
-      <ion-select-option value={{numberOfSubscribers[2]}}>{{numberOfSubscribers[2]}}</ion-select-option>
-      <ion-select-option value={{numberOfSubscribers[3]}}>{{numberOfSubscribers[3]}}</ion-select-option>
-      <ion-select-option value={{numberOfSubscribers[4]}}>{{numberOfSubscribers[4]}}</ion-select-option>
-      <ion-select-option value={{numberOfSubscribers[5]}}>{{numberOfSubscribers[5]}}</ion-select-option>
-    </ion-select>
+    <ion-select   ([ngModel])="likes" (ionChange)=" Onlikes($event)"  placeholder="10">
+        <ion-select-option value='10'>10</ion-select-option>
+        <ion-select-option value='20'>20</ion-select-option>
+        <ion-select-option value='30'>30</ion-select-option>
+        <ion-select-option value='40'>40</ion-select-option>
+        <ion-select-option value='50'>50</ion-select-option>
+        <ion-select-option value='60'>60</ion-select-option>
+      </ion-select>
     </ion-item>
 
     
@@ -49,27 +49,27 @@
         <label >{{ 'Number Of views' | translate}}</label>
         
       <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
-      <ion-select value="10">
-        <ion-select-option value={{numberOfSubscribers[0]}}>{{numberOfSubscribers[0]}}</ion-select-option>
-        <ion-select-option value={{numberOfSubscribers[1]}}>{{numberOfSubscribers[1]}}</ion-select-option>
-        <ion-select-option value={{numberOfSubscribers[2]}}>{{numberOfSubscribers[2]}}</ion-select-option>
-        <ion-select-option value={{numberOfSubscribers[3]}}>{{numberOfSubscribers[3]}}</ion-select-option>
-        <ion-select-option value={{numberOfSubscribers[4]}}>{{numberOfSubscribers[4]}}</ion-select-option>
-        <ion-select-option value={{numberOfSubscribers[5]}}>{{numberOfSubscribers[5]}}</ion-select-option>
-      </ion-select>
+      <ion-select  ([ngModel])="view" (ionChange)=" Onview($event)"placeholder="10">
+          <ion-select-option value='10'>10</ion-select-option>
+          <ion-select-option value='20'>20</ion-select-option>
+          <ion-select-option value='30'>30</ion-select-option>
+          <ion-select-option value='40'>40</ion-select-option>
+          <ion-select-option value='50'>50</ion-select-option>
+          <ion-select-option value='60'>60</ion-select-option>
+        </ion-select>
       </ion-item>
     
       <ion-item lines="none">
           <label >{{ 'Time requird (second)' | translate}}</label>
          
         <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
-        <ion-select value="10">
-          <ion-select-option value={{numberOfSubscribers[0]}}>{{numberOfSubscribers[0]}}</ion-select-option>
-          <ion-select-option value={{numberOfSubscribers[1]}}>{{numberOfSubscribers[1]}}</ion-select-option>
-          <ion-select-option value={{numberOfSubscribers[2]}}>{{numberOfSubscribers[2]}}</ion-select-option>
-          <ion-select-option value={{numberOfSubscribers[3]}}>{{numberOfSubscribers[3]}}</ion-select-option>
-          <ion-select-option value={{numberOfSubscribers[4]}}>{{numberOfSubscribers[4]}}</ion-select-option>
-          <ion-select-option value={{numberOfSubscribers[5]}}>{{numberOfSubscribers[5]}}</ion-select-option>
+        <ion-select   ([ngModel])="sec" (ionChange)=" Onsec($event)" placeholder="10">
+            <ion-select-option value='10'>10</ion-select-option>
+            <ion-select-option value='20'>20</ion-select-option>
+            <ion-select-option value='30'>30</ion-select-option>
+            <ion-select-option value='40'>40</ion-select-option>
+            <ion-select-option value='50'>50</ion-select-option>
+            <ion-select-option value='60'>60</ion-select-option>
         </ion-select>
         </ion-item>
       <hr>
@@ -87,7 +87,7 @@
           <label >{{ 'Total coins' | translate}}</label>
          
         <button style="color:#4458ba ;font-style: bold">
-          1500
+         {{point}}
         
         </button>
         

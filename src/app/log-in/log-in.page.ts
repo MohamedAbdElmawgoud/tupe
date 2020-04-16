@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "src/app/firebase/firebase.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-log-in',
@@ -9,12 +10,13 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 
 export class LogInPage implements OnInit {
 
-  constructor(private firebase:FirebaseService,) { }
+  constructor(private firebase:FirebaseService,public router : Router,) { }
 
   ngOnInit() {
   }
  async googleSignin() {
     await this.firebase.googleSignin();
+    this.router.navigate(['']);
    }
   
 }

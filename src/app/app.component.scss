@@ -2,7 +2,7 @@ ion-icon{
     font-size: 20px;
     margin-right: 10px;
     margin-left: 10px;
-    color: black;
+    color: #6c6c6c;
 }
 img{
     width: 20px;
@@ -15,3 +15,47 @@ img{
     margin-left: 10px;
     margin-right: 10px;
 }
+.profilePhoto{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    float: left;
+    border-radius: 50%;
+    margin-right:80%;
+    margin-left: 5%;
+    margin-top: 12%;
+}
+ion-card{
+    width: 100%;
+    height: 25%;
+    margin-left: 0px;
+    margin-top: 0px;
+    
+    background: linear-gradient(to left ,   #2aa89c, #018979)0% 0%/100% 100% no-repeat ;
+}
+ion-card-title{
+    display: inline-block;
+margin: 8%;
+font-size: 15px;
+color: white;
+margin-top: 5%;
+margin-bottom: 0%;
+}
+ion-menu{
+    --width:75%;
+    --ion-background-color: #eeeeee
+    
+  }
+
+  .email{
+    margin-top: 3%;
+  }
+
+  ion-label{
+    display: inline-block;
+    font-style: bold;
+    margin: 5%;
+    color: #595959;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
