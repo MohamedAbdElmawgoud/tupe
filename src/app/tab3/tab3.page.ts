@@ -56,4 +56,11 @@ export class Tab3Page {
     this.StartTimer();
     
   }
+  savePlayer($event){
+    setInterval(()=>{
+      console.log($event.target.playerInfo.currentTime);
+      
+    } , 1000)
+  }
+
 }

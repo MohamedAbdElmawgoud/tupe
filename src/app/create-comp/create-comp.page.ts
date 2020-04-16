@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DatePipe } from '@angular/common';
 import { NavParams } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-comp',
@@ -27,17 +28,22 @@ export class CreateCompPage implements OnInit {
   camping: camping;
   sec=10;
   point = this.view * this.sec;
+  video;
   constructor(private firebaseService: FirebaseService,
     private datePipe: DatePipe,
      private comp: CampingsService,
-     private navParams: NavParams
+     private navParams: NavParams,
+     private router : ActivatedRoute
     ) { }
 
   ngOnInit() {
-    console.log(this.navParams.get('TypeView'));
-    
+    this.router.queryParamMap.subscribe(res=>{
+    this.type = res.get('type');      
+    })    
   }
-
+  getVideo(video){
+  this.video =video.el.value;    
+  }
   Onlikes(event){
     this.likes = event.target.value;
   //  console.log('selecte is ', event.target.value)
