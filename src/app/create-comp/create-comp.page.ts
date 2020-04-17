@@ -5,7 +5,6 @@ import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DatePipe } from '@angular/common';
-import { NavParams } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2'
 
@@ -33,7 +32,6 @@ export class CreateCompPage implements OnInit {
   constructor(private firebaseService: FirebaseService,
     private datePipe: DatePipe,
      private comp: CampingsService,
-     private navParams: NavParams,
      private router : ActivatedRoute
     ) { }
 
