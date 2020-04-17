@@ -65,7 +65,7 @@ export class AppComponent {
     
    
       this.getUser();
-      
+      this.firebaseService.getDataOfUser()
   }
   
   initializeApp() {
@@ -89,7 +89,7 @@ export class AppComponent {
      this.email = user.email
      console.log('not going to logIn')
    }
-  console.log('user is ', user)
+  console.log('user before update ', user)
     //return user;
   })
   }

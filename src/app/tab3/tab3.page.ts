@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from "rxjs/operators";
 import { CampingsService, camping } from "src/app/firebase/campings.service";
+import { FirebaseService } from "src/app/firebase/firebase.service";
 
 @Component({
   selector: 'app-tab3',
@@ -8,10 +9,12 @@ import { CampingsService, camping } from "src/app/firebase/campings.service";
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  lengthOfArrayOfVideo=0;
+  needed=15;
+  event: any;
+  lengthOfArrayOfVideo = 0;
   videoUrls = [];
   player: any;
-  points: number;
+  points=0;
   hidevalue = false;
   hidePoint= false;
   // timer: NodeJS.Timer;
@@ -49,7 +52,8 @@ export class Tab3Page {
  
 
   }
-  constructor( private comp: CampingsService,) {}
+  constructor( private comp: CampingsService, private firebaseService:FirebaseService) {}
+ 
   ngOnInit() {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
@@ -62,20 +66,32 @@ export class Tab3Page {
     
   }
   savePlayer($event){
+    this.event = $event;
     var startTime = new Date().getTime();
     // setInterval(()=>{
       ;
       var interval = setInterval(()=>{
+        if($event==0){
+          this.maxTime =$event
+        }
+        else{
         this.maxTime =$event.target.playerInfo.currentTime.toFixed(0);
-        this.points = this.maxTime *10;
-        if(new Date().getTime() - startTime > 60000){
+        }
+        if(new Date().getTime() - startTime > this.maxTime*1000 + 10000){
+            if (this.maxTime >= this.needed){
+              this.showMore()
+             
+              this.points = this.maxTime *10;
             clearInterval(interval);
-            
+            }
         }
       console.log($event.target.playerInfo.currentTime);
       
     } , 1000)
-   
+    
+    if(this.points!= 0){
+    this.UpdateUSerPoints(this.points);
+    }
     this.hidePoint =true;
   }
 
@@ -99,7 +115,9 @@ export class Tab3Page {
 
    
   }
+  
   showMore(){
+    console.log('event is',this.event)
     let len;
   //  console.log('video is ',this.videoUrls)
   len = this.videoUrls.length;
@@ -116,7 +134,23 @@ export class Tab3Page {
      
      // window.location.reload()
     }
+    this.savePlayer(this.event);
     this.lengthOfArrayOfVideo++;
   }
 
+  UpdateUSerPoints(points){
+    let user =this.firebaseService.getDataOfUser().subscribe(e => {
+      console.log('user after update :',e);
+      let UserEdited ={
+        displayName: e.displayName,
+        photoURL: e.photoURL,
+        email:e.email,
+        uid: e.uid,
+        point: e.point+points
+      }
+      this.firebaseService.updateUserData(UserEdited)
+      });
+    
+    //this.firebaseService.updateUserData()
+  }
 }

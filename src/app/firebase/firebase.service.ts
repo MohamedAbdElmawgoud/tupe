@@ -6,14 +6,16 @@ import * as firebase from 'firebase';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, flatMap } from 'rxjs/operators';
 import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  point= 0;
+  clientRefrance: any;
+  myUser: User;
+  point = 0;
   document = [];
   profileData: AngularFirestoreCollection<{}>;
   user$: Observable<User>;
@@ -47,9 +49,19 @@ export class FirebaseService {
     return this.updateUserData(credential.user);
   }
 
-  private updateUserData(user) {
+   updateUserData(user:User) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.firestore.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.firestore.collection('users')
+    .doc<User>(`${user.uid}`).update(user)
+    
+    // , ref =>
+    // ref.where('uid', '==', user.uid)
+    //    .limit(1))
+    //    .valueChanges()
+    //    .pipe(flatMap(users => users)).subscribe(doc => {
+    //     this.myUser = <User> doc(user.uid).payload.doc.data();
+    //     this.clientRefrance = doc(user.uid).payload.doc.ref;
+    // });;
 
     const data = {
       uid: user.uid,
@@ -59,7 +71,7 @@ export class FirebaseService {
       point : this.point
     }
     this.storage.saveUserId(user.uid);
-    return userRef.set(data, { merge: true })
+    //return userRef.set(data, { merge: true })
 
   }
 
@@ -75,7 +87,7 @@ export class FirebaseService {
 
   getDataOfUser(){
 
-  
+  console.log(this.user$)
 return this.user$
   }
 UserId(){
