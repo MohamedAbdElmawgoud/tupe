@@ -14,7 +14,7 @@ export class Tab3Page {
   points: number;
   hidevalue = false;
   hidePoint= false;
-  timer: NodeJS.Timer;
+  // timer: NodeJS.Timer;
   maxTime =30;
   time=30;
   videoId = 'rRua0fc2gAo';
@@ -30,7 +30,7 @@ export class Tab3Page {
     console.log('player state is ',event.data)
     }
   StartTimer(){
-    this.timer = setTimeout(x => 
+   setTimeout(x => 
       {
           if(this.maxTime <= 0) { }
           this.maxTime -= 1;

@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 })
 
 export class LogInPage implements OnInit {
-
+  userProfile : any
   constructor(private firebase:FirebaseService,public router : Router,) { }
 
   ngOnInit() {

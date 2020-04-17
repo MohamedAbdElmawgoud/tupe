@@ -8,6 +8,7 @@ import { CurrencyPageRoutingModule } from './currency-routing.module';
 
 import { CurrencyPage } from './currency.page';
 import { TranslateModule } from  '@ngx-translate/core';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { TranslateModule } from  '@ngx-translate/core';
     IonicModule,
     CurrencyPageRoutingModule
   ],
-  declarations: [CurrencyPage]
+  declarations: [CurrencyPage],
+  providers : [
+    AdMobFree
+  ]
 })
 export class CurrencyPageModule {}

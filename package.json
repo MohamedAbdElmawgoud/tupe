@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@angular/youtube-player": "^9.2.1",
+    "@ionic-native/admob-free": "^5.24.0",
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/google-plus": "^5.23.0",
     "@ionic-native/social-sharing": "^5.23.0",
@@ -31,10 +32,10 @@
     "@mobiscroll/angular-lite": "^4.10.2",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "cordova-admob-sdk": "^0.24.1",
+    "cordova-admob-sdk": "0.24.1",
     "cordova-android": "^8.1.0",
     "cordova-browser": "6.0.0",
-    "cordova-plugin-admob-free": "^0.27.0",
+    "cordova-plugin-admob-free": "0.27.0",
     "cordova-promise-polyfill": "0.0.2",
     "core-js": "^2.5.4",
     "firebase": "^7.14.0",
@@ -86,6 +87,9 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "167757336992-0aqqo9rn80ledvcb2pmn3fqblb36oef6.apps.googleusercontent.com"
+      },
+      "cordova-plugin-admob-free": {
+        "ADMOB_APP_ID": "ca-app-pub-6473277362437826~4368645067"
       }
     },
     "platforms": [
