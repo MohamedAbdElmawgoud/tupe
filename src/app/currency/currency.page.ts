@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import {  AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
-import { AdMobFree } from "@ionic-native/admob-free/ngx";
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Component({
   selector: 'app-currency',
@@ -11,7 +11,8 @@ import { AdMobFree } from "@ionic-native/admob-free/ngx";
 export class CurrencyPage implements OnInit {
 
   constructor(public router: Router,
-    private admobFree: AdMobFree
+    private admobFree: AdMobFree,
+    private firebaseService: FirebaseService
   ) { }
 
   ngOnInit() {
@@ -44,6 +45,28 @@ export class CurrencyPage implements OnInit {
      this.router.navigate(['tabs/tab3']);
     
 
+    this.admobFree.rewardVideo.prepare()
+      .then(() => {
+
+      })
+      .catch(e => console.log(e));
+    this.admobFree.rewardVideo.show().then(() => {
+
+    })
+
+    document.addEventListener('admob.rewardvideo.events.REWARD', (result) => {
+      let user = this.firebaseService.getDataOfUser().subscribe(e => {
+        console.log('user after update :', e);
+        let UserEdited = {
+          displayName: e.displayName,
+          photoURL: e.photoURL,
+          email: e.email,
+          uid: e.uid,
+          point: e.point + 20
+        }
+        this.firebaseService.updateUserData(UserEdited)
+      });
+    });
   }
 
 }
