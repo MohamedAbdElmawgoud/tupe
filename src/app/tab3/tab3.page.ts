@@ -146,7 +146,7 @@ export class Tab3Page {
         photoURL: e.photoURL,
         email:e.email,
         uid: e.uid,
-        point: e.point+points
+        point: e.point+points,
       }
       this.firebaseService.updateUserData(UserEdited)
       });
