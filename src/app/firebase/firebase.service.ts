@@ -51,17 +51,9 @@ export class FirebaseService {
 
    updateUserData(user:User) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.firestore.collection('users')
+    this.firestore.collection('users')
     .doc<User>(`${user.uid}`).update(user)
     
-    // , ref =>
-    // ref.where('uid', '==', user.uid)
-    //    .limit(1))
-    //    .valueChanges()
-    //    .pipe(flatMap(users => users)).subscribe(doc => {
-    //     this.myUser = <User> doc(user.uid).payload.doc.data();
-    //     this.clientRefrance = doc(user.uid).payload.doc.ref;
-    // });;
 
     const data = {
       uid: user.uid,
