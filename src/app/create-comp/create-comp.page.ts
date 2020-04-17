@@ -7,6 +7,7 @@ import { map } from "rxjs/operators";
 import { DatePipe } from '@angular/common';
 import { NavParams } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-create-comp',
@@ -15,8 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class CreateCompPage implements OnInit {
-  @Input() TypeView: boolean;
-  @Input() TypeSubscribe: boolean;
+  
   id: string;
  // numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
  likes =10;
@@ -29,6 +29,7 @@ export class CreateCompPage implements OnInit {
   sec=10;
   point = this.view * this.sec;
   video;
+  videoId ;
   constructor(private firebaseService: FirebaseService,
     private datePipe: DatePipe,
      private comp: CampingsService,
@@ -39,11 +40,27 @@ export class CreateCompPage implements OnInit {
   ngOnInit() {
     this.router.queryParamMap.subscribe(res=>{
     this.type = res.get('type');      
-    })    
+    })   
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(tag);
   }
   getVideo(video){
-  this.video =video.el.value;    
+  this.video =video.el.value;   
+
+let   scrubbed = this.video.slice(this.video.indexOf('=')+1 )
+  if(this.video.search('=')== -1){
+    scrubbed= this.video.slice(this.video.indexOf('be/')+3 )
   }
+  // abc 123 Howdy
+  this.videoId= scrubbed;
+  console.log('video is ',scrubbed)
+  }
+
+
+
+
+
   Onlikes(event){
     this.likes = event.target.value;
   //  console.log('selecte is ', event.target.value)
@@ -72,9 +89,10 @@ this.camping = {
       ListOfUserDoneIt: [],
       second:this.sec ,
       point:this.point,
+      videoUrl: this.videoId,
       createdData: Date.now()
     }
-    console.log('comp',this.camping);
+   // console.log('comp',this.camping);
  this.comp.getcampingsList((res=> res.orderByChild('type').equalTo('view'))).snapshotChanges().pipe(
       map((changes : Array<any>) =>
         changes.map(c =>
@@ -83,11 +101,16 @@ this.camping = {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      console.log('comping is ',camping)
+    //  console.log('comping is ',camping)
     });
   
 
-    this.comp.createcamping(this.camping)
+    this.comp.createcamping(this.camping);
+    Swal.fire({
+      icon: 'success',
+      showConfirmButton: true,
+      //timer: 1500,
+    })
   }
 
   // async CreateCompaign(){

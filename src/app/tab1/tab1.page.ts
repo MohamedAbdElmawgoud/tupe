@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { Router } from "@angular/router";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { AlertController } from '@ionic/angular';
+import {  TranslateLoader, TranslateService } from  '@ngx-translate/core';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class Tab1Page {
     constructor(
     private platform: Platform,
     private firebase:FirebaseService,
+    private translate:TranslateService,
     public alertController: AlertController ,
     public router: Router) {
   
@@ -40,25 +42,25 @@ export class Tab1Page {
   
   async createCompinge() {
     const alert = await this.alertController.create({
-      header: 'select the camping type',
+      header: this.translate.instant('select the camping type'),
       inputs: [
-
+       
         {
           name: 'view for you video',
           type: 'radio',
-          label: 'view for your video',
+          label:  this.translate.instant('view for your video'),
           value: 'video'
         },
         {
           name: 'radio6',
           type: 'radio',
-          label: ' likes or subscribes  ',
+          label:  this.translate.instant('likes or subscribes'),
           value: 'channel'
         }
       ],
       buttons : [
         {
-          text : "select"
+          text :  this.translate.instant("select")
         }
       ]
     });

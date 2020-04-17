@@ -9,22 +9,29 @@
 
 <ion-content>
   <div *ngIf="!video">
-    <label>{{ 'video links' | translate}}</label>
-
+    <!-- <label>{{ 'video links' | translate}}</label>
+     -->
     <ion-item>
-      <ion-input #videoEl></ion-input>
+      <ion-input #videoEl placeholder="Add Link"></ion-input>
+      <button class="submit" (click)="getVideo(videoEl)">
+          {{ 'Add' | translate}}
+        </button>
     </ion-item>
 
-    <button class="submit" (click)="getVideo(videoEl)">
-      {{ 'Add' | translate}}
-
-    </button>
+    
   </div>
 
   <div *ngIf="video">
     <ion-card>
    
-
+        <youtube-player 
+        [videoId]="videoId"
+        suggestedQuality="medium"
+        [height]="150"
+        [width]="350"
+        > 
+        <!-- [endSeconds]="60" -->
+      </youtube-player>
     </ion-card>
     <label class="header"> {{ 'Order Settings' | translate}}</label>
     <hr>

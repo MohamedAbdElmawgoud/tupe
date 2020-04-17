@@ -20,6 +20,7 @@
     [width]="400"
     [startSeconds]="0"
     (ready)="savePlayer($event)"
+    [endSeconds]="15"
     > 
     <!-- [endSeconds]="60" -->
   </youtube-player>
@@ -31,11 +32,11 @@
 </label>
 <div class="vl"></div>
 <label class="right">
-    <p *ngIf="hidevalue==true" class="sec"> {{points}}</p>
+    <p *ngIf="hidePoint==true" class="sec"> {{points}}</p>
   {{ 'Points' | translate}}
       </label>
 </ion-item>
-<button>
+<button (click)="showMore()">
   {{ 'Show more' | translate}}
 </button>
 </ion-content>

@@ -47,6 +47,7 @@ needed: number;
 ListOfUserDoneIt: string[];
 second: number;
 point: number,
-createdData: any
+createdData: any,
+videoUrl: string
 
 }

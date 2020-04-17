@@ -8,12 +8,14 @@ import { CreateCompPageRoutingModule } from './create-comp-routing.module';
 
 import { CreateCompPage } from './create-comp.page';
 import { TranslateModule } from  '@ngx-translate/core';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     TranslateModule, 
+    YouTubePlayerModule, 
     IonicModule,
     CreateCompPageRoutingModule,
     
