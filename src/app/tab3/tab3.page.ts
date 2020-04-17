@@ -20,8 +20,10 @@ export class Tab3Page {
   // timer: NodeJS.Timer;
   maxTime =30;
   time=30;
-  videoId = 'rRua0fc2gAo';
-  
+  videoId;
+  passedTIme = 0;
+  interval;
+  lastTime;
   play(player){
     
     this.player= player;
@@ -61,28 +63,33 @@ export class Tab3Page {
     this.getVideoID();
   }
   startTime(){
-    console.log('doneeeeeeeeeee')
     this.StartTimer();
     
   }
   savePlayer($event){
     this.event = $event;
-    var startTime = new Date().getTime();
+    console.log(this.event)
+    // $event.target.removeCueRange()
+   
     // setInterval(()=>{
       ;
-      var interval = setInterval(()=>{
+      this.interval = setInterval(()=>{
+
         if($event==0){
-          this.maxTime =$event
+          // this.maxTime =$event
         }
         else{
-        this.maxTime =$event.target.playerInfo.currentTime.toFixed(0);
+            if(this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)){
+              this.passedTIme ++;
+              this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
+            }
         }
-        if(new Date().getTime() - startTime > this.maxTime*1000 + 10000){
-            if (this.maxTime >= this.needed){
+        if((this.passedTIme - this.maxTime) <= 0){
+            if (this.passedTIme >= this.needed){
               this.showMore()
              
               this.points = this.maxTime *10;
-            clearInterval(interval);
+            clearInterval(this.interval);
             }
         }
       console.log($event.target.playerInfo.currentTime);
@@ -105,11 +112,8 @@ export class Tab3Page {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      camping.forEach(element => {
-        this.videoUrls.push(element.videoUrl)
-      
-      });
-     
+      this.videoUrls = camping
+      this.showMore()
     });
   
 
@@ -117,24 +121,25 @@ export class Tab3Page {
   }
   
   showMore(){
-    console.log('event is',this.event)
     let len;
-  //  console.log('video is ',this.videoUrls)
   len = this.videoUrls.length;
+  let video;
     if(this.lengthOfArrayOfVideo==0){
       
-      this.videoId = this.videoUrls[0];
-      console.log('video is ',this.videoId)
+      video = this.videoUrls[0];
       
-     // window.location.reload()
+      
     }
     else if(this.lengthOfArrayOfVideo<this.videoUrls.length&& this.lengthOfArrayOfVideo !=0){
-      this.videoId = this.videoUrls[this.lengthOfArrayOfVideo];
-      console.log('video is  sds',this.videoId)
-     
-     // window.location.reload()
+     video = this.videoUrls[this.lengthOfArrayOfVideo];
+
     }
     this.savePlayer(this.event);
+    console.log(video);
+    
+    this.videoId = video.videoUrl;
+    this.points  = +video.point / +video.view ;
+    this.maxTime = +video.needed;
     this.lengthOfArrayOfVideo++;
   }
 
