@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@angular/youtube-player": "^9.2.1",
+    "@capacitor/android": "^2.0.1",
+    "@capacitor/core": "2.0.1",
     "@ionic-native/admob-free": "^5.24.0",
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/google-plus": "^5.24.0",
@@ -52,6 +54,7 @@
     "@angular/compiler": "~8.2.14",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@capacitor/cli": "2.0.1",
     "@ionic/angular-toolkit": "^2.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
@@ -90,7 +93,7 @@
         "ADMOB_APP_ID": "ca-app-pub-6473277362437826~4368645067"
       },
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "fog.tube.app",
+        "REVERSED_CLIENT_ID": "111084768406-jc9lgopf365t2t2gst6peo3mf31kj4dk.apps.googleusercontent.com",
         "WEB_APPLICATION_CLIENT_ID": "111084768406-jc9lgopf365t2t2gst6peo3mf31kj4dk.apps.googleusercontent.com"
       }
     },
