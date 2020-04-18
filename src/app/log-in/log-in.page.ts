@@ -31,7 +31,7 @@ export class LogInPage implements OnInit {
     let params;
     if (this.platform.is('android')) {
       params = {
-        'webClientId': '111084768406-jc9lgopf365t2t2gst6peo3mf31kj4dk.apps.googleusercontent.com',
+        'webClientId': '111084768406-trr9hg5hivarm6mu7v44sc6cd0efaio6.apps.googleusercontent.com',
         'offline': true
       }
     }
@@ -44,7 +44,7 @@ export class LogInPage implements OnInit {
         this.onLoginSuccess(idToken, accessToken);
       }).catch((error) => {
         console.log(error)
-        alert('error:' + JSON.stringify(error))
+        alert('error:' + error)
       });
   }
   onLoginSuccess(accessToken, accessSecret) {
