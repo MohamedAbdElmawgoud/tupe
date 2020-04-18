@@ -10,6 +10,7 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
   styleUrls: ['./details-campaign.page.scss'],
 })
 export class DetailsCampaignPage implements OnInit {
+  done: any;
   view: any;
   compdata: any;
   compInfo: any;
@@ -44,7 +45,7 @@ getCompain(createdata){
       )
     ).subscribe(comp => {
   this.getUser(comp[0].ownerId)
-  
+  this.done=comp[0].done.length
    this.compdata = comp[0].createdData;
    this.view = comp[0].view
       console.log('comp is ',comp[0]);
