@@ -25,7 +25,8 @@ export class Tab3Page {
   passedTIme = 0;
   interval;
   lastTime = 0;
-  video
+  video;
+  user;
   play(player) {
 
     this.player = player;
@@ -59,8 +60,9 @@ export class Tab3Page {
     private storage: Storage
   ) { }
 
-  ngOnInit() {
+ async ngOnInit() {
     const tag = document.createElement('script');
+    this.user =await this.storage.get('User');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
@@ -96,7 +98,7 @@ export class Tab3Page {
 
 
   getVideoID() {
-    this.comp.getcampingsList((res => res.orderByChild('videoUrl'))).snapshotChanges().pipe(
+    this.comp.getcampingsList((res => res.orderByChild('expired').equalTo(null))).snapshotChanges().pipe(
       map((changes: Array<any>) =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
@@ -104,7 +106,13 @@ export class Tab3Page {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      this.videoUrls = camping
+      this.videoUrls = camping.filter(ele=>{
+        if(!ele.done)
+          return ele
+        if(ele.done.indexOf(this.user) == -1)
+          return ele
+        return false
+      })
       this.showMore()
     });
 
@@ -153,10 +161,12 @@ export class Tab3Page {
   }
 
   async updateCamping(video) {
-    let user =await this.storage.get('User');
 
     video.done = video.done ? video.done : [];
-    video.done.push(user)
+    video.done.push(this.user)
+    if(video.done.length == video.view)
+      video.expired = true;
+
     this.comp.updatecamping(video.key, video)
 
   }

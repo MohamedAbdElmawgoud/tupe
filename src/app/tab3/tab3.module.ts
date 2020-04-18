@@ -7,7 +7,6 @@ import { Tab3Page } from './tab3.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { TranslateModule } from  '@ngx-translate/core';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { Storage } from '@ionic/storage';
 
 @NgModule({
   imports: [
