@@ -46,10 +46,13 @@ export class FirebaseService {
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
+    
     return this.updateUserData(credential.user);
   }
 
    updateUserData(user:User) {
+     console.log(user);
+     
     // Sets user data to firestore on login
     this.firestore.collection('users')
     .doc<User>(`${user.uid}`).update(user)

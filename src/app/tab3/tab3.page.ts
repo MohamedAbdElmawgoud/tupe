@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { map } from "rxjs/operators";
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { FirebaseService } from "src/app/firebase/firebase.service";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab3',
@@ -9,103 +10,94 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  needed=15;
+  needed = 15;
   event: any;
   lengthOfArrayOfVideo = 0;
   videoUrls = [];
   player: any;
-  points=0;
+  points = 0;
   hidevalue = false;
-  hidePoint= false;
+  hidePoint = false;
   // timer: NodeJS.Timer;
-  maxTime =30;
-  time=30;
+  maxTime = 30;
+  time = 30;
   videoId;
   passedTIme = 0;
   interval;
-  lastTime;
-  play(player){
-    
-    this.player= player;
+  lastTime = 0;
+  video
+  play(player) {
+
+    this.player = player;
     //this.StartTimer()
-    console.log('player is ',player)
-    }
-    
-    change(event){
-    console.log('player state is ',event.data)
-    }
-  StartTimer(){
-   setTimeout(x => 
-      {
-          if(this.maxTime <= 0) { }
-          this.maxTime -= 1;
+    console.log('player is ', player)
+  }
 
-          if(this.maxTime>0){
-            this.hidevalue = false;
-            this.StartTimer();
-          }
-          
-          else{
-            
-              this.hidevalue = true;
-          }
+  change(event) {
+    console.log('player state is ', event.data)
+  }
+  StartTimer() {
+    setTimeout(x => {
+      if (this.maxTime <= 0) { }
+      this.maxTime -= 1;
 
-      }, 1000);
- 
+      if (this.maxTime > 0) {
+        this.hidevalue = false;
+        this.StartTimer();
+      }
+
+      else {
+
+        this.hidevalue = true;
+      }
+
+    }, 1000);
+
 
   }
-  constructor( private comp: CampingsService, private firebaseService:FirebaseService) {}
- 
+  constructor(private comp: CampingsService, private firebaseService: FirebaseService,
+    private storage: Storage
+  ) { }
+
   ngOnInit() {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
   }
-  startTime(){
+  startTime() {
     this.StartTimer();
-    
+
   }
-  savePlayer($event){
+  savePlayer($event) {
     this.event = $event;
-    console.log(this.event)
-    // $event.target.removeCueRange()
-   
-    // setInterval(()=>{
-      ;
-      this.interval = setInterval(()=>{
-
-        if($event==0){
-          // this.maxTime =$event
-        }
-        else{
-            if(this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)){
-              this.passedTIme ++;
-              this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
-            }
-        }
-        if((this.passedTIme - this.maxTime) <= 0){
-            if (this.passedTIme >= this.needed){
-              this.showMore()
-             
-              this.points = this.maxTime *10;
-            clearInterval(this.interval);
-            }
-        }
-      console.log($event.target.playerInfo.currentTime);
-      
-    } , 1000)
-    
-    if(this.points!= 0){
-    this.UpdateUSerPoints(this.points);
+    if (!$event) {
+      return
     }
-    this.hidePoint =true;
+
+    this.interval = setInterval( async  () => {
+      if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
+        this.passedTIme++;
+        this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
+      }
+
+      if ((this.maxTime - this.passedTIme) <= 0) {
+        this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
+        this.updateCamping({ ...this.video })
+        // this.showMore()
+
+        clearInterval(this.interval);
+      }
+
+    }, 1000)
+
+
   }
 
 
-  getVideoID(){
-    this.comp.getcampingsList((res=> res.orderByChild('videoUrl'))).snapshotChanges().pipe(
-      map((changes : Array<any>) =>
+  getVideoID() {
+    this.comp.getcampingsList((res => res.orderByChild('videoUrl'))).snapshotChanges().pipe(
+      map((changes: Array<any>) =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
         )
@@ -115,47 +107,57 @@ export class Tab3Page {
       this.videoUrls = camping
       this.showMore()
     });
-  
 
-   
+
+
   }
-  
-  showMore(){
+
+  showMore() {
     let len;
-  len = this.videoUrls.length;
-  let video;
-    if(this.lengthOfArrayOfVideo==0){
-      
+    len = this.videoUrls.length;
+    let video;
+    if (this.lengthOfArrayOfVideo == 0) {
+
       video = this.videoUrls[0];
-      
-      
+
+
     }
-    else if(this.lengthOfArrayOfVideo<this.videoUrls.length&& this.lengthOfArrayOfVideo !=0){
-     video = this.videoUrls[this.lengthOfArrayOfVideo];
+    else if (this.lengthOfArrayOfVideo < this.videoUrls.length && this.lengthOfArrayOfVideo != 0) {
+      video = this.videoUrls[this.lengthOfArrayOfVideo];
 
     }
     this.savePlayer(this.event);
-    console.log(video);
-    
+    this.video = video;
+
     this.videoId = video.videoUrl;
-    this.points  = +video.point / +video.view ;
-    this.maxTime = +video.needed;
+    this.points = +video.second;
+
+    this.maxTime = +video.second;
     this.lengthOfArrayOfVideo++;
   }
 
-  UpdateUSerPoints(points){
-    let user =this.firebaseService.getDataOfUser().subscribe(e => {
-      console.log('user after update :',e);
-      let UserEdited ={
+  UpdateUSerPoints(points) {
+    let user = this.firebaseService.getDataOfUser().subscribe(e => {
+      console.log('user after update :', e);
+      let UserEdited = {
         displayName: e.displayName,
         photoURL: e.photoURL,
-        email:e.email,
+        email: e.email,
         uid: e.uid,
-        point: e.point+points
+        point: e.point + points
       }
       this.firebaseService.updateUserData(UserEdited)
-      });
-    
+    });
+
     //this.firebaseService.updateUserData()
+  }
+
+  async updateCamping(video) {
+    let user =await this.storage.get('User');
+
+    video.done = video.done ? video.done : [];
+    video.done.push(user)
+    this.comp.updatecamping(video.key, video)
+
   }
 }

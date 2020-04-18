@@ -21,7 +21,7 @@ export class CampingsService {
    }
   
    updatecamping(key: string, value: any): Promise<void> {
-     return this.campingsRef.update(key, value);
+     return this.db.object(this.dbPath + '/' + key).update( value);
    }
   
    deletecamping(key: string): Promise<void> {
@@ -39,15 +39,17 @@ export class CampingsService {
 
 }
 export interface camping {
-Subscribe: number ;
-likes: number;
+Subscribe?: number ;
+likes?: number;
 view: number ;
 type: string;
-needed: number;
+needed?: number;
 ListOfUserDoneIt: string[];
 second: number;
 point: number,
 createdData: any,
-videoUrl: string
+videoUrl: string,
+ownerId : any ,
+done ? : any
 
 }
