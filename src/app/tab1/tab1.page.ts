@@ -28,10 +28,10 @@ export class Tab1Page {
   ngOnInit(){
     
    
-    this.firebase.getDataOfUser().subscribe(e=>{
-      this.points = e.point;
-      console.log('ee',this.points);
-    });
+    // this.firebase.getDataOfUser().subscribe(e=>{
+    //   this.points = e.point;
+    //   console.log('ee',this.points);
+    // });
       
       
   }

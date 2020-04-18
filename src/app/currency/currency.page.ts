@@ -61,19 +61,19 @@ export class CurrencyPage implements OnInit {
 
     })
 
-    document.addEventListener('admob.rewardvideo.events.REWARD', (result) => {
-      let user = this.firebaseService.getDataOfUser().subscribe(e => {
-        console.log('user after update :', e);
-        let UserEdited = {
-          displayName: e.displayName,
-          photoURL: e.photoURL,
-          email: e.email,
-          uid: e.uid,
-          point: e.point + 20
-        }
-        this.firebaseService.updateUserData(UserEdited)
-      });
-    });
+    // document.addEventListener('admob.rewardvideo.events.REWARD', (result) => {
+    //   let user = this.firebaseService.getDataOfUser().subscribe(e => {
+    //     console.log('user after update :', e);
+    //     let UserEdited = {
+    //       displayName: e.displayName,
+    //       photoURL: e.photoURL,
+    //       email: e.email,
+    //       uid: e.uid,
+    //       point: e.point + 20
+    //     }
+    //     this.firebaseService.updateUserData(UserEdited)
+    //   });
+    // });
   }
 
 }

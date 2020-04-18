@@ -56,7 +56,7 @@ export class AppComponent {
     
    
       this.getUser();
-      this.firebaseService.getDataOfUser()
+      // this.firebaseService.getDataOfUser()
   }
   
   initializeApp() {

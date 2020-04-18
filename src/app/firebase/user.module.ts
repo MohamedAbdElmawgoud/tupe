@@ -4,5 +4,5 @@ export class User {
     photoURL?: string;
     displayName?: string;
     myCustomData?: string;
-    point?:number;
+    point?:any;
   }

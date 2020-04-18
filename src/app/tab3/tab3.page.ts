@@ -66,6 +66,7 @@ export class Tab3Page {
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
+
   }
   startTime() {
     this.StartTimer();
@@ -145,19 +146,15 @@ export class Tab3Page {
   }
 
   UpdateUSerPoints(points) {
-    let user = this.firebaseService.getDataOfUser().subscribe(e => {
-      console.log('user after update :', e);
+    let user = this.firebaseService.getDataOfUser(this.user).then(e => {
+      
       let UserEdited = {
-        displayName: e.displayName,
-        photoURL: e.photoURL,
-        email: e.email,
-        uid: e.uid,
-        point: e.point + points
+        ...e.docs[0].data(),
+        point: e.docs[0].data().point + points
       }
-      this.firebaseService.updateUserData(UserEdited)
+      this.firebaseService.updateUser(UserEdited)
     });
 
-    //this.firebaseService.updateUserData()
   }
 
   async updateCamping(video) {
