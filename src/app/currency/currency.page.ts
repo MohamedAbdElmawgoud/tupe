@@ -33,7 +33,7 @@ export class CurrencyPage implements OnInit {
       // for the sake of this example we will just use the test config
       isTesting: true,
       autoShow: true,
-      id: "ca-app-pub-6473277362437826/2644499851"
+      id: "ca-app-pub-6473277362437826/2644499851ng "
     };
     this.admobFree.rewardVideo.config(bannerConfig);
 
