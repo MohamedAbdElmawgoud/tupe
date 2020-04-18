@@ -31,7 +31,7 @@ export class LogInPage implements OnInit {
     let params;
     if (this.platform.is('android')) {
       params = {
-        'webClientId': '124018728460-sv8cqhnnmnf0jeqbnd0apqbnu6egkhug.apps.googleusercontent.com',
+        'webClientId': '111084768406-jc9lgopf365t2t2gst6peo3mf31kj4dk.apps.googleusercontent.com',
         'offline': true
       }
     }
