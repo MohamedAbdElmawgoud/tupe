@@ -42,8 +42,15 @@ export class CurrencyPage implements OnInit {
     this.router.navigate(['subscription']);
   }
   ShowVideo() {
-     this.router.navigate(['tabs/tab3']);
-    
+    // this.router.navigate(['tabs/tab3']);
+    const bannerConfig: AdMobFreeBannerConfig = {
+      // add your config here
+      // for the sake of this example we will just use the test config
+      isTesting: true,
+      autoShow: true,
+      id: "ca-app-pub-6473277362437826/2644499851ng "
+    };
+    this.admobFree.rewardVideo.config(bannerConfig);
 
     this.admobFree.rewardVideo.prepare()
       .then(() => {
