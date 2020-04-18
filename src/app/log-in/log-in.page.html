@@ -3,13 +3,14 @@
 </ion-header>
 
 <ion-content>
+  <div>
+    <img src="assets/icon/fog.png">
+    <h1> FogMine-get subscribers, views and likes</h1>
+  </div>
     <ion-button
-    expand="block"
-    color="danger" 
     (click)="googleSignin()"
-    *ngIf="!userProfile"
-  >
-    <ion-icon name="logo-google" style="margin-right:5px;"></ion-icon>
+    *ngIf="!userProfile">
+    <img src="assets/icon/google.png" class="icon">
     Login
   </ion-button>
 </ion-content>

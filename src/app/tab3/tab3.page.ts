@@ -69,37 +69,37 @@ export class Tab3Page {
   savePlayer($event){
     this.event = $event;
     console.log(this.event)
-    // $event.target.removeCueRange()
+  //  $event.target.removeCueRange()
    
-    // setInterval(()=>{
-      ;
-      this.interval = setInterval(()=>{
+  //   // setInterval(()=>{
+  //     ;
+  //     this.interval = setInterval(()=>{
 
-        if($event==0){
-          // this.maxTime =$event
-        }
-        else{
-            if(this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)){
-              this.passedTIme ++;
-              this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
-            }
-        }
-        if((this.passedTIme - this.maxTime) <= 0){
-            if (this.passedTIme >= this.needed){
-              this.showMore()
+  //       if($event==0){
+  //         // this.maxTime =$event
+  //       }
+  //       else{
+  //           if(this.lastTime != $event.target.playerInfo.currentTime){
+  //             this.passedTIme ++;
+  //             this.lastTime = $event.target.playerInfo.currentTime
+  //           }
+  //       }
+  //       if((this.passedTIme - this.maxTime) <= 0){
+  //           if (this.passedTIme >= this.needed){
+  //             this.showMore()
              
-              this.points = this.maxTime *10;
-            clearInterval(this.interval);
-            }
-        }
-      console.log($event.target.playerInfo.currentTime);
+  //             this.points = this.maxTime *10;
+  //           clearInterval(this.interval);
+  //           }
+  //       }
+  //    // console.log($event.target.playerInfo.currentTime);
       
-    } , 1000)
+  //   } , 1000000)
     
-    if(this.points!= 0){
-    this.UpdateUSerPoints(this.points);
-    }
-    this.hidePoint =true;
+  //   if(this.points!= 0){
+  //   this.UpdateUSerPoints(this.points);
+  //   }
+  //   this.hidePoint =true;
   }
 
 
@@ -138,8 +138,8 @@ export class Tab3Page {
     console.log(video);
     
     this.videoId = video.videoUrl;
-    this.points  = +video.point / +video.view ;
-    this.maxTime = +video.needed;
+   // this.points  = +video.point / +video.view ;
+    //this.maxTime = +video.needed;
     this.lengthOfArrayOfVideo++;
   }
 
