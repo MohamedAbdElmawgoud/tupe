@@ -10,9 +10,10 @@
     <ion-button
     expand="block"
     color="danger" 
-    (click)="login()"
+    (click)="googleSignin()"
     *ngIf="!userProfile"
   >
+  {{userProfile | json}}
     <ion-icon name="logo-google" style="margin-right:5px;"></ion-icon>
     Login
   </ion-button>

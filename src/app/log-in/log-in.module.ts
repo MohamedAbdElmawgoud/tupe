@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { LogInPageRoutingModule } from './log-in-routing.module';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 
 import { LogInPage } from './log-in.page';
 import { AngularFireModule } from '@angular/fire'; 
@@ -23,7 +24,7 @@ import { config } from 'src/environments/environment';
   providers :[
     
     GooglePlus,
-
+    FirebaseAuthentication
   ]
 })
 export class LogInPageModule {}
