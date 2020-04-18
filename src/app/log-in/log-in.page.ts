@@ -51,10 +51,13 @@ export class LogInPage implements OnInit {
     const credential = accessSecret ? firebase.auth.GoogleAuthProvider
         .credential(accessToken, accessSecret) : firebase.auth.GoogleAuthProvider
             .credential(accessToken);
-    this.fireAuth.signInWithCredential(credential)
-      .then((response) => {
-        this.router.navigate([""]);
-      })
+      this.fireAuth.signInWithCredential(credential)
+        .then((response) => {
+          this.firebase.updateUserData(response.user)
+          this.router.navigate([""]);
+        
+          
+        })
 
   }
   

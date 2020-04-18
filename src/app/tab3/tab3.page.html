@@ -10,7 +10,8 @@
 
 <ion-content [fullscreen]="true">
   
-<ion-card click="StartTimer()">
+<div *ngIf="!noVideos">
+  <ion-card click="StartTimer()">
     <youtube-player 
     [videoId]="videoId"
     suggestedQuality="medium"
@@ -31,11 +32,21 @@
 </label>
 <div class="vl"></div>
 <label class="right">
-    <p class="sec"> {{points}}</p>
+    <p class="sec"> {{points - (points* 0.2)}}</p>
   {{ 'Points' | translate}}
       </label>
 </ion-item>
 <button (click)="showMore()">
   {{ 'Show more' | translate}}
 </button>
+</div>
+
+<div *ngIf="noVideos" >
+<p>
+  sorry no video no please reload
+</p>
+</div>
+
+
+
 </ion-content>

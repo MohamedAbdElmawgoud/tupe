@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 export class Tab3Page {
   needed = 15;
   event: any;
-  lengthOfArrayOfVideo = 0;
+  lengthOfArrayOfVideo = -1;
   videoUrls = [];
   player: any;
   points = 0;
@@ -26,6 +26,7 @@ export class Tab3Page {
   interval;
   lastTime = 0;
   video;
+  noVideos = false;
   user;
   play(player) {
 
@@ -60,9 +61,9 @@ export class Tab3Page {
     private storage: Storage
   ) { }
 
- async ngOnInit() {
+  async ngOnInit() {
     const tag = document.createElement('script');
-    this.user =await this.storage.get('User');
+    this.user = await this.storage.get('User');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
@@ -78,7 +79,7 @@ export class Tab3Page {
       return
     }
 
-    this.interval = setInterval( async  () => {
+    this.interval = setInterval(async () => {
       if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
         this.passedTIme++;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
@@ -107,10 +108,10 @@ export class Tab3Page {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      this.videoUrls = camping.filter(ele=>{
-        if(!ele.done)
+      this.videoUrls = camping.filter(ele => {
+        if (!ele.done)
           return ele
-        if(ele.done.indexOf(this.user) == -1)
+        if (ele.done.indexOf(this.user) == -1)
           return ele
         return false
       })
@@ -122,32 +123,26 @@ export class Tab3Page {
   }
 
   showMore() {
-    let len;
-    len = this.videoUrls.length;
-    let video;
-    if (this.lengthOfArrayOfVideo == 0) {
+    this.lengthOfArrayOfVideo++
+    let video = this.videoUrls[this.lengthOfArrayOfVideo];
+    console.log(video , this.noVideos);
+    
+    if (video != undefined) {
+      this.video = video;
 
-      video = this.videoUrls[0];
+      this.videoId = video.videoUrl;
+      this.points = +video.second;
 
-
+      this.maxTime = +video.second;
+      ;
+    } else {
+      this.noVideos = true;
     }
-    else if (this.lengthOfArrayOfVideo < this.videoUrls.length && this.lengthOfArrayOfVideo != 0) {
-      video = this.videoUrls[this.lengthOfArrayOfVideo];
-
-    }
-    this.savePlayer(this.event);
-    this.video = video;
-
-    this.videoId = video.videoUrl;
-    this.points = +video.second;
-
-    this.maxTime = +video.second;
-    this.lengthOfArrayOfVideo++;
   }
 
   UpdateUSerPoints(points) {
     let user = this.firebaseService.getDataOfUser(this.user).then(e => {
-      
+
       let UserEdited = {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
@@ -161,7 +156,7 @@ export class Tab3Page {
 
     video.done = video.done ? video.done : [];
     video.done.push(this.user)
-    if(video.done.length == video.view)
+    if (video.done.length == video.view)
       video.expired = true;
 
     this.comp.updatecamping(video.key, video)
