@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'log-in',
     loadChildren: () => import('./log-in/log-in.module').then( m => m.LogInPageModule)
+  },
+  {
+    path: 'details-campaign', data:  1,
+    loadChildren: () => import('./details-campaign/details-campaign.module').then( m => m.DetailsCampaignPageModule)
   }
 ];
 @NgModule({

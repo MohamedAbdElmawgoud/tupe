@@ -12,13 +12,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
-
-  <!-- <button ion-buttoncolor="light"(click)="login()" class="logIn">login</button> -->
+  <!-- <div *ngFor="let data of createdDate">
+  {{data  | date:'yyyy-MM-dd'}}
+  </div> -->
+  <div *ngIf="compaign"> 
+<ion-card  *ngFor="let data of compaignValue" >
+  <ion-card-title (click)="getDetailsOfComp(data.createdData)">
+      
+    <img src="assets\icon\play.png">
+    <p class="view">
+       
+        {{data.view}} view
+        <ion-icon name="checkmark-circle" class="mark"></ion-icon> 
+       </p>
+      
+       <hr>
+</ion-card-title>
+</ion-card>
+  </div>
+  <div *ngIf="!compaign">
   <ion-icon name="home" class="icon"></ion-icon>
     <p>{{ 'There is no campaign' | translate}}</p>
-  <button (click)="createCompinge()">
-      <ion-icon name="add"></ion-icon>
-  </button>
-
+  
+</div>
+<button (click)="createCompinge()">
+    <ion-icon name="add"></ion-icon>
+</button>
 </ion-content>
