@@ -1,9 +1,37 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>detailsCampaign</ion-title>
+    <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+            <ion-back-button ></ion-back-button>
+          </ion-buttons>
+        <ion-title>detailsCampaign</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<ion-card >
+  <p>
+    created Time
+  </p>
+  <h3>
+    {{compdata  | date:'yyyy-MM-dd'}}
+    
+  </h3>
+ <h2>
+   {{view}} view
+    <ion-icon name="checkmark-circle" class="mark"></ion-icon> 
+ </h2>
+  <hr>
+  
+  </ion-card>
+  
+  <h5>list of number people watched your compaign</h5>
+    <div  >
+   
+        <h4> {{displayName}}
+          </h4>
+        <img src={{photoUrl}}> 
+        
+  </div>
 
 </ion-content>

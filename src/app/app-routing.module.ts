@@ -47,7 +47,7 @@ const routes: Routes = [
     loadChildren: () => import('./log-in/log-in.module').then( m => m.LogInPageModule)
   },
   {
-    path: 'details-campaign', data:  1,
+    path: 'details-campaign',data: {data : ''},
     loadChildren: () => import('./details-campaign/details-campaign.module').then( m => m.DetailsCampaignPageModule)
   }
 ];
