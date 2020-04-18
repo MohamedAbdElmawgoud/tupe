@@ -8,6 +8,7 @@ import { LogInPageRoutingModule } from './log-in-routing.module';
 
 import { LogInPage } from './log-in.page';
 import { AngularFireModule } from '@angular/fire'; 
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 const config = {
   apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
   authDomain: "fir-7e3e0.firebaseapp.com",
@@ -24,8 +25,13 @@ const config = {
     FormsModule,
     IonicModule,
     AngularFireModule.initializeApp(config),
-    LogInPageRoutingModule
+    LogInPageRoutingModule,
   ],
-  declarations: [LogInPage]
+  declarations: [LogInPage],
+  providers :[
+    
+    GooglePlus,
+
+  ]
 })
 export class LogInPageModule {}

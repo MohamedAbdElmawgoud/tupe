@@ -9,6 +9,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { switchMap, flatMap } from 'rxjs/operators';
 import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,8 +25,7 @@ export class FirebaseService {
   constructor(public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private storage: StorageService,
-    
+    private storage: StorageService,    
     public router: Router) {
 
     this.user$ = this.afAuth.authState.pipe(
