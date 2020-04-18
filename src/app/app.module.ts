@@ -21,20 +21,12 @@ import { TranslateModule, TranslateLoader, TranslateService } from  '@ngx-transl
 import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
 import { IonicStorageModule } from "@ionic/storage";
 import { DatePipe } from '@angular/common';
+import { config } from 'src/environments/environment';
 
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
 }
-const config = {
-  apiKey: "AIzaSyDlWNjH4XsEHVkWceFtavf8e7Qq9fKgQwU",
-  authDomain: "fir-7e3e0.firebaseapp.com",
-  databaseURL: "https://fir-7e3e0.firebaseio.com",
-  projectId: "fir-7e3e0",
-  storageBucket: "fir-7e3e0.appspot.com",
-  messagingSenderId: "941729484801",
-  appId: "1:941729484801:web:aabacc4af4907bc1203000",
-  measurementId: "G-TFXWLDL6QG"
-};
+ 
 
 
 @NgModule({
