@@ -9,6 +9,8 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { switchMap, flatMap } from 'rxjs/operators';
 import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
+import { Firebase } from "@ionic-native/firebase/ngx";
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,10 @@ export class FirebaseService {
   user$: Observable<User>;
   user;
   docs = [];
-  constructor(public googlePlus: GooglePlus,
+  constructor(
+    private platform: Platform,
+    private FireBase :Firebase,
+    public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private storage: StorageService,
@@ -42,6 +47,36 @@ export class FirebaseService {
     )
   }
 
+  async getToken() {
+    let token;
+
+    if (this.platform.is('android')) {
+      token = await this.FireBase.getToken();
+    }
+
+    if (this.platform.is('ios')) {
+      token = await this.FireBase.getToken();
+      await this.FireBase.grantPermission();
+    }
+
+    this.saveToken(token);
+  }
+  private saveToken(token) {
+    if (!token) return;
+
+    const devicesRef = this.firestore.collection('devices');
+
+    const data = {
+      token,
+      userId: 'testUserId'
+    };
+
+    return devicesRef.doc(token).set(data);
+  }
+
+  onNotifications() {
+    return this.FireBase.onNotificationOpen();
+  }
 
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
