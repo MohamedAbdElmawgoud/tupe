@@ -19,7 +19,7 @@
   
   <div *ngIf="compaign"> 
 <ion-card  *ngFor="let data of compaignValue" >
-  <ion-card-title (click)="getDetailsOfComp(data.createdData)">
+  <ion-card-title (click)="getDetailsOfComp(data)">
       
     <img src="assets\icon\play.png" >
     <p class="view" style="display:flex">

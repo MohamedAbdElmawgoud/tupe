@@ -88,9 +88,8 @@ export class Tab1Page {
      
  
   }
-  getDetailsOfComp(createdate : number){
-    //console.log('casd',createdate)
-    this.router.navigate(['details-campaign',{ data: createdate }]);
+  getDetailsOfComp(createdate ){
+    this.router.navigate(['details-campaign'] , {queryParams : { data: createdate.key } });
   }
   getUserId(){
     this.firebase.getCurrentUser().subscribe(user=>{

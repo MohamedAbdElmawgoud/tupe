@@ -15,45 +15,47 @@ export class DetailsCampaignPage implements OnInit {
   compdata: any;
   compInfo: any;
   data: any;
-  createdata= 1587206533125;
-photoUrl= 'https://lh3.googleusercontent.com/a-/AOh14Git2em9CyfYQAcZGc3EvPs189RFj551ZRkJvDXrjw';
-displayName ='Nader Medhat';
-
+  createdata = 1587206533125;
+  photoUrl = 'https://lh3.googleusercontent.com/a-/AOh14Git2em9CyfYQAcZGc3EvPs189RFj551ZRkJvDXrjw';
+  displayName = 'Nader Medhat';
+  viewers = [];
   constructor(
-    private firebase:FirebaseService,    
-    private router: Router, 
+    private firebase: FirebaseService,
+    private router: Router,
     private campingsService: CampingsService,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute, ) { }
 
   ngOnInit() {
-    this.getCompain(this.createdata)
-    // this.data = this.route
-    // .data
-    // .subscribe(v => {
-    //   this.createdata = v;
-    //   console.log(this.createdata)
-    // });
+    this.data = this.route
+      .queryParamMap
+      .subscribe(v => {
+
+        this.getCompain(v.get('data'))
+
+      });
   }
-getCompain(createdata){
-  let compaign= this.campingsService.getcampingsList((res => 
-    res.orderByChild('createdData')
-    .equalTo(createdata))).snapshotChanges().pipe(
-      map((changes: Array<any>) =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(comp => {
-  this.getUser(comp[0].ownerId)
-  this.done=comp[0].done.length
-   this.compdata = comp[0].createdData;
-   this.view = comp[0].view
-      console.log('comp is ',comp[0]);
-    
-    });
-}
-async getUser(id){
-  let user =await this.firebase.getDataOfUser(id);
-  console.log('sadazz',user)
-}
+  getCompain(createdata) {
+    this.campingsService.getcampingsList((res =>
+      res.orderByChild('key')
+        .equalTo(createdata))).snapshotChanges().pipe(
+          map((changes: Array<any>) =>
+            changes.map(c =>
+              ({ key: c.payload.key, ...c.payload.val() })
+            )
+          )
+        ).subscribe(comp => {
+          this.getUser(comp[0].ownerId)
+          this.done = comp[0].done.length
+          this.compdata = comp[0].createdData;
+          this.view = comp[0].view
+            comp[0].done.forEach( async (ele) => {
+             let user =  await this.getUser(ele)
+             this.viewers.push(user.docs[0].data())
+             
+          })
+        });
+  }
+   getUser(id) {
+    return this.firebase.getDataOfUser(id);
+  }
 }
