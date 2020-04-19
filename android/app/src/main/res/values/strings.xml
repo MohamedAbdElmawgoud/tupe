@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">youtube</string>
-    <string name="title_activity_main">youtube</string>
+    <string name="app_name">Fog Tube</string>
+    <string name="title_activity_main">Fog Tube</string>
     <string name="package_name">fog.tube.app</string>
     <string name="custom_url_scheme">fog.tube.app</string>
 </resources>
