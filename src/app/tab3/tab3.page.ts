@@ -143,6 +143,7 @@ this.getPoint()
       this.points = +video.second;
 
       this.maxTime = +video.second;
+      this.passedTIme = 0;
       ;
     } else {
       window.location.reload();
