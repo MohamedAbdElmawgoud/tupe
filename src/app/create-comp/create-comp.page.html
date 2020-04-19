@@ -32,6 +32,7 @@
         suggestedQuality="medium"
         [height]="150"
         [width]="350"
+        (ready)="changeStatus($event)"
         > 
         <!-- [endSeconds]="60" -->
       </youtube-player>

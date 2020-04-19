@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-comp',
@@ -33,7 +34,9 @@ export class CreateCompPage implements OnInit {
   videoId;
   userTotalPoint;
   user;
+  status= false;
   constructor(private firebaseService: FirebaseService,
+    private alertController: AlertController,    
     private datePipe: DatePipe,
     private comp: CampingsService,
     private router: ActivatedRoute,
@@ -99,7 +102,7 @@ export class CreateCompPage implements OnInit {
     //  console.log('selecte is ', event.target.value)
   }
   async  createComp() {
-    
+    if (this.status== true){
     if(this.user.point < this.point){
       Swal.fire({
         icon: 'error',
@@ -131,9 +134,23 @@ export class CreateCompPage implements OnInit {
         showConfirmButton: true,
         //timer: 1500,
       })
-this.route.navigate([''])
+      this.route.navigate([''])
+    }
+    else{
+this.presentAlert('please play your video')
+    }
 
-
+  }
+  changeStatus($event){
+    setInterval(()=>{
+    if(this.status==false){
+     if($event.target.playerInfo.currentTime>0){
+        console.log('event is',$event.target.playerInfo.currentTime)
+        this.status = true;
+      }
+    }
+   
+    },1000)
   }
   UpdateUSerPoints(points) {
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
@@ -146,6 +163,15 @@ this.route.navigate([''])
     });
 
   }
+  async presentAlert(title) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+     // subHeader: 'Subtitle',
+      message: title,
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 
 }
