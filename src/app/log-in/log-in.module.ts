@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { LogInPageRoutingModule } from './log-in-routing.module';
-// import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
 
 import { LogInPage } from './log-in.page';
 import { AngularFireModule } from '@angular/fire'; 
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { config } from 'src/environments/environment';
- 
+import {
+  InAppBrowser,
+} from "@ionic-native/in-app-browser/ngx";
 @NgModule({
   imports: [
     CommonModule,
@@ -22,9 +22,7 @@ import { config } from 'src/environments/environment';
   ],
   declarations: [LogInPage],
   providers :[
-    
-    GooglePlus,
-    // FirebaseAuthentication
+    InAppBrowser,
   ]
 })
 export class LogInPageModule {}
