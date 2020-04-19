@@ -72,11 +72,20 @@
         <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
         <ion-select ([ngModel])="view" (ionChange)=" Onview($event)" placeholder="10">
           <ion-select-option value='10'>10</ion-select-option>
-          <ion-select-option value='20'>20</ion-select-option>
-          <ion-select-option value='30'>30</ion-select-option>
-          <ion-select-option value='40'>40</ion-select-option>
-          <ion-select-option value='50'>50</ion-select-option>
-          <ion-select-option value='60'>60</ion-select-option>
+          <ion-select-option value='20'>50</ion-select-option>
+          <ion-select-option value='30'>100</ion-select-option>
+          <ion-select-option value='40'>200</ion-select-option>
+          <ion-select-option value='50'>250</ion-select-option>
+          <ion-select-option value='60'>300</ion-select-option>
+
+          <ion-select-option value='10'>400</ion-select-option>
+          <ion-select-option value='20'>500</ion-select-option>
+          <ion-select-option value='30'>600</ion-select-option>
+          <ion-select-option value='40'>700</ion-select-option>
+          <ion-select-option value='50'>800</ion-select-option>
+          <ion-select-option value='60'>900</ion-select-option>
+          <ion-select-option value='60'>1000</ion-select-option>
+          
         </ion-select>
       </ion-item>
 
@@ -84,13 +93,18 @@
         <label>{{ 'Time requird (second)' | translate}}</label>
 
         <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
-        <ion-select ([ngModel])="sec" (ionChange)=" Onsec($event)" placeholder="10">
-          <ion-select-option value='10'>10</ion-select-option>
-          <ion-select-option value='20'>20</ion-select-option>
-          <ion-select-option value='30'>30</ion-select-option>
-          <ion-select-option value='40'>40</ion-select-option>
-          <ion-select-option value='50'>50</ion-select-option>
-          <ion-select-option value='60'>60</ion-select-option>
+        <ion-select ([ngModel])="sec" (ionChange)=" Onsec($event)" placeholder="45">
+          <ion-select-option value='10'>45</ion-select-option>
+          <ion-select-option value='20'>60</ion-select-option>
+          <ion-select-option value='30'>120</ion-select-option>
+          <ion-select-option value='40'>150</ion-select-option>
+          <ion-select-option value='50'>180</ion-select-option>
+          <ion-select-option value='60'>210</ion-select-option>
+          <ion-select-option value='20'>300</ion-select-option>
+          <ion-select-option value='30'>400</ion-select-option>
+          <ion-select-option value='40'>600</ion-select-option>
+          <ion-select-option value='50'>900</ion-select-option>
+          <ion-select-option value='60'>1200</ion-select-option>
         </ion-select>
       </ion-item>
       <hr>
@@ -113,8 +127,8 @@
         </button>
 
       </ion-item>
-
-      <button class="submit" (click)="createComp()">
+<hr>
+      <button class="done" (click)="createComp()">
         {{ 'Done' | translate}}
 
       </button>

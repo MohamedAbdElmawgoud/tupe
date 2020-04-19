@@ -10,15 +10,15 @@
 
 <ion-content [fullscreen]="true">
   
-<div *ngIf="!noVideos">
+<div *ngIf="!noVideos" class="video">
   <ion-card click="StartTimer()">
     <youtube-player 
     [videoId]="videoId"
     suggestedQuality="medium"
    
     (change)="change($event)"
-    [height]="420"
-    [width]="380"
+    [height]="350"
+    [width]="350"
     [startSeconds]="0"
     (ready)="savePlayer($event)"
     > 

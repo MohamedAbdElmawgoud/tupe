@@ -10,7 +10,7 @@ hr {
     width: 90%;
     margin-right: 5%;
     margin-left: 5%;
-    pointer-events: none //This line is the key!
+   // pointer-events: none //This line is the key!
   }
   label{
       width: 70%;
@@ -59,4 +59,11 @@ ion-select{
     height: 40px;
     color: #696C6B;
     background: #D0D0D0;
+}
+.done{
+    text-transform: uppercase;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: black;
 }

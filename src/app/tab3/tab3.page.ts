@@ -4,6 +4,7 @@ import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2'
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -58,7 +59,9 @@ export class Tab3Page {
 
 
   }
-  constructor(private comp: CampingsService, private firebaseService: FirebaseService,
+  constructor(private comp: CampingsService, 
+    private alertController: AlertController,
+    private firebaseService: FirebaseService,
     private storage: Storage
   ) { }
 
@@ -99,7 +102,7 @@ export class Tab3Page {
 
     }, 1000)
 
-
+    
   }
 
 
@@ -121,7 +124,6 @@ export class Tab3Page {
           return ele
         return false
       })
-
       this.showMore()
     });
 
@@ -176,5 +178,17 @@ export class Tab3Page {
 
     this.comp.updatecamping(video.key, video)
 
+  }
+
+
+  async presentAlert(title) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+     // subHeader: 'Subtitle',
+      message: title,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
