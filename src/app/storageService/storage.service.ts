@@ -14,13 +14,25 @@ export class StorageService {
 
   }
 
-  getVersionId() {
+  getUserId() {
    
-    return this.storage.get('version').then((versionId) => {
-     
-      return versionId;
-    });
+    return this.storage.get('version')
   }
+
+
+  saveUserId(versionId) {
+    this.storage.set('version', versionId);
+   // console.log(versionId);
+
+}
+
+getVersionId() {
+ 
+  return this.storage.get('version').then((versionId) => {
+   
+    return versionId;
+  });
+}
   deleteVersion(){
     this.storage.remove('version');
   }
