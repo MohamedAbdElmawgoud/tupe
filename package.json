@@ -37,7 +37,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "angularx-social-login": "^2.2.1",
     "cordova-admob-sdk": "0.24.1",
-    "cordova-android": "^8.1.0",
+    "cordova-android": "8.1.0",
     "cordova-browser": "6.0.0",
     "cordova-plugin-admob-free": "0.27.0",
     "cordova-plugin-firebase": "^2.0.5",
@@ -95,7 +95,7 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-admob-free": {
-        "ADMOB_APP_ID": "ca-app-pub-6473277362437826~4368645067"
+        "ADMOB_APP_ID": "ca-app-pub-7175438051295681~5749530563"
       },
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "com.googleusercontent.apps.111084768406-139tc1h1f78fgtikqjjl84vc2e2gbjog",
@@ -103,8 +103,6 @@
       },
       "cordova-plugin-firebase": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
