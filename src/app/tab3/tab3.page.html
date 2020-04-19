@@ -4,14 +4,14 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'Fog tube' | translate}}
-<strong>{{showPoint}}</strong>
+<strong>{{point}}</strong>
         
       </ion-title>
       
     </ion-toolbar>
   </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" >
   
 <div *ngIf="!noVideos" class="video">
   <ion-card click="StartTimer()">

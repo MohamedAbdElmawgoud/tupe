@@ -12,6 +12,7 @@ import { StorageService } from "src/app/storageService/storage.service";
 // import { Firebase } from "@ionic-native/firebase/ngx";
 import { Platform } from '@ionic/angular';
 import Swal from 'sweetalert2'
+import { AlertController } from "@ionic/angular";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class FirebaseService {
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private storage: StorageService,
+    private alertController: AlertController,
     public router: Router) {
 
     this.user$ = this.afAuth.authState.pipe(
@@ -114,11 +116,8 @@ export class FirebaseService {
   login(email, password) {
     let isGmail = (/^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/.test(email));
     if (!isGmail) {
-      Swal.fire({
-        icon: 'error',
-        showConfirmButton: true,
-        text: "Please enter  google mail"
-      })
+      this.presentAlert('Please enter  google mail')
+      
       return;
     }
     // Sets user data to firestore on login
@@ -145,11 +144,8 @@ export class FirebaseService {
           this.router.navigate(['']);
 
         } else {
-          Swal.fire({
-            icon: 'error',
-            showConfirmButton: true,
-            text: "password is wrong"
-          })
+          this.presentAlert("password is wrong")
+           
         }
       }
 
@@ -195,6 +191,15 @@ export class FirebaseService {
     return  this.firestore.collection('version').doc('1').snapshotChanges()
   }
 
+  async presentAlert(title) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+     // subHeader: 'Subtitle',
+      message: title,
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 }
 

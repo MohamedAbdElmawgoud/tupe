@@ -21,7 +21,7 @@
     "watch video to earn point":"شاهد الفيديو لكسب النقاط",
     "Review subscription to channels":"مراجعة الاشتراك في القنوات",
     "currency":"العملة",   
-    "view":"مشاهده",
+    "view":"مشاهد",
     "Subscribe":"الاشتراكات",
     "Home":"الرئيسيه",
     "There is no campaign":"لا توجد حملة",
@@ -51,5 +51,10 @@
     "likes or subscribes":"الإعجابات أو الاشتراكات",
     "select":"اختر",
     "Add":"أضف", 
-    "video links":"روابط الفيديو"
+    "video links":"روابط الفيديو",
+    "Communicate":"تواصل",
+    "Account":"الحساب",  
+    "Details Campaign":"تفاصيل الحملة",
+    "created Time":"تاريخ الانشاء",
+    "list of people watched your video":"قائمة الأشخاص الذين شاهدوا الفيديو الخاص بك"
 }

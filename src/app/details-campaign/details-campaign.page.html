@@ -3,15 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>detailsCampaign</ion-title>
+    <ion-title>{{ 'Details Campaign' | translate}}</ion-title>
 
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content dir="ltr">
   <ion-card>
     <p>
-      created Time
+      {{ 'created Time' | translate}}
     </p>
     <h3>
       {{compdata  | date:'yyyy-MM-dd'}}
@@ -19,14 +19,14 @@
     </h3>
     <h2>
       <ion-icon name="checkmark-circle" class="mark"></ion-icon>
-      {{view}}/{{done}} view
+      {{view}}/{{done}} {{ 'view' | translate}}
 
     </h2>
     <hr>
 
   </ion-card>
 
-  <h5>list of people watched your video</h5>
+  <h5>{{ 'list of people watched your video' | translate}}</h5>
   <div *ngFor="let user of viewers">
 
     <h4> {{user.displayName}}

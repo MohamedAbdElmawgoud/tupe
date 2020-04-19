@@ -20,7 +20,13 @@ export class CreateCompPage implements OnInit {
   showPoint: any;
 
   id: string;
-  // numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+  Views = [10, 50,  100,150, 200,250, 300,350, 400,450
+    , 500,550, 600,650, 700,750, 800,850, 900,950, 1000]
+    seconds= [45,
+      60,90,120,150,180,210,240,270,300,330,360,390,420,450,
+      480,510,540,570,600,900,1200,1500,1800,
+      2100,2400,2700,3000,3300,3600
+    ]
   likes = 10;
   Subscribe = 10;
   view = 10;
@@ -28,7 +34,7 @@ export class CreateCompPage implements OnInit {
   needed: number;
   ListOfUserDoneIt: string[];
   camping: camping;
-  sec = 10;
+  sec = 45;
   point = this.view * this.sec;
   video;
   videoId;
@@ -104,12 +110,7 @@ export class CreateCompPage implements OnInit {
   async  createComp() {
     if (this.status== true){
     if(this.user.point < this.point){
-      Swal.fire({
-        icon: 'error',
-        showConfirmButton: true,
-        //timer: 1500,
-        text : "You don't have enough points"
-      })
+      this.presentAlert("You don't have enough points")
       return
     }
       let user = await this.storage.get('User');
@@ -128,12 +129,10 @@ export class CreateCompPage implements OnInit {
         ownerId : user
       }
       this.UpdateUSerPoints(-this.point)
-      this.comp.createcamping(this.camping);
-      Swal.fire({
-        icon: 'success',
-        showConfirmButton: true,
-        //timer: 1500,
-      })
+      //this.comp.createcamping(this.camping);
+
+      this.presentAlert('Added success')
+      
       this.route.navigate([''])
     }
     else{
@@ -153,11 +152,12 @@ this.presentAlert('please play your video')
     },1000)
   }
   UpdateUSerPoints(points) {
+    console.log('updatePoint',points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
 
       let UserEdited = {
         ...e.docs[0].data(),
-        point: e.docs[0].data().point - points
+        point: e.docs[0].data().point + points
       }
       this.firebaseService.updateUser(UserEdited)
     });
