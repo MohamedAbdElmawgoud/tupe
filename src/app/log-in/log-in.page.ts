@@ -9,7 +9,7 @@ import {
   InAppBrowser,
   InAppBrowserOptions
 } from "@ionic-native/in-app-browser/ngx";
-@Component({
+@Component({ 
   selector: 'app-log-in',
   templateUrl: './log-in.page.html',
   styleUrls: ['./log-in.page.scss'],

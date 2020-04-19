@@ -8,20 +8,33 @@ export class StorageService {
 
   constructor(public storage: Storage) { }
 
-  saveVersionId(versionId) {
-      this.storage.set('version', versionId);
-     // console.log(versionId);
+  saveUserId(userId) {
+      this.storage.set('user', userId);
+     // console.log(userId);
 
   }
 
-  getVersionId() {
+  getUserId() {
    
-    return this.storage.get('version').then((versionId) => {
-     
-      return versionId;
-    });
+    return this.storage.get('User')
   }
-  deleteVersion(){
-    this.storage.remove('version');
+  deleteUser(){
+    this.storage.remove('user');
   }
+  saveVersionId(versionId) {
+    this.storage.set('version', versionId);
+   // console.log(versionId);
+
+}
+
+getVersionId() {
+ 
+  return this.storage.get('version').then((versionId) => {
+   
+    return versionId;
+  });
+}
+deleteVersion(){
+  this.storage.remove('version');
+}
 }

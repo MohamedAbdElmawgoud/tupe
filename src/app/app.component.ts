@@ -62,7 +62,7 @@ export class AppComponent {
     this.firebaseService.getVersion().subscribe(version =>{
       console.log('data', version.payload.data())
       
-        this.versionId.push(version.payload.data().numberOfVersion)
+        this.versionId.push(version.payload.data())
   
       console.log('version',this.versionId)
       this.storage.saveVersionId(this.versionId)
