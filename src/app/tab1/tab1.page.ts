@@ -74,7 +74,7 @@ export class Tab1Page {
             this.view.push(element.view)
             
               this.viewer.push(element.done)
-            this.done=element.done.length
+            this.done=element.done? element.done.length : 0
             
           this.createdDate.push(element.createdData) 
           this.compaign =true;   
@@ -94,20 +94,7 @@ export class Tab1Page {
     this.router.navigate(['details-campaign'] , {queryParams : { data: createdate.key } });
   }
   getUserId(){
-    // this.firebase.getCurrentUser().subscribe(user=>{
-    //   if(user==null){
-    //     console.log('go to logIn')
-    //      this.router.navigate(['log-in']);
-         
-    //    }
-    //    else{
-        
-    //      this.uid = user.uid
-    //     // console.log('sfdsfds',this.uid)
-    //    }
-    // //  console.log('uid ', this.uid)
-    //     //return user;
-    //   })
+
   }
   async createCompinge() {
     const alert = await this.alertController.create({
