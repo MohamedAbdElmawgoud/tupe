@@ -52,5 +52,8 @@
     "Add":"Add", 
     "video links":"video links",
     "Communicate":"Communicate",
-    "Account":"Account"
+    "Account":"Account",  
+     "Details Campaign":"Details Campaign",
+     "created Time":"created Time",
+     "list of people watched your video":"list of people watched your video"
 }

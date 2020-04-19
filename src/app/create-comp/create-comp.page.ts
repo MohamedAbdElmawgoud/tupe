@@ -110,12 +110,7 @@ export class CreateCompPage implements OnInit {
   async  createComp() {
     if (this.status== true){
     if(this.user.point < this.point){
-      Swal.fire({
-        icon: 'error',
-        showConfirmButton: true,
-        //timer: 1500,
-        text : "You don't have enough points"
-      })
+      this.presentAlert("You don't have enough points")
       return
     }
       let user = await this.storage.get('User');

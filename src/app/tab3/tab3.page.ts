@@ -166,12 +166,9 @@ export class Tab3Page {
       this.firebaseService.updateUser(UserEdited)
       this.showPoint = this.showPoint + points
       
-      Swal.fire({
-        icon: 'success',
-        showConfirmButton: true,
-        //timer: 1500,
-        text: "you have got " + points + " points"
-      })
+      this.presentAlert("you have got " + points + " points")
+      
+    
     });
 
 
