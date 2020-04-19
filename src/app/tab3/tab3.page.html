@@ -20,8 +20,8 @@
     suggestedQuality="medium"
    
     (change)="change($event)"
-    [height]="350"
-    [width]="350"
+    [height]="430"
+    [width]="390"
     [startSeconds]="0"
     (ready)="savePlayer($event)"
     > 
@@ -44,10 +44,15 @@
 </button>
 </div>
 
-<div *ngIf="noVideos" >
-<p>
-  sorry no video no please reload
-</p>
+<div *ngIf="noVideos" style="
+width: text-a;
+text-align: center;
+margin-top: 103px;
+" >
+  <p> {{ 'There is no channel' | translate}}</p>
+  <button  (click)="Reload()">
+    {{ 'Reloading' | translate}}
+  </button>
 </div>
 
 
