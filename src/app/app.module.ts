@@ -22,6 +22,7 @@ import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
 import { IonicStorageModule } from "@ionic/storage";
 import { DatePipe } from '@angular/common';
 import { config } from 'src/environments/environment';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
@@ -55,6 +56,7 @@ export  function  HttpLoaderFactory(http:  HttpClient) {
     DatePipe,
     SplashScreen,
     TranslateService,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [TranslateModule],    

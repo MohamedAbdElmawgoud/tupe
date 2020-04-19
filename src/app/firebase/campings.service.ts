@@ -32,7 +32,10 @@ export class CampingsService {
      
      return this.db.list(this.dbPath , query);
    }
-  
+   getNotification(){
+    return  this.db.list('notification').snapshotChanges()
+  }
+
    deleteAll(): Promise<void> {
      return this.campingsRef.remove();
    }
