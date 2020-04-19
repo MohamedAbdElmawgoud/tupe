@@ -127,6 +127,8 @@ export class AppComponent {
      this.profilePhoto = user.photoURL;
      this.displayName = user.displayName;
      this.email = user.email
+     this.points = user.points
+     console.log('point',this.points)
    }
     //return user;
   })
@@ -165,7 +167,8 @@ export class AppComponent {
     }
 logout(){
   this.firebaseService.logout();
-  window.location.reload()
+  window.location.reload();
+  
   
   
 }
