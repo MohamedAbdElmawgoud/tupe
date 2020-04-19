@@ -72,13 +72,14 @@ export class Tab3Page {
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
-this.getPoint()
+    this.getPoint()
   }
   startTime() {
     this.StartTimer();
 
   }
   async savePlayer($event) {
+    
     this.event = $event;
     if (!$event) {
       return
@@ -135,7 +136,7 @@ this.getPoint()
   showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-
+    
     if (video != undefined) {
       this.video = video;
 
@@ -144,10 +145,13 @@ this.getPoint()
 
       this.maxTime = +video.second;
       this.passedTIme = 0;
+      this.lastTime = 0;
+
+      this.savePlayer(this.event)
       ;
     } else {
-      window.location.reload();
-      // this.noVideos = true;
+      // window.location.reload();
+      this.noVideos = true;
     }
   }
 
@@ -160,6 +164,8 @@ this.getPoint()
       }
       e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
+      this.showPoint = this.showPoint + points
+      
       Swal.fire({
         icon: 'success',
         showConfirmButton: true,
