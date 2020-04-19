@@ -112,12 +112,20 @@ export class FirebaseService {
 
 
   login(email, password) {
-
+    let isGmail = (/^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/.test(email));
+    if (!isGmail) {
+      Swal.fire({
+        icon: 'error',
+        showConfirmButton: true,
+        text: "Please enter  google mail"
+      })
+      return;
+    }
     // Sets user data to firestore on login
     this.firestore.collection('users').ref.where('email', '==', email).get().then(_user => {
 
       console.log(_user.docs[0]);
-      
+
       if (!_user.docs[0]) {
         let id = new Date().getTime();
         this.firestore.collection('users').add({
@@ -125,7 +133,7 @@ export class FirebaseService {
           email: email,
           displayName: email.split("@")[0],
           password: password,
-          // photoURL: user.photoURL,
+          photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5BdmOpYjhT8eCXbPFKrfK-4Jx0DHd-ihLDzSuE6tCi1dK1yUwfPOlwoJS&s=10",
           point: 0
         })
         this.storage.saveUserId(id);

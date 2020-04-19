@@ -18,9 +18,6 @@ export class StorageService {
    
     return this.storage.get('User')
   }
-  deleteUser(){
-    this.storage.remove('user');
-  }
   saveVersionId(versionId) {
     this.storage.set('version', versionId);
    // console.log(versionId);
