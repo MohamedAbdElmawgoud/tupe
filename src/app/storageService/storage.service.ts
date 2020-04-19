@@ -8,11 +8,7 @@ export class StorageService {
 
   constructor(public storage: Storage) { }
 
-  saveVersionId(versionId) {
-      this.storage.set('version', versionId);
-     // console.log(versionId);
 
-  }
 
   getUserId() {
    
@@ -22,6 +18,9 @@ export class StorageService {
 
   saveUserId(versionId) {
     this.storage.set('User', versionId);
+  }
+  saveVersionId(versionId) {
+    this.storage.set('version', versionId);
    // console.log(versionId);
 
 }
@@ -33,7 +32,7 @@ getVersionId() {
     return versionId;
   });
 }
-  deleteVersion(){
-    this.storage.remove('version');
-  }
+deleteVersion(){
+  this.storage.remove('version');
+}
 }
