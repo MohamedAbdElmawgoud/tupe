@@ -30,6 +30,7 @@ export class Tab3Page {
   video;
   noVideos = false;
   user;
+  showPoint;
   play(player) {
 
     this.player = player;
@@ -157,6 +158,7 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
+      this.showPoint =e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
       Swal.fire({
         icon: 'success',

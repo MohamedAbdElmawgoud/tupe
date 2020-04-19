@@ -110,23 +110,25 @@ export class AppComponent {
     });
     toast.present();
   }
-  getUser() {
-
-    this.storage.getUserId().then(user => {
-      console.log(!user, user, 'user');
-
-      if (!user) {
-        console.log('go to logIn')
-        this.router.navigate(['log-in']);
-
-      }
-      else {
-        this.profilePhoto = user.photoURL;
-        this.displayName = user.displayName;
-        this.email = user.email
-      }
-      //return user;
-    })
+   getUser(){
+     
+ this.storage.getUserId().then(user=>{
+   console.log(!user , user , 'user');
+   
+  if(!user){
+    console.log('go to logIn')
+     this.router.navigate(['log-in']);
+     
+   }
+   else{
+     this.profilePhoto = user.photoURL;
+     this.displayName = user.displayName;
+     this.email = user.email
+     this.points = user.points
+     console.log('point',this.points)
+   }
+    //return user;
+  })
   }
 
 
