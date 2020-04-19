@@ -60,9 +60,8 @@ export class AppComponent {
    ngOnInit(){
     
     this.firebaseService.getVersion().subscribe(version =>{
-      console.log('data', version.payload.data())
       
-        this.versionId.push(version.payload.data().numberOfVersion)
+        this.versionId.push((<any>version.payload.data()).numberOfVersion)
   
       console.log('version',this.versionId)
       this.storage.saveVersionId(this.versionId)

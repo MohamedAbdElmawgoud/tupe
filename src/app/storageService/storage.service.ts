@@ -16,12 +16,12 @@ export class StorageService {
 
   getUserId() {
    
-    return this.storage.get('version')
+    return this.storage.get('User')
   }
 
 
   saveUserId(versionId) {
-    this.storage.set('version', versionId);
+    this.storage.set('User', versionId);
    // console.log(versionId);
 
 }
