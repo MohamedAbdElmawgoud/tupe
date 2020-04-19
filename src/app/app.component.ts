@@ -9,6 +9,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as firebase from 'firebase';
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { ToastController } from '@ionic/angular';
+import { StorageService } from "src/app/storageService/storage.service";
 
 
 @Component({
@@ -18,6 +19,7 @@ import { ToastController } from '@ionic/angular';
 })
 
 export class AppComponent {
+  versionId=[];
   points: number;
   email: string;
   displayName: string;
@@ -34,7 +36,8 @@ export class AppComponent {
     public router : Router,
     private firebaseService:FirebaseService,
     public toastController: ToastController,    
-    private menu: MenuController
+    private menu: MenuController,
+    private storage: StorageService,
     
   ) {
     this.initializeApp();
@@ -56,7 +59,14 @@ export class AppComponent {
   }
    ngOnInit(){
     
-   
+    this.firebaseService.getVersion().subscribe(version =>{
+      console.log('data', version.payload.data())
+      
+        this.versionId.push(version.payload.data().numberOfVersion)
+  
+      console.log('version',this.versionId)
+      this.storage.saveVersionId(this.versionId)
+    })
       this.getUser();
       // this.firebaseService.getDataOfUser()
   }
