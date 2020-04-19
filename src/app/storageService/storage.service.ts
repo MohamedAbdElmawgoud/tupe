@@ -8,15 +8,16 @@ export class StorageService {
 
   constructor(public storage: Storage) { }
 
-  saveUserId(userId) {
-      this.storage.set('user', userId);
-     // console.log(userId);
 
-  }
 
   getUserId() {
    
     return this.storage.get('User')
+  }
+
+
+  saveUserId(versionId) {
+    this.storage.set('User', versionId);
   }
   saveVersionId(versionId) {
     this.storage.set('version', versionId);

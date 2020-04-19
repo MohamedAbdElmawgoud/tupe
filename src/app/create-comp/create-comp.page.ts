@@ -30,20 +30,28 @@ export class CreateCompPage implements OnInit {
   point = this.view * this.sec;
   video;
   videoId;
+  userTotalPoint;
+  user;
   constructor(private firebaseService: FirebaseService,
     private datePipe: DatePipe,
     private comp: CampingsService,
     private router: ActivatedRoute,
-    private storage : Storage
+    private storage : Storage,
+    private firebase: FirebaseService,
   ) { }
 
-  ngOnInit() {
+ async ngOnInit() {
     this.router.queryParamMap.subscribe(res => {
       this.type = res.get('type');
     })
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
+    let user = await this.storage.get('User');
+
+    this.user =( await this.firebaseService.getDataOfUser(user)).docs[0].data()
+    console.log(this.user);
+    
   }
   getVideo(video) {
     this.video = video.el.value;
@@ -80,6 +88,16 @@ export class CreateCompPage implements OnInit {
     //  console.log('selecte is ', event.target.value)
   }
   async  createComp() {
+    
+    if(this.user.point < this.point){
+      Swal.fire({
+        icon: 'error',
+        showConfirmButton: true,
+        //timer: 1500,
+        text : "You don't have enough points"
+      })
+      return
+    }
       let user = await this.storage.get('User');
 
       this.camping = {
@@ -95,7 +113,7 @@ export class CreateCompPage implements OnInit {
         createdData: Date.now(),
         ownerId : user
       }
-      
+      this.UpdateUSerPoints(-this.point)
       this.comp.createcamping(this.camping);
       Swal.fire({
         icon: 'success',
@@ -104,6 +122,17 @@ export class CreateCompPage implements OnInit {
       })
 
 
+
+  }
+  UpdateUSerPoints(points) {
+    let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
+
+      let UserEdited = {
+        ...e.docs[0].data(),
+        point: e.docs[0].data().point - points
+      }
+      this.firebaseService.updateUser(UserEdited)
+    });
 
   }
 
