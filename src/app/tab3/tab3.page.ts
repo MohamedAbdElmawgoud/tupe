@@ -12,6 +12,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  point: any;
   needed = 15;
   event: any;
   lengthOfArrayOfVideo = -1;
@@ -164,9 +165,12 @@ export class Tab3Page {
       }
       e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      this.showPoint = this.showPoint + points
       
+      this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
+     this.ionViewCanLeave(this.showPoint)
+     // this.ionViewWillLeave(this.showPoint)
+    
       
     
     });
@@ -174,6 +178,14 @@ export class Tab3Page {
 
 
   }
+  ionViewCanLeave(point){
+     this.point =point
+     this.ngOnInit()
+  }
+  // ionViewWillLeave(point)
+  // {
+  //   this.showPoint = point
+  // }
 getPoint(){
   this.firebaseService.getDataOfUser(this.user).then(point =>{
     this.showPoint = point.docs[0].data().point
