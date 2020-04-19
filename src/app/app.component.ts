@@ -11,6 +11,7 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 import { ToastController } from '@ionic/angular';
 import { StorageService } from './storageService/storage.service';
 
+// import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,7 @@ export class AppComponent {
     public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
+    // private fcm: FCM
 
   ) {
     this.initializeApp();
@@ -56,6 +58,7 @@ export class AppComponent {
   }
   async ngOnInit() {
     let id
+
     await this.firebaseService.getVersion().subscribe(version => {
       this.versionId = (<any>version.payload.data()).numberOfVersion
       this.versionId.forEach(element => {
@@ -93,15 +96,15 @@ export class AppComponent {
   }
 
   private notificationSetup() {
-    this.firebaseService.getToken();
-    this.firebaseService.onNotifications().subscribe(
-      (msg) => {
-        if (this.platform.is('ios')) {
-          this.presentToast(msg.aps.alert);
-        } else {
-          this.presentToast(msg.body);
-        }
-      });
+    // this.firebaseService.getToken();
+    // this.firebaseService.onNotifications().subscribe(
+    //   (msg) => {
+    //     if (this.platform.is('ios')) {
+    //       this.presentToast(msg.aps.alert);
+    //     } else {
+    //       this.presentToast(msg.body);
+    //     }
+    //   });
   }
   async presentToast(message) {
     const toast = await this.toastController.create({

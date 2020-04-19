@@ -7,6 +7,17 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="BackgroundMode">
+    <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode"/>
+  </feature>
+  <feature name="BackgroundModeExt">
+    <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundModeExt"/>
+  </feature>
+
+  <feature name="Badge">
+    <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge"/>
+  </feature>
+
   <feature name="GooglePlus">
     <param name="android-package" value="nl.xservices.plugins.GooglePlus"/>
     <param name="onload" value="true"/>
@@ -14,6 +25,10 @@
 
   <feature name="InAppBrowser">
     <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+  </feature>
+
+  <feature name="LocalNotification">
+    <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification"/>
   </feature>
 
   <feature name="Device">

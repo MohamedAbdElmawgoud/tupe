@@ -9,7 +9,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { switchMap, flatMap } from 'rxjs/operators';
 import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
-import { Firebase } from "@ionic-native/firebase/ngx";
+// import { Firebase } from "@ionic-native/firebase/ngx";
 import { Platform } from '@ionic/angular';
 import Swal from 'sweetalert2'
 
@@ -27,7 +27,7 @@ export class FirebaseService {
   docs = [];
   constructor(
     private platform: Platform,
-    private FireBase: Firebase,
+    // private FireBase: Firebase,
     public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -51,14 +51,14 @@ export class FirebaseService {
   async getToken() {
     let token;
 
-    if (this.platform.is('android')) {
-      token = await this.FireBase.getToken();
-    }
+    // if (this.platform.is('android')) {
+    //   token = await this.FireBase.getToken();
+    // }
 
-    if (this.platform.is('ios')) {
-      token = await this.FireBase.getToken();
-      await this.FireBase.grantPermission();
-    }
+    // if (this.platform.is('ios')) {
+    //   token = await this.FireBase.getToken();
+    //   await this.FireBase.grantPermission();
+    // }
 
     this.saveToken(token);
   }
@@ -76,7 +76,7 @@ export class FirebaseService {
   }
 
   onNotifications() {
-    return this.FireBase.onNotificationOpen();
+    // return this.FireBase.onNotificationOpen();
   }
 
   async googleSignin() {
