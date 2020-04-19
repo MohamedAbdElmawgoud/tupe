@@ -168,17 +168,4 @@ export class AppComponent {
 
 
   }
-<<<<<<< HEAD
-  Translate(type: string){
-      this.translate.use(type);// ar or en    
-    }
-logout(){
-  this.firebaseService.logout();
-  window.location.reload();
-  
-  
-  
-}
-=======
->>>>>>> cbbb3828cb8b7e44790b470eca552ddc4920fd76
 }
