@@ -98,7 +98,11 @@
       "cordova-plugin-admob-free": {
         "ADMOB_APP_ID": "ca-app-pub-7175438051295681~5749530563"
       },
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-googleplus": {
+        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.111084768406-139tc1h1f78fgtikqjjl84vc2e2gbjog",
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.111084768406-139tc1h1f78fgtikqjjl84vc2e2gbjog"
+      }
     },
     "platforms": []
   }

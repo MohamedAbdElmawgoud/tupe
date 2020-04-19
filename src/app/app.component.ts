@@ -9,6 +9,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as firebase from 'firebase';
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { ToastController } from '@ionic/angular';
+import { StorageService } from './storageService/storage.service';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class AppComponent {
     public router : Router,
     private firebaseService:FirebaseService,
     public toastController: ToastController,    
-    private menu: MenuController
+    private menu: MenuController,
+    private storage: StorageService,
     
   ) {
     this.initializeApp();
@@ -90,8 +92,10 @@ export class AppComponent {
   }
    getUser(){
      
- this.firebaseService.getCurrentUser().subscribe(user=>{
-  if(user==null){
+ this.storage.getUserId().then(user=>{
+   console.log(!user , user , 'user');
+   
+  if(!user){
     console.log('go to logIn')
      this.router.navigate(['log-in']);
      
@@ -100,9 +104,7 @@ export class AppComponent {
      this.profilePhoto = user.photoURL;
      this.displayName = user.displayName;
      this.email = user.email
-     console.log('not going to logIn')
    }
-  console.log('user before update ', user)
     //return user;
   })
   }

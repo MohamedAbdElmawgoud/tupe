@@ -4,10 +4,19 @@
   <div>
     <img src="assets/icon/fog.png">
     <h1> FogMine-get subscribers, views and likes</h1>
+
+    <div padding>
+      <ion-item>
+        <ion-input name="email" type="email" placeholder="your@email.com" #email required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input name="password" type="password" placeholder="Password" #password required></ion-input>
+      </ion-item>
+    </div>
   </div>
     <button
    
-    (click)="login()"
+    (click)="googleSignin(email , password)"
     *ngIf="!userProfile"
   >
   {{userProfile | json}}

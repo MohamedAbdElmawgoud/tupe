@@ -11,6 +11,7 @@ import { User } from "src/app/firebase/user.module";
 import { StorageService } from "src/app/storageService/storage.service";
 import { Firebase } from "@ionic-native/firebase/ngx";
 import { Platform } from '@ionic/angular';
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class FirebaseService {
   docs = [];
   constructor(
     private platform: Platform,
-    private FireBase :Firebase,
+    private FireBase: Firebase,
     public googlePlus: GooglePlus,
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -80,43 +81,83 @@ export class FirebaseService {
 
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const credential = await this.afAuth.signInWithPopup(provider);
+    // const credential = await this.afAuth.signInWithEmailAndPassword();
 
-    return this.updateUserData(credential.user);
+    // return this.updateUserData(credential.user);
   }
 
   updateUserData(user) {
 
     // Sets user data to firestore on login
-    this.firestore.collection('users').ref.where('uid' , '==' , user.uid).get().then(_user => {
-        
+    this.firestore.collection('users').ref.where('uid', '==', user.uid).get().then(_user => {
 
-        if (!_user.docs[0]) {
-          this.firestore.collection('users').add({
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            point: 0
-          })
-        } else {
- 
-        }
 
-      })
+      if (!_user.docs[0]) {
+        this.firestore.collection('users').add({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          point: 0
+        })
+      } else {
+
+      }
+
+    })
 
     this.storage.saveUserId(user.uid);
 
   }
 
-  updateUser(user){
-    
-    this.firestore.collection('users')
-    .ref.where('uid' , '==' , user.uid).get().then(ele=>{
-      ele.docs[0].ref.update({
-        ...user
-      })
+
+  login(email, password) {
+
+    // Sets user data to firestore on login
+    this.firestore.collection('users').ref.where('email', '==', email).get().then(_user => {
+
+      console.log(_user.docs[0]);
+      
+      if (!_user.docs[0]) {
+        let id = new Date().getTime();
+        this.firestore.collection('users').add({
+          uid: id,
+          email: email,
+          displayName: email.split("@")[0],
+          password: password,
+          // photoURL: user.photoURL,
+          point: 0
+        })
+        this.storage.saveUserId(id);
+        this.router.navigate(['']);
+
+      } else {
+        if (_user.docs[0].data().password == password) {
+          this.storage.saveUserId(_user.docs[0].data().uid);
+          this.router.navigate(['']);
+
+        } else {
+          Swal.fire({
+            icon: 'error',
+            showConfirmButton: true,
+            text: "password is wrong"
+          })
+        }
+      }
+
     })
+
+
+  }
+
+  updateUser(user) {
+
+    this.firestore.collection('users')
+      .ref.where('uid', '==', user.uid).get().then(ele => {
+        ele.docs[0].ref.update({
+          ...user
+        })
+      })
   }
 
 
@@ -129,9 +170,9 @@ export class FirebaseService {
     return this.afAuth.authState
   }
 
- async getDataOfUser(id) {
+  async getDataOfUser(id) {
     return this.firestore.collection('users')
-    .ref.where('uid' , '==' , id).get()
+      .ref.where('uid', '==', id).get()
   }
   UserId() {
     this.getCurrentUser().subscribe(user => {

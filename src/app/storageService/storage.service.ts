@@ -16,10 +16,7 @@ export class StorageService {
 
   getUserId() {
    
-    return this.storage.get('User').then((userId) => {
-     
-      return userId;
-    });
+    return this.storage.get('User')
   }
   deleteUser(){
     this.storage.remove('User');

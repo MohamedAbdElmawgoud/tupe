@@ -26,34 +26,39 @@ export class LogInPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const browser = this.iab.create('https://fogtube.store/login.html', "_blank", {
-      // zoom: "no",
-      // location: "no",
-      // toolbar: "no"
-    });
-    browser.on("loadstart").subscribe(e => {
-      if (e.url.indexOf("#") > -1) {
-        let url = e.url;
-        let [
-          uid , displayName , email ,photoURL
-        ] = url.split('#')[1].split('*');
-        console.log(   uid , displayName , email ,photoURL);
+    // const browser = this.iab.create('https://fogtube.store/login.html', "_blank", {
+    //   // zoom: "no",
+    //   // location: "no",
+    //   // toolbar: "no"
+    // });
+    // browser.on("loadstart").subscribe(e => {
+    //   if (e.url.indexOf("#") > -1) {
+    //     let url = e.url;
+    //     let [
+    //       uid , displayName , email ,photoURL
+    //     ] = url.split('#')[1].split('*');
+    //     console.log(   uid , displayName , email ,photoURL);
         
-        browser.close();
-      }
-    })
+    //     browser.close();
+    //   }
+    // })
 
   }
-  async googleSignin() {
-    await this.firebase.googleSignin();
-    this.router.navigate(['']);
+  googleSignin(email , password){
+    console.log();
+    this.firebase.login(email.el.value , password.el.value)
+    
   }
+  // async googleSignin() {
+  //   await this.firebase.googleSignin();
+  //   this.router.navigate(['']);
+  // }
 
   async login() {
     let params;
     if (this.platform.is('android')) {
       params = {
-        'webClientId': '111084768406-trr9hg5hivarm6mu7v44sc6cd0efaio6.apps.googleusercontent.com',
+        'webClientId': '111084768406-139tc1h1f78fgtikqjjl84vc2e2gbjog.apps.googleusercontent.com',
         'offline': true
       }
     }

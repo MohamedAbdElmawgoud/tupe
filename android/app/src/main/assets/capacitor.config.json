@@ -1,6 +1,6 @@
 {
   "appId": "fog.tube.app",
-  "appName": "youtube",
+  "appName": "Fog Tube",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

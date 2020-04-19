@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import {  TranslateLoader, TranslateService } from  '@ngx-translate/core';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { map } from "rxjs/operators";
+import { StorageService } from '../storageService/storage.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class Tab1Page {
     private translate:TranslateService,
     private campingsService: CampingsService,
     public alertController: AlertController ,
+    private storage: StorageService,
     public router: Router) {
   
   }
@@ -51,15 +53,15 @@ export class Tab1Page {
   
   getCompinge(){
     let done =0;
-    this.firebase.getCurrentUser().subscribe(user=>{
-      if(user==null){
+    this.storage.getUserId().then(user=>{
+      if(!user){
         console.log('go to logIn')
          this.router.navigate(['log-in']);
        }
        else{   
          let compaign= this.campingsService.getcampingsList((res => 
           res.orderByChild('ownerId')
-          .equalTo(user.uid))).snapshotChanges().pipe(
+          .equalTo(user))).snapshotChanges().pipe(
             map((changes: Array<any>) =>
               changes.map(c =>
                 ({ key: c.payload.key, ...c.payload.val() })
@@ -92,20 +94,20 @@ export class Tab1Page {
     this.router.navigate(['details-campaign'] , {queryParams : { data: createdate.key } });
   }
   getUserId(){
-    this.firebase.getCurrentUser().subscribe(user=>{
-      if(user==null){
-        console.log('go to logIn')
-         this.router.navigate(['log-in']);
+    // this.firebase.getCurrentUser().subscribe(user=>{
+    //   if(user==null){
+    //     console.log('go to logIn')
+    //      this.router.navigate(['log-in']);
          
-       }
-       else{
+    //    }
+    //    else{
         
-         this.uid = user.uid
-        // console.log('sfdsfds',this.uid)
-       }
-    //  console.log('uid ', this.uid)
-        //return user;
-      })
+    //      this.uid = user.uid
+    //     // console.log('sfdsfds',this.uid)
+    //    }
+    // //  console.log('uid ', this.uid)
+    //     //return user;
+    //   })
   }
   async createCompinge() {
     const alert = await this.alertController.create({
