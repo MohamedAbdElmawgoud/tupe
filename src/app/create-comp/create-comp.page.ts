@@ -129,7 +129,7 @@ export class CreateCompPage implements OnInit {
         ownerId : user
       }
       this.UpdateUSerPoints(-this.point)
-      this.comp.createcamping(this.camping);
+      //this.comp.createcamping(this.camping);
 
       this.presentAlert('Added success')
       
@@ -152,11 +152,12 @@ this.presentAlert('please play your video')
     },1000)
   }
   UpdateUSerPoints(points) {
+    console.log('updatePoint',points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
 
       let UserEdited = {
         ...e.docs[0].data(),
-        point: e.docs[0].data().point - points
+        point: e.docs[0].data().point + points
       }
       this.firebaseService.updateUser(UserEdited)
     });
