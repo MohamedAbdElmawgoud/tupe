@@ -135,11 +135,9 @@ export class CreateCompPage implements OnInit {
       }
       this.UpdateUSerPoints(-this.point)
       this.comp.createcamping(this.camping);
-      Swal.fire({
-        icon: 'success',
-        showConfirmButton: true,
-        //timer: 1500,
-      })
+
+      this.presentAlert('Added success')
+      
       this.route.navigate([''])
     }
     else{
