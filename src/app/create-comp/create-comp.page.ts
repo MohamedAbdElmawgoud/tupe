@@ -129,7 +129,7 @@ export class CreateCompPage implements OnInit {
         ownerId : user
       }
       this.UpdateUSerPoints(-this.point)
-      //this.comp.createcamping(this.camping);
+      this.comp.createcamping(this.camping);
 
       this.presentAlert('Added success')
       

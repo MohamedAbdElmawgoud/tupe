@@ -81,11 +81,11 @@ export class Tab1Page {
         
           comp.forEach(element => {
             this.compaignValue.push(element)
-            this.view.push(element.view)
+            //this.view.push(element.view)
             
               this.viewer.push(element.done)
             this.done=element.done? element.done.length : 0
-            
+            this.view.push(this.done);
           this.createdDate.push(element.createdData) 
           this.compaign =true;   
           });
