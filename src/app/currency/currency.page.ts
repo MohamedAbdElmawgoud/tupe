@@ -2,20 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 import { FirebaseService } from '../firebase/firebase.service';
-
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-currency',
   templateUrl: './currency.page.html',
   styleUrls: ['./currency.page.scss'],
 })
 export class CurrencyPage implements OnInit {
+  user: any;
+  showPoint: any;
 
   constructor(public router: Router,
     private admobFree: AdMobFree,
+    private storage: Storage    ,    
     private firebaseService: FirebaseService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.user = await this.storage.get('User');
+    this.getPoint()
     const bannerConfig: AdMobFreeBannerConfig = {
       // add your config here
       // for the sake of this example we will just use the test config
@@ -32,6 +38,15 @@ export class CurrencyPage implements OnInit {
        })
        .catch(e => console.log(e));
   }
+
+  getPoint(){
+    this.firebaseService.getDataOfUser(this.user).then(point =>{
+      this.showPoint = point.docs[0].data().point
+    })
+    return this.showPoint
+  }
+
+
   share() {
     this.router.navigate(['invite-friends']);
   }

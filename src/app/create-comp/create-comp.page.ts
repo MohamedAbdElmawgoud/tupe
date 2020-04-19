@@ -16,6 +16,7 @@ import { Storage } from '@ionic/storage';
 })
 
 export class CreateCompPage implements OnInit {
+  showPoint: any;
 
   id: string;
   // numberOfSubscribers = [10, 20, 30, 40, 50, 60, 70, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
@@ -41,6 +42,7 @@ export class CreateCompPage implements OnInit {
   ) { }
 
  async ngOnInit() {
+  this.getPoint()
     this.router.queryParamMap.subscribe(res => {
       this.type = res.get('type');
     })
@@ -53,6 +55,14 @@ export class CreateCompPage implements OnInit {
     console.log(this.user);
     
   }
+
+  getPoint(){
+    this.firebaseService.getDataOfUser(this.user).then(point =>{
+      this.showPoint = point.docs[0].data().point
+    })
+    return this.showPoint
+  }
+
   getVideo(video) {
     this.video = video.el.value;
 

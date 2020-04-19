@@ -15,7 +15,9 @@ import { StorageService } from '../storageService/storage.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  view= [];
+  showPoint: any;
+  user: any;
+  view = [];
   viewer = [];
   done=0;
   createdDate = [];
@@ -36,9 +38,10 @@ export class Tab1Page {
     public router: Router) {
   
   }
-  ngOnInit(){
+ async ngOnInit(){
     
-   
+    this.user = await this.storage.get('User');
+    this.getPoint()
     // this.firebase.getDataOfUser().subscribe(e=>{
     //   this.points = e.point;
     //   console.log('ee',this.points);
@@ -46,6 +49,13 @@ export class Tab1Page {
       this.getUserId()
      
       this.getCompinge()
+  }
+
+  getPoint(){
+    this.firebase.getDataOfUser(this.user).then(point =>{
+      this.showPoint = point.docs[0].data().point
+    })
+    return this.showPoint
   }
    googleSignin() {
     this.firebase.googleSignin();

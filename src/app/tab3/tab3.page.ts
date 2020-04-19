@@ -72,7 +72,7 @@ export class Tab3Page {
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
-
+this.getPoint()
   }
   startTime() {
     this.StartTimer();
@@ -157,7 +157,7 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      this.showPoint =e.docs[0].data().point + points;
+      e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
       Swal.fire({
         icon: 'success',
@@ -170,7 +170,12 @@ export class Tab3Page {
 
 
   }
-
+getPoint(){
+  this.firebaseService.getDataOfUser(this.user).then(point =>{
+    this.showPoint = point.docs[0].data().point
+  })
+  return this.showPoint
+}
   async updateCamping(video) {
 
     video.done = video.done ? video.done : [];
