@@ -3,6 +3,7 @@ import { map } from "rxjs/operators";
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { Storage } from '@ionic/storage';
+import Swal from 'sweetalert2'
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -77,7 +78,7 @@ export class Tab3Page {
     this.StartTimer();
 
   }
-  savePlayer($event) {
+  async savePlayer($event) {
     this.event = $event;
     if (!$event) {
       return
@@ -92,10 +93,12 @@ export class Tab3Page {
       if ((this.maxTime - this.passedTIme) <= 0) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
-        // this.showMore()
+        // window.location.reload()
 
         clearInterval(this.interval);
-        this.presentAlert('Point Added')
+
+        await this.ngOnInit()
+
       }
 
     }, 1000)
@@ -113,14 +116,15 @@ export class Tab3Page {
       )
     ).subscribe(camping => {
       // this.camping = camping;
+      
       this.videoUrls = camping.filter(ele => {
+        
         if (!ele.done)
           return ele
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return false
       })
-      
       this.showMore()
     });
 
@@ -131,8 +135,7 @@ export class Tab3Page {
   showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-    console.log(video , this.noVideos);
-    
+
     if (video != undefined) {
       this.video = video;
 
@@ -143,7 +146,7 @@ export class Tab3Page {
       ;
     } else {
       window.location.reload();
-     // this.noVideos = true;
+      // this.noVideos = true;
     }
   }
 
@@ -156,7 +159,15 @@ export class Tab3Page {
       }
       this.showPoint =e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
+      Swal.fire({
+        icon: 'success',
+        showConfirmButton: true,
+        //timer: 1500,
+        text: "you have got " + points + " points"
+      })
     });
+
+
 
   }
 

@@ -19,7 +19,7 @@ import { StorageService } from './storageService/storage.service';
 })
 
 export class AppComponent {
-  versionId=[];
+  versionId;
   points: number;
   email: string;
   displayName: string;
@@ -28,70 +28,67 @@ export class AppComponent {
   textDir: string;
   user;
   constructor(
-    
+
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public translate:  TranslateService,    
-    public router : Router,
-    private firebaseService:FirebaseService,
-    public toastController: ToastController,    
+    public translate: TranslateService,
+    public router: Router,
+    private firebaseService: FirebaseService,
+    public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
-    
+
   ) {
     this.initializeApp();
     //firebase.initializeApp(config);    
-    this.currentLanguage  =  localStorage.getItem('lng') || 'en'
+    this.currentLanguage = localStorage.getItem('lng') || 'en'
     this.Translate(this.currentLanguage);
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) =>
-    {
-      if(event.lang == 'ar')
-      {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (event.lang == 'ar') {
         this.textDir = 'rtl';
       }
-      else
-      {
+      else {
         this.textDir = 'ltr';
       }
     });
-  
+
   }
-  async ngOnInit(){
+  async ngOnInit() {
     let id
- await   this.firebaseService.getVersion().subscribe(version =>{
-      this.versionId=version.payload.data().numberOfVersion
+    await this.firebaseService.getVersion().subscribe(version => {
+      this.versionId = (<any>version.payload.data()).numberOfVersion
       this.versionId.forEach(element => {
-        id =element
+        id = element
       });
-       console.log('version',id)
-    if (this.storage.getVersionId()==null){
-      
-      
-      this.storage.saveVersionId(id)
-    }
-    else {
-      this.versionId = this.storage.getVersionId()
-      console.log('storage', this.versionId)
-      if (id ==this.versionId){
-        console.log('version dont Need to update')
+      console.log('version', id)
+      if (this.storage.getVersionId() == null) {
+
+
+        this.storage.saveVersionId(id)
       }
-      else{
-        console.log('version Need to update')
+      else {
+        this.versionId = this.storage.getVersionId()
+        console.log('storage', this.versionId)
+        if (id == this.versionId) {
+          console.log('version dont Need to update')
+        }
+        else {
+          console.log('version Need to update')
+        }
       }
-    }
 
     })
-      this.getUser();
-      // this.firebaseService.getDataOfUser()
+    this.getUser();
+    // this.firebaseService.getDataOfUser()
   }
-  
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.notificationSetup();
-      
+
     });
   }
 
@@ -106,7 +103,7 @@ export class AppComponent {
         }
       });
   }
- async presentToast(message) {
+  async presentToast(message) {
     const toast = await this.toastController.create({
       message,
       duration: 3000
@@ -136,32 +133,42 @@ export class AppComponent {
 
 
 
-  goToinviteFreind(){
+  goToinviteFreind() {
     this.menu.close();
     this.router.navigate(['invite-friends']);
   }
-  goTofaq(){
+  goTofaq() {
     this.menu.close();
     this.router.navigate(['faq']);
   }
-  goTomessage(){
+  goTomessage() {
     this.menu.close();
     this.router.navigate(['message']);
-    
+
   }
-  goToVip(){
+  goToVip() {
     this.menu.close();
     this.router.navigate(['vip-account']);
   }
 
 
-  changeLng(type){
+  changeLng(type) {
     this.translate.use(type);// ar or en
     this.menu.close();
-    
-    this.currentLanguage =type;
-    localStorage.setItem('lng' ,type)
+
+    this.currentLanguage = type;
+    localStorage.setItem('lng', type)
   }
+  Translate(type: string) {
+    this.translate.use(type);// ar or en    
+  }
+  logout() {
+    this.firebaseService.logout();
+    window.location.reload()
+
+
+  }
+<<<<<<< HEAD
   Translate(type: string){
       this.translate.use(type);// ar or en    
     }
@@ -172,4 +179,6 @@ logout(){
   
   
 }
+=======
+>>>>>>> cbbb3828cb8b7e44790b470eca552ddc4920fd76
 }
