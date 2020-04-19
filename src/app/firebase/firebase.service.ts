@@ -187,9 +187,13 @@ export class FirebaseService {
       //console.log('id is ', user.uid)
       return user.uid
     })
+
+    
   }
 
-
+  getVersion(){
+    return  this.firestore.collection('version').doc('1').snapshotChanges()
+  }
 
 
 }

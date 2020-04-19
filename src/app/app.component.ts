@@ -19,6 +19,7 @@ import { StorageService } from './storageService/storage.service';
 })
 
 export class AppComponent {
+  versionId=[];
   points: number;
   email: string;
   displayName: string;
@@ -58,7 +59,14 @@ export class AppComponent {
   }
    ngOnInit(){
     
-   
+    this.firebaseService.getVersion().subscribe(version =>{
+      console.log('data', version.payload.data())
+      
+        this.versionId.push(version.payload.data().numberOfVersion)
+  
+      console.log('version',this.versionId)
+      this.storage.saveVersionId(this.versionId)
+    })
       this.getUser();
       // this.firebaseService.getDataOfUser()
   }
