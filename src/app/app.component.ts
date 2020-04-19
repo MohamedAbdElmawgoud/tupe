@@ -57,15 +57,30 @@ export class AppComponent {
     });
   
   }
-   ngOnInit(){
-    
-    this.firebaseService.getVersion().subscribe(version =>{
-      console.log('data', version.payload.data())
+  async ngOnInit(){
+    let id
+ await   this.firebaseService.getVersion().subscribe(version =>{
+      this.versionId=version.payload.data().numberOfVersion
+      this.versionId.forEach(element => {
+        id =element
+      });
+       console.log('version',id)
+    if (this.storage.getVersionId()==null){
       
-        this.versionId.push(version.payload.data())
-  
-      console.log('version',this.versionId)
-      this.storage.saveVersionId(this.versionId)
+      
+      this.storage.saveVersionId(id)
+    }
+    else {
+      this.versionId = this.storage.getVersionId()
+      console.log('storage', this.versionId)
+      if (id ==this.versionId){
+        console.log('version dont Need to update')
+      }
+      else{
+        console.log('version Need to update')
+      }
+    }
+
     })
       this.getUser();
       // this.firebaseService.getDataOfUser()

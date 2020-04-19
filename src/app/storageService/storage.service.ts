@@ -26,10 +26,12 @@ export class StorageService {
 
 getVersionId() {
  
-  return this.storage.get('version').then((versionId) => {
+  return this.storage.get('version')
+  
+  // .then((versionId) => {
    
-    return versionId;
-  });
+  //   return versionId;
+  // });
 }
 deleteVersion(){
   this.storage.remove('version');
