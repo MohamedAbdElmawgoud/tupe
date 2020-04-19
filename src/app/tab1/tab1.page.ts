@@ -40,7 +40,7 @@ export class Tab1Page {
   }
  async ngOnInit(){
     
-    this.user = await this.storage.get('User');
+    this.user = await this.storage.getUserId();
     this.getPoint()
     // this.firebase.getDataOfUser().subscribe(e=>{
     //   this.points = e.point;

@@ -5,7 +5,7 @@ import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
@@ -41,6 +41,7 @@ export class CreateCompPage implements OnInit {
     private comp: CampingsService,
     private router: ActivatedRoute,
     private storage : Storage,
+    private route : Router,
     private firebase: FirebaseService,
   ) { }
 
@@ -133,7 +134,7 @@ export class CreateCompPage implements OnInit {
         showConfirmButton: true,
         //timer: 1500,
       })
-
+      this.route.navigate([''])
     }
     else{
 this.presentAlert('please play your video')
