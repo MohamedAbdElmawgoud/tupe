@@ -8,8 +8,8 @@ import { Router } from "@angular/router";
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as firebase from 'firebase';
 import { FirebaseService } from "src/app/firebase/firebase.service";
+import { ToastController } from '@ionic/angular';
 
- 
 
 @Component({
   selector: 'app-root',
@@ -26,12 +26,14 @@ export class AppComponent {
   textDir: string;
   user;
   constructor(
+    
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public translate:  TranslateService,    
     public router : Router,
     private firebaseService:FirebaseService,
+    public toastController: ToastController,    
     private menu: MenuController
     
   ) {
@@ -63,9 +65,29 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.notificationSetup();
+      
     });
   }
 
+  private notificationSetup() {
+    this.firebaseService.getToken();
+    this.firebaseService.onNotifications().subscribe(
+      (msg) => {
+        if (this.platform.is('ios')) {
+          this.presentToast(msg.aps.alert);
+        } else {
+          this.presentToast(msg.body);
+        }
+      });
+  }
+ async presentToast(message) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 3000
+    });
+    toast.present();
+  }
    getUser(){
      
  this.firebaseService.getCurrentUser().subscribe(user=>{

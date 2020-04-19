@@ -15,6 +15,8 @@ import { map } from "rxjs/operators";
 })
 export class Tab1Page {
   view= [];
+  viewer = [];
+  done=0;
   createdDate = [];
   uid: string;
   compaignValue = [];
@@ -48,6 +50,7 @@ export class Tab1Page {
    }
   
   getCompinge(){
+    let done =0;
     this.firebase.getCurrentUser().subscribe(user=>{
       if(user==null){
         console.log('go to logIn')
@@ -67,10 +70,15 @@ export class Tab1Page {
           comp.forEach(element => {
             this.compaignValue.push(element)
             this.view.push(element.view)
+            
+              this.viewer.push(element.done)
+            this.done=element.done.length
+            
           this.createdDate.push(element.createdData) 
           this.compaign =true;   
           });
            // console.log(comp);
+         
            console.log('compaignValue is', this.compaignValue )
           });
        }

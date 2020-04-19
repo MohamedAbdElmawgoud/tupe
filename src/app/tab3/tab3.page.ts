@@ -136,7 +136,8 @@ export class Tab3Page {
       this.maxTime = +video.second;
       ;
     } else {
-      this.noVideos = true;
+      window.location.reload();
+     // this.noVideos = true;
     }
   }
 

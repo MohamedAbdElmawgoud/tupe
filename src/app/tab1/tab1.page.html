@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <p class="point">{{points}}</p>
+    <!-- <p class="point">{{points}}</p> -->
     
     <ion-title>{{ 'Tube Mine' | translate}}</ion-title>
     
@@ -15,14 +15,16 @@
   <!-- <div *ngFor="let data of createdDate">
   {{data  | date:'yyyy-MM-dd'}}
   </div> -->
+  
+  
   <div *ngIf="compaign"> 
 <ion-card  *ngFor="let data of compaignValue" >
   <ion-card-title (click)="getDetailsOfComp(data.createdData)">
       
-    <img src="assets\icon\play.png">
-    <p class="view">
+    <img src="assets\icon\play.png" >
+    <p class="view" style="display:flex">
        
-        {{data.view}} view
+        {{data.view}}/{{done}} view
         <ion-icon name="checkmark-circle" class="mark"></ion-icon> 
        </p>
       

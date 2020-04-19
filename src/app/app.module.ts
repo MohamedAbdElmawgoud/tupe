@@ -22,6 +22,7 @@ import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
 import { IonicStorageModule } from "@ionic/storage";
 import { DatePipe } from '@angular/common';
 import { config } from 'src/environments/environment';
+import { Firebase } from '@ionic-native/firebase/ngx';
 
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
@@ -50,6 +51,7 @@ export  function  HttpLoaderFactory(http:  HttpClient) {
     HttpClientModule
   ],
   providers: [
+    Firebase,   
     StatusBar,
     GooglePlus,
     DatePipe,
