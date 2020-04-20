@@ -9,6 +9,8 @@ import {
   InAppBrowser,
   InAppBrowserOptions
 } from "@ionic-native/in-app-browser/ngx";
+// import "android/capacitor-google-auth";
+import { Plugins } from '@capacitor/core';
 @Component({ 
   selector: 'app-log-in',
   templateUrl: './log-in.page.html',
@@ -44,9 +46,12 @@ export class LogInPage implements OnInit {
     // })
 
   }
-  googleSignin(email , password){
-    console.log();
+ async googleSignin(email , password){
+    // console.log();
     this.firebase.login(email.el.value , password.el.value)
+    // let googleUser = await Plugins.GoogleAuth.signIn();
+    // // const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken); 
+    // alert(JSON.stringify(googleUser))
     
   }
   // async googleSignin() {

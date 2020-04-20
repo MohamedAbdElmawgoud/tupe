@@ -128,15 +128,10 @@ export class AppComponent {
       }
       else {
         this.versionId = this.storage.getVersionId()
-        if (id == this.versionId) {
-          
-          console.log('version dont Need to update')
+        if (id != this.versionId) {
+          this.presentAlert("there is a new update please install first ")
         }
-        else {
-       //   this.presentAlert('version Need to update to '+ id);
-          console.log('version Need to update' ,id)
-        }
-      
+
       }
 
     })
@@ -158,7 +153,6 @@ export class AppComponent {
      // subHeader: 'Subtitle',
       message: title,
     //  buttons: ['OK']
-    backdropDismiss: false 
     });
 
     await alert.present();

@@ -23,8 +23,10 @@
     "@angular/youtube-player": "^9.2.1",
     "@capacitor/android": "^2.0.1",
     "@capacitor/core": "^2.0.1",
+    "@codetrix-studio/capacitor-google-auth": "^2.0.1",
     "@ionic-native/admob-free": "^5.24.0",
     "@ionic-native/admob-plus": "^5.24.0",
+    "@ionic-native/admob-pro": "^5.24.0",
     "@ionic-native/background-mode": "^5.24.0",
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/google-plus": "^5.24.0",
@@ -39,16 +41,19 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "android": "0.0.8",
     "angularx-social-login": "^2.2.1",
+    "capacitor-admob": "^0.1.0",
     "cordova-android": "8.1.0",
     "cordova-browser": "6.0.0",
+    "cordova-plugin-admobpro": "2.49.0",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-badge": "^0.8.8",
+    "cordova-plugin-extension": "^1.5.4",
     "cordova-plugin-inappbrowser": "^3.2.0",
-    "cordova-promise-polyfill": "0.0.2",
     "cordova-support-android-plugin": "^1.0.2",
     "cordova-support-google-services": "^1.4.0",
     "core-js": "^2.5.4",
     "firebase": "^7.14.0",
+    "ionic-admob": "^0.19.7",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
     "sweetalert2": "^9.10.12",
@@ -95,12 +100,12 @@
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-admob-free": {
-        "ADMOB_APP_ID": "ca-app-pub-7175438051295681~5749530563"
-      },
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-admobpro": {
+        "PLAY_SERVICES_VERSION": "16.0.0",
+        "ADMOB_APP_ID": "ca-app-pub-7175438051295681~5749530563"
+      }
     },
     "platforms": []
   }
