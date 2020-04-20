@@ -60,6 +60,8 @@ export class DetailsCampaignPage implements OnInit {
             )
           )
         ).subscribe(comp => {
+        this.compInfo = comp[0];
+        console.log('cscsc',this.compInfo)
           this.getUser(comp[0].ownerId)
           this.done = comp[0].done.length
           this.compdata = comp[0].createdData;
@@ -75,11 +77,11 @@ export class DetailsCampaignPage implements OnInit {
    getUser(id) {
     return this.firebase.getDataOfUser(id);
   }
-  deleteComp(compdata){
-    this.campingsService.deletecamping(compdata)
+  deleteComp(data){
+    this.campingsService.deletecamping(data)
     
     this.presentAlert('compaign deleted')
-    this.router.navigate([''])
+   // this.router.navigate([''])
   }
 
   async presentAlert(title) {

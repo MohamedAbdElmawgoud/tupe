@@ -24,13 +24,18 @@ export class CampingsService {
      return this.db.object(this.dbPath + '/' + key).update( value);
    }
   
-   deletecamping(key): Promise<void> {
-     return this.db.object(this.dbPath + '/' + key).remove()
+   deletecamping(data): Promise<void> {
+    // return this.db.object(this.dbPath + '/' + key).remove()
+     // this.db.list(`/campigns/${data.key}`).remove(data.key)
+   //   this.db.database.ref().child(`/campigns/${data.key}`).remove()e
+   this.db.database.ref(`/campigns/${data.key}`).remove()
+
    }
   
    getcampingsList(query ): AngularFireList<camping> {
      
      return this.db.list(this.dbPath , query);
+     
    }
    getNotification(){
     return  this.db.list('notification').snapshotChanges()
