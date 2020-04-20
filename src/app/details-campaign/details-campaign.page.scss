@@ -29,7 +29,7 @@ hr {
   }
   p{
     margin-left: 5%;
-    margin-right: 5%;
+   // margin-right: 5%;
     font-size: 15px;
   }
   h2{
@@ -37,8 +37,8 @@ hr {
   }
   h4{
      // display: inline;
-       margin-left: 10%; 
-       margin-right: 10%;           
+    //   margin-left: 10%; 
+     //  margin-right: 10%;           
      font-size: 15px;
       //width: 100%
   }
@@ -46,8 +46,10 @@ hr {
   div {
     display: flex;
     flex-direction: row-reverse;
-    margin-right: 40%;
+   margin-right: 20%;
     margin-left: 5%;
+   // width: 80%;
+   float: left;
   }
   h5{
       margin: 5%;

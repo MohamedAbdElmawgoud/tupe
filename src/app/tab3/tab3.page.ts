@@ -23,6 +23,7 @@ export class Tab3Page {
   hidevalue = false;
   hidePoint = false;
   // timer: NodeJS.Timer;
+  status = false
   maxTime = 30;
   time = 30;
   videoId;
@@ -71,6 +72,7 @@ export class Tab3Page {
   ) { }
 
   async ngOnInit() {
+    
     this.route.events.subscribe(event=>{
       if(this.event && event instanceof NavigationStart){
         this.event.target.pauseVideo()        
@@ -82,7 +84,9 @@ export class Tab3Page {
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
+    if(this.status==false){
     this.getPoint()
+    }
   }
   startTime() {
     this.StartTimer();
@@ -101,14 +105,14 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) <= 0) {
+      if ((this.maxTime - this.passedTIme) == 0 && this.status==false) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
         // window.location.reload()
 
         clearInterval(this.interval);
 
-        await this.ngOnInit()
+        // await this.ngOnInit()
 
       }
 
@@ -172,25 +176,33 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      e.docs[0].data().point + points;
+     // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-
+      if (this.status!= true){
       this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
-      this.ionViewCanLeave(this.showPoint)
+      this.point = this.showPoint
+        this.status = true;
+     // this.ionViewCanLeave(this.showPoint)
+      
       // this.ionViewWillLeave(this.showPoint)
 
 
-
+      }
     });
 
 
 
   }
-  ionViewCanLeave(point) {
-    this.point = point
-    this.ngOnInit()
-  }
+  // ionViewCanLeave(point) {
+  //     if (this.status!= true){
+  //   this.point = point
+  //   this.status = true;
+  //   return false;
+  //       }
+      
+  
+  // }
   // ionViewWillLeave(point)
   // {
   //   this.showPoint = point

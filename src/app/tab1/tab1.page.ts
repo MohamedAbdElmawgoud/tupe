@@ -72,6 +72,7 @@ export class Tab1Page {
    }
   
   getCompinge(){
+    this.compaignValue = []
     let done =0;
     this.storage.getUserId().then(user=>{
       if(!user){
@@ -88,9 +89,9 @@ export class Tab1Page {
               )
             )
           ).subscribe(comp => {
-        
+        this.compaignValue = comp
           comp.forEach(element => {
-            this.compaignValue.push(element)
+            //this.compaignValue.push(element)
             //this.view.push(element.view)
             
               this.viewer.push(element.done)
