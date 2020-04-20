@@ -11,6 +11,7 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 import { ToastController } from '@ionic/angular';
 import { StorageService } from './storageService/storage.service';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
+import { AlertController } from '@ionic/angular';
 
 import { map } from 'rxjs/operators';
 import {
@@ -49,6 +50,7 @@ export class AppComponent {
     public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
+    public alertController: AlertController ,
     // private fcm: FCM
 
   ) {
@@ -111,6 +113,7 @@ export class AppComponent {
     );
 
     let id
+    
 
     await this.firebaseService.getVersion().subscribe(version => {
       this.versionId = (<any>version.payload.data()).numberOfVersion
@@ -121,16 +124,25 @@ export class AppComponent {
       if (this.storage.getVersionId() == null) {
 
 
-        this.storage.saveVersionId(id)
+       this.storage.saveVersionId(id).then(e =>{
+          console.log('eeae',e)
+        })
       }
       else {
+<<<<<<< HEAD
+        
+=======
         this.versionId = this.storage.getVersionId()
+>>>>>>> f428810500194b5b6250b067eb264e415d48be9b
         if (id == this.versionId) {
+          
           console.log('version dont Need to update')
         }
         else {
-          console.log('version Need to update')
+       //   this.presentAlert('version Need to update to '+ id);
+          console.log('version Need to update' ,id)
         }
+      
       }
 
     })
@@ -146,7 +158,18 @@ export class AppComponent {
 
     });
   }
+  async presentAlert(title) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+     // subHeader: 'Subtitle',
+      message: title,
+    //  buttons: ['OK']
+    backdropDismiss: false 
+    });
 
+    await alert.present();
+   
+  }
   private notificationSetup() {
     // this.firebaseService.getToken();
     // this.firebaseService.onNotifications().subscribe(

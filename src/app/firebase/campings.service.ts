@@ -8,7 +8,7 @@ export class CampingsService {
 
  
 
-  private dbPath = '/campings';
+  public dbPath = '/campings';
   
    campingsRef: AngularFireList<camping> = null;
   
@@ -24,8 +24,8 @@ export class CampingsService {
      return this.db.object(this.dbPath + '/' + key).update( value);
    }
   
-   deletecamping(key: string): Promise<void> {
-     return this.campingsRef.remove(key);
+   deletecamping(key): Promise<void> {
+     return this.db.object(this.dbPath + '/' + key).remove()
    }
   
    getcampingsList(query ): AngularFireList<camping> {

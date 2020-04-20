@@ -3,8 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'Details Campaign' | translate}}</ion-title>
-
+    <ion-title>{{ 'Details Campaign' | translate}}
+    <strong>{{showPoint}}</strong>
+  </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,5 +37,5 @@
   </div>
 
 
-
+<button (click)="deleteComp(compdata)"> delete</button>
 </ion-content>

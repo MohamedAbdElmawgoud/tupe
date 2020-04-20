@@ -108,6 +108,7 @@ export class CreateCompPage implements OnInit {
     //  console.log('selecte is ', event.target.value)
   }
   async  createComp() {
+    let lenOfComp;
     if (this.status== true){
     if(this.user.point < this.point){
       this.presentAlert("You don't have enough points")
@@ -129,11 +130,28 @@ export class CreateCompPage implements OnInit {
         ownerId : user
       }
       this.UpdateUSerPoints(-this.point)
-      this.comp.createcamping(this.camping);
+      this.comp.getcampingsList((res =>
+        res.orderByChild('ownerId')
+          .equalTo(this.user.uid))).snapshotChanges().pipe(
+            map((changes: Array<any>) =>
+              changes.map(c =>
+                ({ key: c.payload.key, ...c.payload.val() })
+              )
+            )
+          ).subscribe(e=>{
+            lenOfComp =e.length;
+            if(lenOfComp==5){
+               this.presentAlert('You have maximum Of compaign')
+            }
+           
+             
+          })
 
-      this.presentAlert('Added success')
-      
-      this.route.navigate([''])
+    //  
+    this.comp.createcamping(this.camping);
+    this.presentAlert('Added success');
+    this.route.navigate([''])
+    
     }
     else{
 this.presentAlert('please play your video')
