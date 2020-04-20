@@ -20,6 +20,7 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed
 } from '@capacitor/core';
+import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 const { PushNotifications, Modals } = Plugins;
 // import { FCM } from '@ionic-native/fcm/ngx';
@@ -39,6 +40,7 @@ export class AppComponent {
   currentLanguage: string;
   textDir: string;
   user;
+  clicks = 0;
   constructor(
 
     private platform: Platform,
@@ -51,6 +53,7 @@ export class AppComponent {
     private menu: MenuController,
     private storage: StorageService,
     public alertController: AlertController ,
+    private admob: AdMobPro,
     // private fcm: FCM
 
   ) {
@@ -68,7 +71,27 @@ export class AppComponent {
     });
 
   }
+  ads(){
+    this.clicks++;
+    if(this.clicks % 5 == 0){
+      this.admob.prepareInterstitial({adId: 
+        "ca-app-pub-7175438051295681/1087590199"
+      })
+      .then(() => { this.admob.showInterstitial(); });      
+    }else if( this.clicks % 7 ==0 ) {
+      this.admob.prepareRewardVideoAd({adId: 
+        "ca-app-pub-7175438051295681/5622372208"
+      })
+      .then(() => { this.admob.showRewardVideoAd()
+      
+      });    
+    }   
+  }
   async ngOnInit() {
+    // ads 
+
+
+
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
 
@@ -115,28 +138,25 @@ export class AppComponent {
     let id
     
 
-    await this.firebaseService.getVersion().subscribe(version => {
+    await this.firebaseService.getVersion().subscribe( async version => {
       this.versionId = (<any>version.payload.data()).numberOfVersion
       this.versionId.forEach(element => {
         id = element
       });
-      console.log('version', id)
-      if (this.storage.getVersionId() == null) {
+      let currentVersion = await this.storage.getVersionId()
+            console.log('version', id , currentVersion )
+      if (currentVersion== null) {
 
 
        this.storage.saveVersionId(id)
       }
       else {
-        this.versionId = this.storage.getVersionId()
-        if (id == this.versionId) {
-          
-          console.log('version dont Need to update')
+        if (id != currentVersion) {
+          this.presentAlert("there is a new update please install first ")
+         this.storage.saveVersionId(id)
+
         }
-        else {
-       //   this.presentAlert('version Need to update to '+ id);
-          console.log('version Need to update' ,id)
-        }
-      
+
       }
 
     })
@@ -158,7 +178,6 @@ export class AppComponent {
      // subHeader: 'Subtitle',
       message: title,
     //  buttons: ['OK']
-    backdropDismiss: false 
     });
 
     await alert.present();

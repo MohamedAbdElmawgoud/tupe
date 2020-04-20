@@ -10,7 +10,8 @@ import { AngularFireModule } from '@angular/fire';
 import { CreateCompPageModule } from "src/app/create-comp/create-comp.module";
 import { config } from 'src/environments/environment';
 
- 
+import { AdMobPro } from '@ionic-native/admob-pro/ngx';
+
 
 @NgModule({
   imports: [
@@ -23,6 +24,9 @@ import { config } from 'src/environments/environment';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab1Page }])
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page],
+  providers : [
+    AdMobPro
+  ]
 })
 export class Tab1PageModule {}

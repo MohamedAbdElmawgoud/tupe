@@ -7,6 +7,7 @@ import {  TranslateLoader, TranslateService } from  '@ngx-translate/core';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { map } from "rxjs/operators";
 import { StorageService } from '../storageService/storage.service';
+import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 
 @Component({
@@ -35,11 +36,20 @@ export class Tab1Page {
     private campingsService: CampingsService,
     public alertController: AlertController ,
     private storage: StorageService,
+    private admob: AdMobPro,
     public router: Router) {
   
   }
  async ngOnInit(){
+  // await this.admob.createBanner.show({
+  //   id:  "ca-app-pub-7175438051295681/3187780553",
     
+  // })
+
+  this.admob.createBanner({adId: 
+    "ca-app-pub-7175438051295681/3187780553"
+  })
+  .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
     this.user = await this.storage.getUserId();
     this.getPoint()
     // this.firebase.getDataOfUser().subscribe(e=>{
