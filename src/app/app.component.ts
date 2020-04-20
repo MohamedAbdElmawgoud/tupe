@@ -100,11 +100,7 @@ export class AppComponent {
         })
       }
       else {
-<<<<<<< HEAD
-        
-=======
         this.versionId = this.storage.getVersionId()
->>>>>>> f428810500194b5b6250b067eb264e415d48be9b
         if (id == this.versionId) {
           
           console.log('version dont Need to update')
