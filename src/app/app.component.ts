@@ -130,6 +130,8 @@ export class AppComponent {
         this.versionId = this.storage.getVersionId()
         if (id != this.versionId) {
           this.presentAlert("there is a new update please install first ")
+         this.storage.saveVersionId(id)
+
         }
 
       }
