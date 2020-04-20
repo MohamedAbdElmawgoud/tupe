@@ -75,7 +75,7 @@ export class AppComponent {
     // On succcess, we should be able to receive notifications
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
-        alert('Push registration success, token: ' + token.value);
+        // alert('Push registration success, token: ' + token.value);
         console.log('Push registration success, token: ' + token.value);
       }
     );
@@ -83,7 +83,7 @@ export class AppComponent {
     // Some issue with our setup and push will not work
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        // alert('Error on registration: ' + JSON.stringify(error));
       }
     );
 
@@ -107,7 +107,7 @@ export class AppComponent {
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
+        // alert('Push action performed: ' + JSON.stringify(notification));
         console.log('Push action performed: ' + notification);
       }
     );
@@ -124,16 +124,10 @@ export class AppComponent {
       if (this.storage.getVersionId() == null) {
 
 
-       this.storage.saveVersionId(id).then(e =>{
-          console.log('eeae',e)
-        })
+       this.storage.saveVersionId(id)
       }
       else {
-<<<<<<< HEAD
-        
-=======
         this.versionId = this.storage.getVersionId()
->>>>>>> f428810500194b5b6250b067eb264e415d48be9b
         if (id == this.versionId) {
           
           console.log('version dont Need to update')
