@@ -74,15 +74,21 @@ export class CreateCompPage implements OnInit {
   }
 
   getVideo(video) {
+    if(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/.test(video.el.value)){
     this.video = video.el.value;
 
-    let scrubbed = this.video.slice(this.video.indexOf('=') + 1)
-    if (this.video.search('=') == -1) {
-      scrubbed = this.video.slice(this.video.indexOf('be/') + 3)
+      let scrubbed = this.video.slice(this.video.indexOf('=') + 1)
+      if (this.video.search('=') == -1) {
+        scrubbed = this.video.slice(this.video.indexOf('be/') + 3)
+      }
+      // abc 123 Howdy
+      this.videoId = scrubbed;
+      console.log('video is ', scrubbed)
+    }else{
+      this.presentAlert('please add a youtube url')
+
     }
-    // abc 123 Howdy
-    this.videoId = scrubbed;
-    console.log('video is ', scrubbed)
+
   }
 
 
