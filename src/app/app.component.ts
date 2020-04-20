@@ -10,7 +10,13 @@ import * as firebase from 'firebase';
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { ToastController } from '@ionic/angular';
 import { StorageService } from './storageService/storage.service';
+import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { AlertController } from '@ionic/angular';
+
+import { Plugins } from '@capacitor/core';
+import { map } from 'rxjs/operators';
+import { FCM } from '@ionic-native/fcm/ngx';
+const { App, BackgroundTask, LocalNotifications } = Plugins;
 
 // import { FCM } from '@ionic-native/fcm/ngx';
 
@@ -37,6 +43,7 @@ export class AppComponent {
     public translate: TranslateService,
     public router: Router,
     private firebaseService: FirebaseService,
+    private fcm: FCM,
     public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
@@ -59,6 +66,23 @@ export class AppComponent {
 
   }
   async ngOnInit() {
+    this.fcm.subscribeToTopic('marketing');
+
+    this.fcm.getToken().then(token => {
+      // backend.registerToken(token);
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      if (data.wasTapped) {
+        console.log("Received in background");
+      } else {
+        console.log("Received in foreground");
+      };
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      // backend.registerToken(token);
+    });
     let id
     
 
@@ -76,7 +100,11 @@ export class AppComponent {
         })
       }
       else {
+<<<<<<< HEAD
         
+=======
+        this.versionId = this.storage.getVersionId()
+>>>>>>> f428810500194b5b6250b067eb264e415d48be9b
         if (id == this.versionId) {
           
           console.log('version dont Need to update')
@@ -131,25 +159,25 @@ export class AppComponent {
     });
     toast.present();
   }
-   getUser(){
-     
- this.storage.getUserId().then(user=>{
-   console.log(!user , user , 'user');
-   
-  if(!user){
-    console.log('go to logIn')
-     this.router.navigate(['log-in']);
-     
-   }
-   else{
-     this.profilePhoto = user.photoURL;
-     this.displayName = user.displayName;
-     this.email = user.email
-     this.points = user.points
-     console.log('point',this.points)
-   }
-    //return user;
-  })
+  getUser() {
+
+    this.storage.getUserId().then(user => {
+      console.log(!user, user, 'user');
+
+      if (!user) {
+        console.log('go to logIn')
+        this.router.navigate(['log-in']);
+
+      }
+      else {
+        this.profilePhoto = user.photoURL;
+        this.displayName = user.displayName;
+        this.email = user.email
+        this.points = user.points
+        console.log('point', this.points)
+      }
+      //return user;
+    })
   }
 
 
