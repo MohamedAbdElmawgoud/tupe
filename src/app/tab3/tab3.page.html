@@ -4,7 +4,9 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'Fog tube' | translate}}
-<strong>{{point}}</strong>
+<strong *ngIf="!status">{{showPoint}}</strong>
+
+<strong *ngIf="status">{{point}}</strong>
         
       </ion-title>
       

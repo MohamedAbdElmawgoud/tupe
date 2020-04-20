@@ -5,6 +5,7 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2'
 import { AlertController } from '@ionic/angular';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -22,6 +23,7 @@ export class Tab3Page {
   hidevalue = false;
   hidePoint = false;
   // timer: NodeJS.Timer;
+  status = false
   maxTime = 30;
   time = 30;
   videoId;
@@ -61,26 +63,37 @@ export class Tab3Page {
 
 
   }
-  constructor(private comp: CampingsService, 
+  constructor(private comp: CampingsService,
     private alertController: AlertController,
     private firebaseService: FirebaseService,
-    private storage: Storage
+    private storage: Storage,
+    private route : Router
+
   ) { }
 
   async ngOnInit() {
+    
+    this.route.events.subscribe(event=>{
+      if(this.event && event instanceof NavigationStart){
+        this.event.target.pauseVideo()        
+      }
+      
+    })
     const tag = document.createElement('script');
     this.user = await this.storage.get('User');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
+    if(this.status==false){
     this.getPoint()
+    }
   }
   startTime() {
     this.StartTimer();
 
   }
   async savePlayer($event) {
-    
+
     this.event = $event;
     if (!$event) {
       return
@@ -92,20 +105,20 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) <= 0) {
+      if ((this.maxTime - this.passedTIme) == 0 && this.status==false) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
         // window.location.reload()
 
         clearInterval(this.interval);
 
-        await this.ngOnInit()
+        // await this.ngOnInit()
 
       }
 
     }, 1000)
 
-    
+
   }
 
 
@@ -118,9 +131,9 @@ export class Tab3Page {
       )
     ).subscribe(camping => {
       // this.camping = camping;
-      
+
       this.videoUrls = camping.filter(ele => {
-        
+
         if (!ele.done)
           return ele
         if (ele.done.indexOf(this.user) == -1)
@@ -137,7 +150,7 @@ export class Tab3Page {
   showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-    
+
     if (video != undefined) {
       this.video = video;
 
@@ -149,7 +162,7 @@ export class Tab3Page {
       this.lastTime = 0;
 
       this.savePlayer(this.event)
-      ;
+        ;
     } else {
       // window.location.reload();
       this.noVideos = true;
@@ -163,35 +176,43 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      e.docs[0].data().point + points;
+     // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      
+      if (this.status!= true){
       this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
-     this.ionViewCanLeave(this.showPoint)
-     // this.ionViewWillLeave(this.showPoint)
-    
+      this.point = this.showPoint
+        this.status = true;
+     // this.ionViewCanLeave(this.showPoint)
       
-    
+      // this.ionViewWillLeave(this.showPoint)
+
+
+      }
     });
 
 
 
   }
-  ionViewCanLeave(point){
-     this.point =point
-     this.ngOnInit()
-  }
+  // ionViewCanLeave(point) {
+  //     if (this.status!= true){
+  //   this.point = point
+  //   this.status = true;
+  //   return false;
+  //       }
+      
+  
+  // }
   // ionViewWillLeave(point)
   // {
   //   this.showPoint = point
   // }
-getPoint(){
-  this.firebaseService.getDataOfUser(this.user).then(point =>{
-    this.showPoint = point.docs[0].data().point
-  })
-  return this.showPoint
-}
+  getPoint() {
+    this.firebaseService.getDataOfUser(this.user).then(point => {
+      this.showPoint = point.docs[0].data().point
+    })
+    return this.showPoint
+  }
   async updateCamping(video) {
 
     video.done = video.done ? video.done : [];
@@ -207,14 +228,14 @@ getPoint(){
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-     // subHeader: 'Subtitle',
+      // subHeader: 'Subtitle',
       message: title,
       buttons: ['OK']
     });
 
     await alert.present();
   }
-  Reload(){
+  Reload() {
     window.location.reload()
   }
 }

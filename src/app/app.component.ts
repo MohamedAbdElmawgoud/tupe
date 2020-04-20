@@ -13,11 +13,15 @@ import { StorageService } from './storageService/storage.service';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { AlertController } from '@ionic/angular';
 
-import { Plugins } from '@capacitor/core';
 import { map } from 'rxjs/operators';
-import { FCM } from '@ionic-native/fcm/ngx';
-const { App, BackgroundTask, LocalNotifications } = Plugins;
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed
+} from '@capacitor/core';
 
+const { PushNotifications, Modals } = Plugins;
 // import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
@@ -43,7 +47,6 @@ export class AppComponent {
     public translate: TranslateService,
     public router: Router,
     private firebaseService: FirebaseService,
-    private fcm: FCM,
     public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
@@ -66,23 +69,49 @@ export class AppComponent {
 
   }
   async ngOnInit() {
-    this.fcm.subscribeToTopic('marketing');
+    // Register with Apple / Google to receive push via APNS/FCM
+    PushNotifications.register();
 
-    this.fcm.getToken().then(token => {
-      // backend.registerToken(token);
-    });
+    // On succcess, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token: PushNotificationToken) => {
+        // alert('Push registration success, token: ' + token.value);
+        console.log('Push registration success, token: ' + token.value);
+      }
+    );
 
-    this.fcm.onNotification().subscribe(data => {
-      if (data.wasTapped) {
-        console.log("Received in background");
-      } else {
-        console.log("Received in foreground");
-      };
-    });
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        // alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
 
-    this.fcm.onTokenRefresh().subscribe(token => {
-      // backend.registerToken(token);
-    });
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotification) => {
+        var audio1 = new Audio('assets/audio.mp3');
+        console.log('Audio');
+        audio1.play();
+        // alert('Push received: ' + JSON.stringify(notification));
+        console.log('Push received: ', notification);
+
+        let alertRet = Modals.alert({
+          title: notification.title,
+          message: notification.body
+        });
+
+      }
+    );
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: PushNotificationActionPerformed) => {
+        // alert('Push action performed: ' + JSON.stringify(notification));
+        console.log('Push action performed: ' + notification);
+      }
+    );
+
     let id
     
 
@@ -95,9 +124,7 @@ export class AppComponent {
       if (this.storage.getVersionId() == null) {
 
 
-       this.storage.saveVersionId(id).then(e =>{
-          console.log('eeae',e)
-        })
+       this.storage.saveVersionId(id)
       }
       else {
         this.versionId = this.storage.getVersionId()
