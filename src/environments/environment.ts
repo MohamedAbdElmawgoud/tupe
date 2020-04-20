@@ -23,6 +23,17 @@ export const config = {
   appId: "1:941729484801:web:aabacc4af4907bc1203000",
   measurementId: "G-TFXWLDL6QG"
 };
+
+// export const config = {
+//   apiKey: "AIzaSyDazhWMFHM2GRAjs8SYSSL8GrpqWZDdHAs",
+//   authDomain: "fog-tube.firebaseapp.com",
+//   databaseURL: "https://fog-tube.firebaseio.com",
+//   projectId: "fog-tube",
+//   storageBucket: "fog-tube.appspot.com",
+//   messagingSenderId: "693510009864",
+//   appId: "1:693510009864:web:bf27397619adbc94fc4dbd",
+//   measurementId: "G-7ZQSLFG70L"
+// };
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
