@@ -214,4 +214,7 @@ getPoint(){
 
     await alert.present();
   }
+  Reload(){
+    window.location.reload()
+  }
 }

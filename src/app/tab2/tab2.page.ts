@@ -22,6 +22,12 @@ export class Tab2Page {
     this.getPoint()
   
   }
+  getPoint(){
+    this.firebaseService.getDataOfUser(this.user).then(point =>{
+      this.showPoint = point.docs[0].data().point
+    })
+    return this.showPoint
+  }
   ShowVideo(){
     this.router.navigate(['tabs/tab3']);
     
@@ -30,10 +36,5 @@ export class Tab2Page {
     window.location.reload()
     
    }
-   getPoint(){
-    this.firebaseService.getDataOfUser(this.user).then(point =>{
-      this.showPoint = point.docs[0].data().point
-    })
-    return this.showPoint
-  }
+  
 }
