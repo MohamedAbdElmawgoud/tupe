@@ -70,7 +70,10 @@ export class Tab1Page {
    googleSignin() {
     this.firebase.googleSignin();
    }
-  
+   ionViewWillEnter(){
+      this.getCompinge()
+      this.getPoint()
+  }
   getCompinge(){
     this.compaignValue = []
     let done =0;

@@ -73,12 +73,12 @@ export class AppComponent {
   }
   ads(){
     this.clicks++;
-    if(this.clicks % 5 == 0){
+    if(this.clicks % 15 == 0){
       this.admob.prepareInterstitial({adId: 
         "ca-app-pub-7175438051295681/1087590199"
       })
       .then(() => { this.admob.showInterstitial(); });      
-    }else if( this.clicks % 7 ==0 ) {
+    }else if( this.clicks % 22 ==0 ) {
       this.admob.prepareRewardVideoAd({adId: 
         "ca-app-pub-7175438051295681/5622372208"
       })

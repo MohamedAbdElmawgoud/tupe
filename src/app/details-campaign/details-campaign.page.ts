@@ -24,6 +24,7 @@ export class DetailsCampaignPage implements OnInit {
   photoUrl = 'https://lh3.googleusercontent.com/a-/AOh14Git2em9CyfYQAcZGc3EvPs189RFj551ZRkJvDXrjw';
   displayName = 'Nader Medhat';
   viewers = [];
+  campId;
   constructor(
     private firebase: FirebaseService,
     private router: Router,
@@ -38,7 +39,7 @@ export class DetailsCampaignPage implements OnInit {
     this.data = this.route
       .queryParamMap
       .subscribe(v => {
-
+        this.campId = v.get('data');
         this.getCompain(v.get('data'))
 
       });
@@ -77,11 +78,11 @@ export class DetailsCampaignPage implements OnInit {
    getUser(id) {
     return this.firebase.getDataOfUser(id);
   }
-  deleteComp(data){
-    this.campingsService.deletecamping(data)
+  deleteComp(){
+    this.campingsService.deletecamping(this.campId)
     
     this.presentAlert('compaign deleted')
-   // this.router.navigate([''])
+   this.router.navigate([''])
   }
 
   async presentAlert(title) {
