@@ -9,8 +9,7 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    // implementation project(':codetrix-studio-capacitor-google-auth')
-    // implementation project(':capacitor-admob')
+    implementation project(':capacitor-youtube-player')
     implementation "com.google.android.gms:play-services-ads:16.0.0"
 }
 apply from: "../../node_modules/cordova-plugin-badge/src/android/badge.gradle"

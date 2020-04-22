@@ -52,7 +52,7 @@ export class AppComponent {
     public toastController: ToastController,
     private menu: MenuController,
     private storage: StorageService,
-    public alertController: AlertController ,
+    public alertController: AlertController,
     private admob: AdMobPro,
     // private fcm: FCM
 
@@ -71,27 +71,51 @@ export class AppComponent {
     });
 
   }
-  ads(){
+  ads() {
     this.clicks++;
-    if(this.clicks % 15 == 0){
-      this.admob.prepareInterstitial({adId: 
-        "ca-app-pub-7175438051295681/1087590199"
+    if (this.clicks % 25 == 0) {
+      this.admob.prepareInterstitial({
+        adId:
+          "ca-app-pub-7175438051295681/1087590199"
       })
-      .then(() => { this.admob.showInterstitial(); });      
-    }else if( this.clicks % 22 ==0 ) {
-      this.admob.prepareRewardVideoAd({adId: 
-        "ca-app-pub-7175438051295681/5622372208"
+        .then(() => { this.admob.showInterstitial(); });
+    } else if (this.clicks % 32 == 0) {
+      this.admob.prepareRewardVideoAd({
+        adId:
+          "ca-app-pub-7175438051295681/5622372208"
       })
-      .then(() => { this.admob.showRewardVideoAd()
-      
-      });    
-    }   
+        .then(() => {
+          this.admob.showRewardVideoAd()
+
+        });
+    }
   }
   async ngOnInit() {
     // ads 
+    window['overApps'].checkPermission(function (msg) {
+      alert(JSON.stringify(msg))
+    });
+    var options = {
+      path: "test.html",          // file path to display as view content.
+      hasHead: false,              // display over app head image which open the view up on click.
+      dragToSide: false,          // enable auto move of head to screen side after dragging stop. 
+      enableBackBtn: false,       // enable hardware back button to close view.
+      enableCloseBtn: false,      //  whether to show native close btn or to hide it.
+      verticalPosition: "top",    // set vertical alignment of view.
+      horizontalPosition: "left"  // set horizontal alignment of view. 
+    };
 
+    // window['overApps'].startOverApp(options, function (success) {
+    //   alert(JSON.stringify(success))
 
+    // }, function (err) {
+    //   console.log(err);
+    //   alert(JSON.stringify(err))
+    // });
 
+    document.addEventListener('onAdDismiss', (data) => {
+      // this.presentAlert(JSON.stringify(data))
+    });
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
 
@@ -136,24 +160,24 @@ export class AppComponent {
     );
 
     let id
-    
 
-    await this.firebaseService.getVersion().subscribe( async version => {
+
+    await this.firebaseService.getVersion().subscribe(async version => {
       this.versionId = (<any>version.payload.data()).numberOfVersion
       this.versionId.forEach(element => {
         id = element
       });
       let currentVersion = await this.storage.getVersionId()
-            console.log('version', id , currentVersion )
-      if (currentVersion== null) {
+      console.log('version', id, currentVersion)
+      if (currentVersion == null) {
 
 
-       this.storage.saveVersionId(id)
+        this.storage.saveVersionId(id)
       }
       else {
         if (id != currentVersion) {
           this.presentAlert("there is a new update please install first ")
-         this.storage.saveVersionId(id)
+          this.storage.saveVersionId(id)
 
         }
 
@@ -175,13 +199,13 @@ export class AppComponent {
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-     // subHeader: 'Subtitle',
+      // subHeader: 'Subtitle',
       message: title,
-    //  buttons: ['OK']
+      //  buttons: ['OK']
     });
 
     await alert.present();
-   
+
   }
   private notificationSetup() {
     // this.firebaseService.getToken();
