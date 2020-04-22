@@ -91,27 +91,8 @@ export class AppComponent {
     }
   }
   async ngOnInit() {
-    // ads 
-    window['overApps'].checkPermission(function (msg) {
-      alert(JSON.stringify(msg))
-    });
-    var options = {
-      path: "test.html",          // file path to display as view content.
-      hasHead: false,              // display over app head image which open the view up on click.
-      dragToSide: false,          // enable auto move of head to screen side after dragging stop. 
-      enableBackBtn: false,       // enable hardware back button to close view.
-      enableCloseBtn: false,      //  whether to show native close btn or to hide it.
-      verticalPosition: "top",    // set vertical alignment of view.
-      horizontalPosition: "left"  // set horizontal alignment of view. 
-    };
-
-    // window['overApps'].startOverApp(options, function (success) {
-    //   alert(JSON.stringify(success))
-
-    // }, function (err) {
-    //   console.log(err);
-    //   alert(JSON.stringify(err))
-    // });
+    this.getUser();
+;
 
     document.addEventListener('onAdDismiss', (data) => {
       // this.presentAlert(JSON.stringify(data))
@@ -184,7 +165,6 @@ export class AppComponent {
       }
 
     })
-    this.getUser();
     // this.firebaseService.getDataOfUser()
   }
 
@@ -228,20 +208,24 @@ export class AppComponent {
   getUser() {
 
     this.storage.getUserId().then(user => {
-      console.log(!user, user, 'user');
+      
+      this.firebaseService.getDataOfUser(user).then(_user=>{
+        // if(user)
+        let user = _user.docs[0].data()        
+        if (!user) {
+          console.log('go to logIn')
+          this.router.navigate(['log-in']);
+  
+        }
+        else {
+          this.profilePhoto = user.photoURL;
+          this.displayName = user.displayName;
+          this.email = user.email
+          this.points = user.points
+          console.log('point', this.points)
+        }
+      })
 
-      if (!user) {
-        console.log('go to logIn')
-        this.router.navigate(['log-in']);
-
-      }
-      else {
-        this.profilePhoto = user.photoURL;
-        this.displayName = user.displayName;
-        this.email = user.email
-        this.points = user.points
-        console.log('point', this.points)
-      }
       //return user;
     })
   }

@@ -83,32 +83,44 @@ export class FirebaseService {
 
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    // const credential = await this.afAuth.signInWithEmailAndPassword();
+    const credential = await this.afAuth.signInWithPopup(provider);
 
-    // return this.updateUserData(credential.user);
+    return this.updateUserData(credential.user);
   }
 
   updateUserData(user) {
+    console.log(user);
+    
+    if(!user.userId){
+      user.userId = user.uid
+    }
 
+    
     // Sets user data to firestore on login
     this.firestore.collection('users').ref.where('uid', '==', user.userId).get().then(_user => {
-
-
+      
       if (!_user.docs[0]) {
         this.firestore.collection('users').add({
           uid: user.userId,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.imageUrl,
+          photoURL: user.imageUrl || '',
           point: 0
+        }).then(u=>{
+          console.log(u);
+          
         })
+
       } else {
 
       }
 
+      this.storage.saveUserId(user.userId);
+      this.router.navigate(['']);
+
     })
 
-    this.storage.saveUserId(user.uid);
+
 
   }
 
