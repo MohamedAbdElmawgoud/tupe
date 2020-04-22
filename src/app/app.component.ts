@@ -19,7 +19,7 @@ import {
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed
-} from '@capacitor/core';
+} from '@capacitor/core'; 
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 const { PushNotifications, Modals } = Plugins;
@@ -68,7 +68,7 @@ export class AppComponent {
       else {
         this.textDir = 'ltr';
       }
-    });
+    }); 
 
   }
   ads(){

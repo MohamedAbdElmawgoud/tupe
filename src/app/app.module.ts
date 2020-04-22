@@ -23,7 +23,7 @@ import { IonicStorageModule } from "@ionic/storage";
 import { DatePipe } from '@angular/common';
 import { config } from 'src/environments/environment';
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
-
+ 
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
 }
