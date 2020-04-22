@@ -49,6 +49,7 @@
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-extension": "^1.5.4",
+    "cordova-plugin-googleplus": "8.4.0",
     "cordova-plugin-inappbrowser": "^3.2.0",
     "cordova-plugin-youtube-video-player": "^2.4.0",
     "cordova-support-android-plugin": "^1.0.2",

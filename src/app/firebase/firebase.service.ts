@@ -91,15 +91,15 @@ export class FirebaseService {
   updateUserData(user) {
 
     // Sets user data to firestore on login
-    this.firestore.collection('users').ref.where('uid', '==', user.uid).get().then(_user => {
+    this.firestore.collection('users').ref.where('uid', '==', user.userId).get().then(_user => {
 
 
       if (!_user.docs[0]) {
         this.firestore.collection('users').add({
-          uid: user.uid,
+          uid: user.userId,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.photoURL,
+          photoURL: user.imageUrl,
           point: 0
         })
       } else {
