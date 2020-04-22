@@ -8,7 +8,9 @@ export class StorageService {
 
   constructor(public storage: Storage) { }
 
-
+  async clear(){
+    await this.storage.clear()
+  }
 
   getUserId() {
    

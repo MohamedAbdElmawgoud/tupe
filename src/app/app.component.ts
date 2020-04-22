@@ -94,8 +94,8 @@ export class AppComponent {
     this.getUser();
 ;
 
-    document.addEventListener('onAdDismiss', (data) => {
-      // this.presentAlert(JSON.stringify(data))
+    document.addEventListener('RewardComplate', (data) => {
+      this.UpdateUSerPoints()
     });
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
@@ -167,7 +167,25 @@ export class AppComponent {
     })
     // this.firebaseService.getDataOfUser()
   }
+  UpdateUSerPoints() {
+    let user = this.firebaseService.getDataOfUser(this.user).then(e => {
 
+      let UserEdited = {
+        ...e.docs[0].data(),
+        point: e.docs[0].data().point + 20
+      }
+     // e.docs[0].data().point + points;
+      this.firebaseService.updateUser(UserEdited)
+      this.presentAlert("you have got " + 20 + " points")
+
+
+
+
+    });
+
+
+
+  }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -208,7 +226,7 @@ export class AppComponent {
   getUser() {
 
     this.storage.getUserId().then(user => {
-      
+      this.user = user;
       this.firebaseService.getDataOfUser(user).then(_user=>{
         // if(user)
         let user = _user.docs[0].data()        
@@ -261,8 +279,8 @@ export class AppComponent {
   Translate(type: string) {
     this.translate.use(type);// ar or en    
   }
-  logout() {
-    this.firebaseService.logout();
+  async logout() {
+    await this.storage.clear();
     window.location.reload()
 
 

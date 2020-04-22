@@ -41,6 +41,7 @@ export class CreateCompPage implements OnInit {
   userTotalPoint;
   user;
   status= false;
+  duration;
   constructor(private firebaseService: FirebaseService,
     private alertController: AlertController,    
     private datePipe: DatePipe,
@@ -115,6 +116,12 @@ export class CreateCompPage implements OnInit {
   }
   async  createComp() {
     let lenOfComp;
+
+
+    if(this.duration < this.sec){
+      this.presentAlert("You must choose valid duration ")
+      
+    }
     if (this.status== true){
     if(this.user.point < this.point){
       this.presentAlert("You don't have enough points")
@@ -165,6 +172,7 @@ this.presentAlert('please play your video')
 
   }
   changeStatus($event){
+    this.duration = $event.target.playerInfo.duration;
     setInterval(()=>{
     if(this.status==false){
      if($event.target.playerInfo.currentTime>0){

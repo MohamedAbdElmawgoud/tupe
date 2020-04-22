@@ -17,7 +17,9 @@ export class CurrencyPage implements OnInit {
     private storage: Storage,
     private firebaseService: FirebaseService
   ) { }
-
+  ionViewWillEnter(){
+    this.getPoint()
+}
   async ngOnInit() {
 
     this.user = await this.storage.get('User');

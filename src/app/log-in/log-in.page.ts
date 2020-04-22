@@ -37,7 +37,7 @@ export class LogInPage implements OnInit {
       {
       },
       (obj) => {
-
+        
         this.firebase.updateUserData(obj)
       },
       function (msg) {
