@@ -120,6 +120,7 @@ export class CreateCompPage implements OnInit {
 
     if(this.duration < this.sec){
       this.presentAlert("You must choose valid duration ")
+      return
       
     }
     if (this.status== true){

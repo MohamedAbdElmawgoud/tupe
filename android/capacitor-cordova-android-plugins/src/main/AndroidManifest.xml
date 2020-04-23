@@ -6,7 +6,7 @@ xmlns:amazon="http://schemas.amazon.com/apk/res/android">
 <activity android:name="com.keyes.youtube.OpenYouTubePlayerActivity" android:screenOrientation="landscape"/>
 <activity android:name="com.bunkerpalace.cordova.YouTubeActivity" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/activity_name" android:launchMode="singleTop" android:theme="@android:style/Theme.Black.NoTitleBar" android:windowSoftInputMode="adjustResize"/>
 <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.android.gms.ads.AdActivity" android:theme="@android:style/Theme.Translucent"/>
-<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-1732462268437559~8122845794"/>
+<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="$ADMOB_APP_ID"/>
 <service android:name="de.appplant.cordova.plugin.background.ForegroundService"/>
 </application>
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>

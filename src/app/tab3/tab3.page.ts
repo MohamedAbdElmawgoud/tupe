@@ -141,6 +141,7 @@ export class Tab3Page {
         return null
       })
       await this.showMore()
+      
     });
 
 
@@ -180,15 +181,14 @@ export class Tab3Page {
       }
      // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      if (this.status){
+      // if (this.status){
       this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
       this.point = this.showPoint
-        this.status = true;
 
 
 
-      }
+      // }
     });
 
 
@@ -218,9 +218,11 @@ export class Tab3Page {
       header: 'Alert',
       // subHeader: 'Subtitle',
       message: title,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
-
+      setTimeout(()=>{
+        this.alertController.dismiss()
+      } , 3000)
     await alert.present();
   }
   Reload() {

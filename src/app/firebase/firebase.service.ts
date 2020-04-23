@@ -121,6 +121,7 @@ export class FirebaseService {
 
       this.storage.saveUserId(user.userId);
       this.router.navigate(['']);
+      // window.location.reload()
 
     })
 

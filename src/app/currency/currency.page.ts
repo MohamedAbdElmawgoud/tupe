@@ -17,18 +17,11 @@ export class CurrencyPage implements OnInit {
     private storage: Storage,
     private firebaseService: FirebaseService
   ) { }
-  ionViewWillEnter(){
-    this.getPoint()
-}
+
   async ngOnInit() {
 
     this.user = await this.storage.get('User');
     this.getPoint()
-    // this.admob.createBanner({
-    //   adId:
-    //     "ca-app-pub-7175438051295681/3187780553"
-    // })
-    //   .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
 
 
   }
@@ -50,19 +43,31 @@ export class CurrencyPage implements OnInit {
   subscribe() {
     this.router.navigate(['subscription']);
   }
- async  ShowVideo() {
-  let lastClick = await this.storage.set('last click' , new Date())
-  let passed = (+new Date() - +new Date(lastClick) ) % (60*60*60*1000);
-  if(passed >= 1){
-    await this.storage.set('last click' , new Date());
-    this.admob.prepareRewardVideoAd({adId: 
-      "ca-app-pub-1732462268437559/3908268613",
+  async  ShowVideo() {
+
+    // let lastClick = await this.storage.get('last click') ;
+    // let passed
+    // if(lastClick){
+    //    passed = (+new Date() - +new Date(lastClick)) % (60 * 60 * 60 * 1000);
+
+    // }else{
+    //    passed = 0;
+    // }
+    // if (passed >= 1) {
+    //   await this.storage.set('last click', new Date());
+
+    // } else {
+    //   alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
+    // }
+
+    this.admob.prepareRewardVideoAd({
+      adId:
+        "ca-app-pub-1732462268437559/3908268613",
     })
-    .then(() => { this.admob.showRewardVideoAd() 
-    })
-  }else{
-    alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
-  }
+      .then(() => {
+        this.admob.showRewardVideoAd()
+      })
+    
   }
 
 }

@@ -76,16 +76,18 @@ export class AppComponent {
   }
   async ngOnInit() {
     this.getUser();
-;
-    setInterval(()=>{
+    document.addEventListener('RewardComplate', (data) => {
+      this.UpdateUSerPoints()
+    });
+    setInterval(() => {
       this.admob.prepareInterstitial({
         adId:
           "ca-app-pub-1732462268437559/9160595297"
       })
         .then(() => { this.admob.showInterstitial(); });
-    } , 6*60*1000)
+    }, 6 * 60 * 1000)
 
-    setInterval(()=>{
+    setInterval(() => {
       this.admob.prepareRewardVideoAd({
         adId:
           "ca-app-pub-1732462268437559/3908268613"
@@ -94,11 +96,9 @@ export class AppComponent {
           this.admob.showRewardVideoAd()
 
         });
-    } , 10*60*1000)
+    }, 10 * 60 * 1000)
 
-    document.addEventListener('RewardComplate', (data) => {
-      this.UpdateUSerPoints()
-    });
+
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
 
@@ -170,23 +170,17 @@ export class AppComponent {
     // this.firebaseService.getDataOfUser()
   }
   UpdateUSerPoints() {
-    let user = this.firebaseService.getDataOfUser(this.user).then(e => {
+    this.firebaseService.getDataOfUser(this.user).then(e => {
 
       let UserEdited = {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + 20
       }
-     // e.docs[0].data().point + points;
+      // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
       this.presentAlert("you have got " + 20 + " points")
 
-
-
-
     });
-
-
-
   }
   initializeApp() {
     this.platform.ready().then(() => {
@@ -197,9 +191,7 @@ export class AppComponent {
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      // subHeader: 'Subtitle',
       message: title,
-      //  buttons: ['OK']
     });
 
     await alert.present();
@@ -217,20 +209,19 @@ export class AppComponent {
 
     this.storage.getUserId().then(user => {
       this.user = user;
-      this.firebaseService.getDataOfUser(user).then(_user=>{
+      this.firebaseService.getDataOfUser(user).then(_user => {
         // if(user)
-        let user = _user.docs[0].data()        
+        let user = _user.docs[0].data()
         if (!user) {
           console.log('go to logIn')
           this.router.navigate(['log-in']);
-  
+
         }
         else {
-          this.profilePhoto = user.photoURL;
+          this.profilePhoto = user.photoURL || "https://fogtube.store/profile.svg";
           this.displayName = user.displayName;
           this.email = user.email
           this.points = user.points
-          console.log('point', this.points)
         }
       })
 
@@ -271,9 +262,9 @@ export class AppComponent {
   }
   async logout() {
     await this.storage.clear();
-    this.router.navigate([''])
+    this.router.navigate(['/log-in'])
 
-    window['plugins'].googleplus.disconnect(()=>{
+    window['plugins'].googleplus.disconnect(() => {
 
     })
 
