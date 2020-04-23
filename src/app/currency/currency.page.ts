@@ -50,12 +50,19 @@ export class CurrencyPage implements OnInit {
   subscribe() {
     this.router.navigate(['subscription']);
   }
-  ShowVideo() {
+ async  ShowVideo() {
+  let lastClick = await this.storage.set('last click' , new Date())
+  let passed = (+new Date() - +new Date(lastClick) ) % (60*60*60*1000);
+  if(passed >= 1){
+    await this.storage.set('last click' , new Date());
     this.admob.prepareRewardVideoAd({adId: 
       "ca-app-pub-7175438051295681/5622372208",
     })
     .then(() => { this.admob.showRewardVideoAd() 
     })
+  }else{
+    alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
+  }
   }
 
 }

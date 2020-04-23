@@ -49,6 +49,10 @@ const routes: Routes = [
   {
     path: 'details-campaign',data: {data : ''},
     loadChildren: () => import('./details-campaign/details-campaign.module').then( m => m.DetailsCampaignPageModule)
+  },
+  {
+    path: 'create-subscripe',
+    loadChildren: () => import('./create-subscripe/create-subscripe.module').then( m => m.CreateSubscripePageModule)
   }
 ];
 @NgModule({

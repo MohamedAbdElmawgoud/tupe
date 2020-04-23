@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>{{ 'Create Compaign' | translate}}
+        <strong>{{showPoint}}</strong>
+
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!video">
+    <!-- <label>{{ 'video links' | translate}}</label>
+     -->
+    <ion-item>
+      <ion-input #videoEl placeholder="Add Link"></ion-input>
+      <button class="submit" (click)="getVideo(videoEl)">
+          {{ 'Add' | translate}}
+        </button>
+    </ion-item>
+
+    
+  </div>
+
+  <div *ngIf="video">
+    <ion-card>
+   
+        <youtube-player 
+        [videoId]="videoId"
+        suggestedQuality="medium"
+        [height]="150"
+        [width]="350"
+        (ready)="changeStatus($event)"
+        > 
+        <!-- [endSeconds]="60" -->
+      </youtube-player>
+    </ion-card>
+    <label class="header"> {{ 'Order Settings' | translate}}</label>
+    <hr>
+    <form>
+
+
+
+      <ion-item lines="none" >
+        <label>{{ 'Number Of views' | translate}}</label>
+
+        <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+        <ion-select ([ngModel])="view"
+         (ionChange)=" Onview($event)" placeholder="10" >
+      <div *ngFor="let view of Views">
+         
+          <ion-select-option value={{view}}>{{view}}</ion-select-option>
+      </div>
+          
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <label>{{ 'Time requird (second)' | translate}}</label>
+
+        <!-- *ngFor="let item of numberOfSubscribers; index as i;" -->
+        <ion-select ([ngModel])="sec" (ionChange)=" Onsec($event)" placeholder="45">
+            <div *ngFor="let second of seconds">
+                
+                 <ion-select-option value={{second}}>{{second}}</ion-select-option>
+             </div>
+        </ion-select>
+      </ion-item>
+      <hr>
+      <ion-item lines="none">
+        <label>{{ 'Vip account (reduce 10%)' | translate}}</label>
+
+        <button style="width:70px;font-size: 12px">
+
+          {{ 'Upgrade' | translate}}
+        </button>
+
+      </ion-item>
+
+      <ion-item lines="none" style="color:#4458ba; font-style: bold; font-size: 18px;">
+        <label>{{ 'Total coins' | translate}}</label>
+
+        <button style="color:#4458ba ;font-style: bold; width:70px">
+          {{point}}
+
+        </button>
+
+      </ion-item>
+<hr>
+      <button class="done" (click)="createComp()">
+        {{ 'Done' | translate}}
+
+      </button>
+    </form>
+  </div>
+</ion-content>

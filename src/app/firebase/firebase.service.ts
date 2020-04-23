@@ -83,8 +83,12 @@ export class FirebaseService {
 
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const credential = await this.afAuth.signInWithPopup(provider);
+    provider.addScope('https://www.googleapis.com/auth/youtube')
+    provider.addScope('https://www.googleapis.com/auth/youtube.readonly')
 
+    const credential = await this.afAuth.signInWithPopup(provider);
+    console.log(credential);
+    
     return this.updateUserData(credential.user);
   }
 
