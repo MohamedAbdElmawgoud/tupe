@@ -19,10 +19,10 @@ export class Tab2Page {
   ) {}
 
   async ngOnInit() {
-    this.admob.createBanner({adId: 
-      "ca-app-pub-7175438051295681/3187780553"
-    })
-    .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
+    // this.admob.createBanner({adId: 
+    //   "ca-app-pub-7175438051295681/3187780553"
+    // })
+    // .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
    
     this.user = await this.storage.get('User');
     this.getPoint()

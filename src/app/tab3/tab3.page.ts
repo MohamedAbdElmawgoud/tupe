@@ -109,11 +109,10 @@ export class Tab3Page {
       if ((this.maxTime - this.passedTIme) == 0 ) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
-        // window.location.reload()
 
         clearInterval(this.interval);
 
-        // await this.ngOnInit()
+        await this.ngOnInit()
 
       }
 
@@ -130,7 +129,7 @@ export class Tab3Page {
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
-    ).subscribe(camping => {
+    ).subscribe( async camping => {
       // this.camping = camping;
 
       this.videoUrls = camping.filter(ele => {
@@ -141,20 +140,20 @@ export class Tab3Page {
           return ele
         return null
       })
-      this.showMore()
+      await this.showMore()
     });
 
 
 
   }
 
-  showMore() {
+  async showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
     this.clickViewTime ++;
     
     if(this.clickViewTime == 4 ){
-      window.location.reload()
+     await this.ngOnInit()
     }
     if (video != undefined) {
       this.video = video;
@@ -186,9 +185,7 @@ export class Tab3Page {
       this.presentAlert("you have got " + points + " points")
       this.point = this.showPoint
         this.status = true;
-     // this.ionViewCanLeave(this.showPoint)
-      
-      // this.ionViewWillLeave(this.showPoint)
+
 
 
       }
@@ -197,19 +194,7 @@ export class Tab3Page {
 
 
   }
-  // ionViewCanLeave(point) {
-  //     if (this.status!= true){
-  //   this.point = point
-  //   this.status = true;
-  //   return false;
-  //       }
-      
-  
-  // }
-  // ionViewWillLeave(point)
-  // {
-  //   this.showPoint = point
-  // }
+
   getPoint() {
     this.firebaseService.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point

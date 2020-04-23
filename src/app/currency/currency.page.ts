@@ -24,11 +24,11 @@ export class CurrencyPage implements OnInit {
 
     this.user = await this.storage.get('User');
     this.getPoint()
-    this.admob.createBanner({
-      adId:
-        "ca-app-pub-7175438051295681/3187780553"
-    })
-      .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
+    // this.admob.createBanner({
+    //   adId:
+    //     "ca-app-pub-7175438051295681/3187780553"
+    // })
+    //   .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
 
 
   }
@@ -56,7 +56,7 @@ export class CurrencyPage implements OnInit {
   if(passed >= 1){
     await this.storage.set('last click' , new Date());
     this.admob.prepareRewardVideoAd({adId: 
-      "ca-app-pub-7175438051295681/5622372208",
+      "ca-app-pub-1732462268437559/3908268613",
     })
     .then(() => { this.admob.showRewardVideoAd() 
     })

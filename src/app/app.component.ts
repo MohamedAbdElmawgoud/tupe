@@ -72,27 +72,29 @@ export class AppComponent {
 
   }
   ads() {
-    this.clicks++;
-    if (this.clicks % 25 == 0) {
+
+  }
+  async ngOnInit() {
+    this.getUser();
+;
+    setInterval(()=>{
       this.admob.prepareInterstitial({
         adId:
-          "ca-app-pub-7175438051295681/1087590199"
+          "ca-app-pub-1732462268437559/9160595297"
       })
         .then(() => { this.admob.showInterstitial(); });
-    } else if (this.clicks % 32 == 0) {
+    } , 6*60*1000)
+
+    setInterval(()=>{
       this.admob.prepareRewardVideoAd({
         adId:
-          "ca-app-pub-7175438051295681/5622372208"
+          "ca-app-pub-1732462268437559/3908268613"
       })
         .then(() => {
           this.admob.showRewardVideoAd()
 
         });
-    }
-  }
-  async ngOnInit() {
-    this.getUser();
-;
+    } , 10*60*1000)
 
     document.addEventListener('RewardComplate', (data) => {
       this.UpdateUSerPoints()
@@ -190,8 +192,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.notificationSetup();
-
     });
   }
   async presentAlert(title) {
@@ -205,17 +205,7 @@ export class AppComponent {
     await alert.present();
 
   }
-  private notificationSetup() {
-    // this.firebaseService.getToken();
-    // this.firebaseService.onNotifications().subscribe(
-    //   (msg) => {
-    //     if (this.platform.is('ios')) {
-    //       this.presentToast(msg.aps.alert);
-    //     } else {
-    //       this.presentToast(msg.body);
-    //     }
-    //   });
-  }
+
   async presentToast(message) {
     const toast = await this.toastController.create({
       message,

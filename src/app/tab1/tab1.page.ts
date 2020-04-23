@@ -47,7 +47,7 @@ export class Tab1Page {
   // })
 
   this.admob.createBanner({adId: 
-    "ca-app-pub-7175438051295681/3187780553"
+    "ca-app-pub-1732462268437559/8107174552"
   })
   .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
     this.user = await this.storage.getUserId();
