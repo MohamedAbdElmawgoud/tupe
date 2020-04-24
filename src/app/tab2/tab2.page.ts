@@ -14,7 +14,6 @@ export class Tab2Page {
 
   constructor(public router : Router,
     private firebaseService: FirebaseService,  
-    private admob: AdMobPro,
     private storage: Storage    
   ) {}
 

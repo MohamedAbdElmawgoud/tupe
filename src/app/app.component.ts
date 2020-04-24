@@ -76,7 +76,7 @@ export class AppComponent {
   }
   async ngOnInit() {
     this.getUser();
-    document.addEventListener('RewardComplate', (data) => {
+    document.addEventListener('onAdDismiss', (data) => {
       this.UpdateUSerPoints()
     });
     setInterval(() => {

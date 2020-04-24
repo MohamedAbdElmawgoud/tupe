@@ -14,7 +14,6 @@ import { AdMobPro } from '@ionic-native/admob-pro/ngx';
     CommonModule,
     FormsModule,
     TranslateModule,
-    AdMobPro,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab2Page }])
   ],

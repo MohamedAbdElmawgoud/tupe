@@ -47,25 +47,27 @@ export class CurrencyPage implements OnInit {
     let lastClick = await this.storage.get('last click');
     let passed
     if (lastClick) {
-      passed = (+new Date() - +new Date(lastClick)) / (60 * 60 * 60 * 1000);
+      passed = (+new Date() - +new Date(lastClick))  / 1000;
 
     } else {
-      passed = 1;
+      passed = 121;
     }
 
 
-    if (passed >= 1) {
-      await this.storage.set('last click', new Date());
+    if (passed >= 120) {
+          await this.storage.set('last click', new Date());
+
       this.admob.prepareRewardVideoAd({
         adId:
           "ca-app-pub-1732462268437559/3908268613",
       })
-        .then(() => {
+        .then(async() => {
+
           this.admob.showRewardVideoAd()
         })
 
     } else {
-      alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
+      alert('you must wait ' + (120 - passed).toFixed(0) + ' second to try agian')
     }
 
   }

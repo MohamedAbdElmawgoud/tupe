@@ -3,11 +3,12 @@ import { Platform } from '@ionic/angular';
 import { Router } from "@angular/router";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { AlertController } from '@ionic/angular';
-import {  TranslateLoader, TranslateService } from  '@ngx-translate/core';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { CampingsService, camping } from "src/app/firebase/campings.service";
 import { map } from "rxjs/operators";
 import { StorageService } from '../storageService/storage.service';
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
+import { subscribesService } from '../firebase/subscripe';
 
 
 @Component({
@@ -20,148 +21,176 @@ export class Tab1Page {
   user: any;
   view = [];
   viewer = [];
-  done=0;
+  done = 0;
   createdDate = [];
   uid: string;
   compaignValue = [];
   points: number;
   type: any;
   userProfile: any = null;
-  
+  campings
   compaign = false;
-    constructor(
+  constructor(
     private platform: Platform,
-    private firebase:FirebaseService,
-    private translate:TranslateService,
+    private firebase: FirebaseService,
+    private translate: TranslateService,
     private campingsService: CampingsService,
-    public alertController: AlertController ,
+    public alertController: AlertController,
     private storage: StorageService,
     private admob: AdMobPro,
+    private subscribes: subscribesService,
     public router: Router) {
-  
-  }
- async ngOnInit(){
-  // await this.admob.createBanner.show({
-  //   id:  "ca-app-pub-7175438051295681/3187780553",
-    
-  // })
 
-  this.admob.createBanner({adId: 
-    "ca-app-pub-1732462268437559/8107174552"
-  })
-  .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
+  }
+  async ngOnInit() {
+
+
+    this.admob.createBanner({
+      adId:
+        "ca-app-pub-1732462268437559/8107174552"
+    })
+      .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
     this.user = await this.storage.getUserId();
     this.getPoint()
-    // this.firebase.getDataOfUser().subscribe(e=>{
-    //   this.points = e.point;
-    //   console.log('ee',this.points);
-    // });
-      this.getUserId()
-     
-      this.getCompinge()
+
+    this.getUserId()
+
   }
 
-  getPoint(){
-    this.firebase.getDataOfUser(this.user).then(point =>{
+  getPoint() {
+    this.firebase.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point
     })
     return this.showPoint
   }
-   googleSignin() {
+  googleSignin() {
     this.firebase.googleSignin();
-   }
-   ionViewWillEnter(){
-      this.getCompinge()
-      this.getPoint()
   }
-  getCompinge(){
+  ionViewWillEnter() {
+    this.getCompinge()
+    this.getPoint()
+  }
+  getCompinge() {
     this.compaignValue = []
-    let done =0;
-    this.storage.getUserId().then(user=>{
-      if(!user){
+    let done = 0;
+    this.storage.getUserId().then(user => {
+      if (!user) {
         console.log('go to logIn')
-         this.router.navigate(['log-in']);
-       }
-       else{   
-         let compaign= this.campingsService.getcampingsList((res => 
+        this.router.navigate(['log-in']);
+      }
+      else {
+        this.compaignValue = [];
+        this.campingsService.getcampingsList((res =>
           res.orderByChild('ownerId')
-          .equalTo(user))).snapshotChanges().pipe(
-            map((changes: Array<any>) =>
-              changes.map(c =>
-                ({ key: c.payload.key, ...c.payload.val() })
+            .equalTo(user))).snapshotChanges().pipe(
+              map((changes: Array<any>) =>
+                changes.map(c =>
+                  ({ key: c.payload.key, ...c.payload.val() })
+                )
               )
-            )
-          ).subscribe(comp => {
-        this.compaignValue = comp
-          comp.forEach(element => {
-            //this.compaignValue.push(element)
-            //this.view.push(element.view)
-            
-              this.viewer.push(element.done)
-            this.done=element.done? element.done.length : 0
-            this.view.push(this.done);
-          this.createdDate.push(element.createdData) 
-          this.compaign =true;   
-          });
-           // console.log(comp);
+            ).subscribe(comp => {
          
-           console.log('compaignValue is', this.compaignValue )
-          });
-       }
-        //return user;
-      })
-      
-     
- 
+              comp.forEach(ele=>{
+                let views = `${ele.view}/${ele.done? ele.done.length : 0}`
+                ele['viewStat'] = views;
+                this.compaignValue.push(ele)
+
+              })
+              console.log('compaignValue is', this.compaignValue)
+            });
+
+        this.subscribes.getsubscribesList((res =>
+          res.orderByChild('ownerId')
+            .equalTo(user))).snapshotChanges().pipe(
+              map((changes: Array<any>) =>
+                changes.map(c =>
+                  ({ key: c.payload.key, ...c.payload.val() })
+                )
+              )
+            ).subscribe(subscribes => {
+
+              subscribes.forEach(ele=>{
+                
+                let views = `${ele.view}/${ele.done? ele.done.length : 0}`
+                ele['viewStat'] = views;
+                ele['image'] = ele.channel.channel.thumbnails.default.url;
+
+                this.compaignValue.push(ele)
+
+              })
+              console.log(this.compaignValue);
+
+            });
+
+
+
+      }
+      //return user;
+    })
+
+
+
+
+
   }
-  getDetailsOfComp(createdate ){
-    this.router.navigate(['details-campaign'] , {queryParams : { data: createdate.key } });
+  getDetailsOfComp(createdate) {
+    this.router.navigate(['details-campaign'], { queryParams: { data: createdate.key } });
   }
-  getUserId(){
+  getUserId() {
 
   }
   async createCompinge() {
     const alert = await this.alertController.create({
       header: this.translate.instant('select the camping type'),
       inputs: [
-       
+
         {
           name: 'view for you video',
           type: 'radio',
-          label:  this.translate.instant('view for your video'),
+          label: this.translate.instant('view for your video'),
           value: 'video'
         },
         {
           name: 'radio6',
           type: 'radio',
-          label:  this.translate.instant('likes or subscribes'),
+          label: this.translate.instant('likes or subscribes'),
           value: 'channel'
         }
       ],
-      buttons : [
+      buttons: [
         {
-          text :  this.translate.instant("select")
+          text: this.translate.instant("select")
         }
       ]
     });
 
     await alert.present();
 
-    alert.onDidDismiss().then(e=>{
-      if(e.data){
-        this.router.navigate(['create-comp'] , {
-          queryParams : {
-            type : e.data.values
-          }
-        });
+    alert.onDidDismiss().then(e => {
+      if (e.data) {
+
+        if (e.data.values == 'channel') {
+          this.router.navigate(['create-subscripe'], {
+            queryParams: {
+              type: e.data.values
+            }
+          });
+        } else {
+          this.router.navigate(['create-comp'], {
+            queryParams: {
+              type: e.data.values
+            }
+          });
+        }
+
 
       }
-      
+
     })
 
-  // this.presentModal();
-   
-    
+    // this.presentModal();
+
+
   }
-  
+
 }
