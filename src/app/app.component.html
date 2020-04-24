@@ -1,6 +1,6 @@
 <ion-app (click)="ads()" >
 
-    <ion-menu side="end" menuId="End" contentId="menuContent">
+    <ion-menu  *ngIf="user" side="end" menuId="End" contentId="menuContent">
         <ion-header>
             <!-- <ion-toolbar color="tertiary">
                 <ion-title>{{ 'Menu' | translate}}</ion-title>

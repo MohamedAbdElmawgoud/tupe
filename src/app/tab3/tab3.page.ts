@@ -34,7 +34,7 @@ export class Tab3Page {
   noVideos = false;
   user;
   showPoint;
-  clickViewTime = 0; 
+  clickViewTime = 0;
   play(player) {
 
     this.player = player;
@@ -68,26 +68,24 @@ export class Tab3Page {
     private alertController: AlertController,
     private firebaseService: FirebaseService,
     private storage: Storage,
-    private route : Router
+    private route: Router
 
   ) { }
 
   async ngOnInit() {
-    
-    this.route.events.subscribe(event=>{
-      if(this.event && event instanceof NavigationStart){
-        this.event.target.pauseVideo()        
+
+    this.route.events.subscribe(event => {
+      if (this.event && event instanceof NavigationStart) {
+        this.event.target.pauseVideo()
       }
-      
+
     })
     const tag = document.createElement('script');
     this.user = await this.storage.get('User');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
-    if(this.status==false){
     this.getPoint()
-    }
   }
   startTime() {
     this.StartTimer();
@@ -106,10 +104,10 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) == 0 ) {
+      if ((this.maxTime - this.passedTIme) == 0) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
-
+        this.getPoint()
         clearInterval(this.interval);
 
         await this.ngOnInit()
@@ -129,19 +127,19 @@ export class Tab3Page {
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
-    ).subscribe( async camping => {
+    ).subscribe(async camping => {
       // this.camping = camping;
 
       this.videoUrls = camping.filter(ele => {
-        
+
         if (!ele.done)
-          return ele        
+          return ele
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
-      })
+      }).splice(0, 5)
       await this.showMore()
-      
+
     });
 
 
@@ -151,10 +149,10 @@ export class Tab3Page {
   async showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-    this.clickViewTime ++;
-    
-    if(this.clickViewTime == 4 ){
-     await this.ngOnInit()
+    this.clickViewTime++;
+
+    if (this.clickViewTime == 4) {
+      await this.ngOnInit()
     }
     if (video != undefined) {
       this.video = video;
@@ -179,7 +177,7 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-     // e.docs[0].data().point + points;
+      // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
       // if (this.status){
       this.showPoint = this.showPoint + points
@@ -220,9 +218,9 @@ export class Tab3Page {
       message: title,
       buttons: ['OK'],
     });
-      setTimeout(()=>{
-        this.alertController.dismiss()
-      } , 3000)
+    setTimeout(() => {
+      this.alertController.dismiss()
+    }, 3000)
     await alert.present();
   }
   Reload() {

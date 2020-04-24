@@ -43,31 +43,31 @@ export class CurrencyPage implements OnInit {
   subscribe() {
     this.router.navigate(['subscription']);
   }
-  async  ShowVideo() {
+  async ShowVideo() {
+    let lastClick = await this.storage.get('last click');
+    let passed
+    if (lastClick) {
+      passed = (+new Date() - +new Date(lastClick)) / (60 * 60 * 60 * 1000);
 
-    // let lastClick = await this.storage.get('last click') ;
-    // let passed
-    // if(lastClick){
-    //    passed = (+new Date() - +new Date(lastClick)) % (60 * 60 * 60 * 1000);
+    } else {
+      passed = 1;
+    }
 
-    // }else{
-    //    passed = 0;
-    // }
-    // if (passed >= 1) {
-    //   await this.storage.set('last click', new Date());
 
-    // } else {
-    //   alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
-    // }
-
-    this.admob.prepareRewardVideoAd({
-      adId:
-        "ca-app-pub-1732462268437559/3908268613",
-    })
-      .then(() => {
-        this.admob.showRewardVideoAd()
+    if (passed >= 1) {
+      await this.storage.set('last click', new Date());
+      this.admob.prepareRewardVideoAd({
+        adId:
+          "ca-app-pub-1732462268437559/3908268613",
       })
-    
+        .then(() => {
+          this.admob.showRewardVideoAd()
+        })
+
+    } else {
+      alert('you must wait ' + (1 - +passed.toFixed(2)) + ' to try agian')
+    }
+
   }
 
 }
