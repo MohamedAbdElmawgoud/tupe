@@ -76,8 +76,12 @@ export class AppComponent {
   }
   async ngOnInit() {
     this.getUser();
-    document.addEventListener('onAdDismiss', (data) => {
+    document.addEventListener('onAdDismiss', (data : any) => {
+      if(data.adType=="rewardvideo"){
       this.UpdateUSerPoints()
+
+        
+      }
     });
     setInterval(() => {
       this.admob.prepareInterstitial({

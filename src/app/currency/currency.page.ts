@@ -11,7 +11,9 @@ import { Storage } from '@ionic/storage';
 export class CurrencyPage implements OnInit {
   user: any;
   showPoint: any;
-
+  ionViewWillEnter() {
+    this.getPoint()
+  }
   constructor(public router: Router,
     private admob: AdMobPro,
     private storage: Storage,
@@ -50,11 +52,11 @@ export class CurrencyPage implements OnInit {
       passed = (+new Date() - +new Date(lastClick))  / 1000;
 
     } else {
-      passed = 121;
+      passed = 9001;
     }
 
 
-    if (passed >= 120) {
+    if (passed >= 900) {
           await this.storage.set('last click', new Date());
 
       this.admob.prepareRewardVideoAd({
@@ -67,7 +69,7 @@ export class CurrencyPage implements OnInit {
         })
 
     } else {
-      alert('you must wait ' + (120 - passed).toFixed(0) + ' second to try agian')
+      alert('you must wait ' + (900 - passed).toFixed(0) + ' second to try agian')
     }
 
   }

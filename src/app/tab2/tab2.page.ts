@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { Storage } from '@ionic/storage';
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
+import { subscribesService } from '../firebase/subscripe';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -11,21 +13,63 @@ import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 export class Tab2Page {
   showPoint: any;
   user: any;
-
+  campings;
+  noVideos;
+  lengthOfArrayOfVideo = 0;
+  channel
   constructor(public router : Router,
     private firebaseService: FirebaseService,  
-    private storage: Storage    
+    private storage: Storage    ,
+    private subscribes: subscribesService
+
   ) {}
 
   async ngOnInit() {
-    // this.admob.createBanner({adId: 
-    //   "ca-app-pub-7175438051295681/3187780553"
-    // })
-    // .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
-   
+
     this.user = await this.storage.get('User');
+
+    this.subscribes.getsubscribesList((res => res.orderByChild('expired').equalTo(null))).snapshotChanges().pipe(
+      map((changes: Array<any>) =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(async camping => {
+      // this.camping = camping;
+
+      this.campings = camping.filter(ele => {
+
+        if (!ele.done)
+          return ele
+        if (ele.done.indexOf(this.user) == -1)
+          return ele
+        return null
+      }).splice(0, 5)
+      // console.log(this.campings);
+      if(this.campings.length == 0){
+        this.noVideos = true
+      }
+      
+      await this.showMore()
+      console.log(this.channel);
+      
+
+    });
     this.getPoint()
   
+  }
+
+  async showMore() {
+    this.lengthOfArrayOfVideo++
+    let channel = this.campings[this.lengthOfArrayOfVideo];
+    console.log(channel);
+    
+    if (channel != undefined) {
+      this.channel =channel;
+    } else {
+      // window.location.reload();
+      this.noVideos = true;
+    }
   }
   getPoint(){
     this.firebaseService.getDataOfUser(this.user).then(point =>{

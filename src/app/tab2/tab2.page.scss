@@ -35,3 +35,20 @@ p{
 strong{
   float: right;
 }
+
+.channel {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 13px;
+  box-shadow: 1px 1px 12px 5px #00000030;
+  img{
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+  }
+}
+
