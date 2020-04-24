@@ -8,12 +8,14 @@ import { CreateSubscripePageRoutingModule } from './create-subscripe-routing.mod
 
 import { CreateSubscripePage } from './create-subscripe.page';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule, 
     CreateSubscripePageRoutingModule,
     HttpClientModule
   ],

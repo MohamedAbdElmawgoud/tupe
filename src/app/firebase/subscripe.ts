@@ -44,17 +44,6 @@ export class subscribesService {
 
 }
 export interface Subscripe {
-Subscribe?: number ;
-likes?: number;
-view: number ;
-type: string;
-needed?: number;
-ListOfUserDoneIt: string[];
-second: number;
-point: number,
-createdData: any,
-videoUrl: string,
-ownerId : any ,
-done ? : any
+[key : string] : any
 
 }

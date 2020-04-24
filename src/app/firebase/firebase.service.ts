@@ -191,9 +191,10 @@ export class FirebaseService {
     return this.afAuth.authState
   }
 
-  async getDataOfUser(id) {
+  async getDataOfUser(id?) {
+    let _id = await this.storage.getUserId()
     return this.firestore.collection('users')
-      .ref.where('uid', '==', id).get()
+      .ref.where('uid', '==', id || _id).get()
   }
   UserId() {
     this.getCurrentUser().subscribe(user => {
