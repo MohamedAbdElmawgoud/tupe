@@ -109,8 +109,8 @@ export class Tab3Page {
         this.updateCamping({ ...this.video })
         this.getPoint()
         clearInterval(this.interval);
-
-        await this.ngOnInit()
+        window.location.reload()
+        // await this.ngOnInit()
 
       }
 
@@ -137,7 +137,7 @@ export class Tab3Page {
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
-      }).splice(0, 5)
+      })
       await this.showMore()
 
     });

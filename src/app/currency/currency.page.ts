@@ -52,11 +52,11 @@ export class CurrencyPage implements OnInit {
       passed = (+new Date() - +new Date(lastClick))  / 1000;
 
     } else {
-      passed = 9001;
+      passed = 3001;
     }
 
 
-    if (passed >= 900) {
+    if (passed >= 300) {
           await this.storage.set('last click', new Date());
 
       this.admob.prepareRewardVideoAd({
@@ -69,7 +69,7 @@ export class CurrencyPage implements OnInit {
         })
 
     } else {
-      alert('you must wait ' + (900 - passed).toFixed(0) + ' second to try agian')
+      alert('you must wait ' + (300 - passed).toFixed(0) + ' second to try agian')
     }
 
   }

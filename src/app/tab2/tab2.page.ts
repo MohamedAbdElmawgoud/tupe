@@ -16,7 +16,9 @@ export class Tab2Page {
   campings;
   noVideos;
   lengthOfArrayOfVideo = 0;
-  channel
+  channel;
+  step;
+  passedTIme = 0
   constructor(public router : Router,
     private firebaseService: FirebaseService,  
     private storage: Storage    ,
@@ -51,7 +53,6 @@ export class Tab2Page {
       }
       
       await this.showMore()
-      console.log(this.channel);
       
 
     });
@@ -62,7 +63,7 @@ export class Tab2Page {
   async showMore() {
     this.lengthOfArrayOfVideo++
     let channel = this.campings[this.lengthOfArrayOfVideo];
-    console.log(channel);
+    this.step = 1;
     
     if (channel != undefined) {
       this.channel =channel;
@@ -80,6 +81,10 @@ export class Tab2Page {
   ShowVideo(){
     this.router.navigate(['tabs/tab3']);
     
+   }
+
+   subscribe(){
+     this.step = 2;
    }
    Reload(){
     window.location.reload()

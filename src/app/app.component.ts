@@ -77,6 +77,7 @@ export class AppComponent {
   async ngOnInit() {
     this.getUser();
     document.addEventListener('onAdDismiss', (data : any) => {
+      alert(data)
       if(data.adType=="rewardvideo"){
       this.UpdateUSerPoints()
 
