@@ -24,6 +24,7 @@ import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 const { PushNotifications, Modals } = Plugins;
 // import { FCM } from '@ionic-native/fcm/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +55,7 @@ export class AppComponent {
     private storage: StorageService,
     public alertController: AlertController,
     private admob: AdMobPro,
+    private appVersion : AppVersion
     // private fcm: FCM
 
   ) {
@@ -75,9 +77,9 @@ export class AppComponent {
 
   }
   async ngOnInit() {
+
     this.getUser();
     document.addEventListener('onAdDismiss', (data : any) => {
-      alert(data)
       if(data.adType=="rewardvideo"){
       this.UpdateUSerPoints()
 
@@ -151,25 +153,13 @@ export class AppComponent {
 
 
     await this.firebaseService.getVersion().subscribe(async version => {
-      this.versionId = (<any>version.payload.data()).numberOfVersion
-      this.versionId.forEach(element => {
-        id = element
-      });
-      let currentVersion = await this.storage.getVersionId()
-      console.log('version', id, currentVersion)
-      if (currentVersion == null) {
+     let versionOnServer = (<any>version[0].payload.doc.data()).number;
+    // alert(())
+    let appVersion = await this.appVersion.getVersionNumber();
+    if(appVersion != versionOnServer){
+      this.presentAlert('there is a new version you must update it ')
+    }
 
-
-        this.storage.saveVersionId(id)
-      }
-      else {
-        if (id != currentVersion) {
-          this.presentAlert("there is a new update please install first ")
-          this.storage.saveVersionId(id)
-
-        }
-
-      }
 
     })
     // this.firebaseService.getDataOfUser()
@@ -181,6 +171,8 @@ export class AppComponent {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + 20
       }
+      document.getElementById('point').textContent = e.docs[0].data().point + 20;
+
       // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
       this.presentAlert("you have got " + 20 + " points")

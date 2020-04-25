@@ -206,7 +206,7 @@ export class FirebaseService {
   }
 
   getVersion(){
-    return  this.firestore.collection('version').doc('1').snapshotChanges()
+    return  this.firestore.collection('version').snapshotChanges()
   }
 
   async presentAlert(title) {

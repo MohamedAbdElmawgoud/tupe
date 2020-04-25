@@ -35,6 +35,7 @@ export class Tab3Page {
   user;
   showPoint;
   clickViewTime = 0;
+  lock;
   play(player) {
 
     this.player = player;
@@ -104,13 +105,13 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) == 0) {
-        this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
+      if ((this.maxTime - this.passedTIme) == 0 && !this.lock) {
         this.updateCamping({ ...this.video })
-        this.getPoint()
+        this.getPoint();
+        this.lock = true;
         clearInterval(this.interval);
-        window.location.reload()
-        // await this.ngOnInit()
+        // await this.showMore()
+ 
 
       }
 
@@ -138,6 +139,8 @@ export class Tab3Page {
           return ele
         return null
       })
+      console.log(this.videoUrls , this.user);
+      
       await this.showMore()
 
     });
@@ -149,14 +152,10 @@ export class Tab3Page {
   async showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-    this.clickViewTime++;
 
-    if (this.clickViewTime == 4) {
-      await this.ngOnInit()
-    }
     if (video != undefined) {
       this.video = video;
-
+      this.lock = false
       this.videoId = video.videoUrl;
       this.points = +video.second;
 
@@ -165,7 +164,6 @@ export class Tab3Page {
       this.lastTime = 0;
       this.savePlayer(this.event);
     } else {
-      // window.location.reload();
       this.noVideos = true;
     }
   }
@@ -183,8 +181,8 @@ export class Tab3Page {
       this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
       this.point = this.showPoint
-
-
+      document.getElementById('point').textContent = this.showPoint;
+      this.showMore()
 
       // }
     });
@@ -206,7 +204,8 @@ export class Tab3Page {
     if (video.done.length == video.view)
       video.expired = true;
 
-    this.comp.updatecamping(video.key, video)
+    await this.comp.updatecamping(video.key, video)
+    await this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
 
   }
 
