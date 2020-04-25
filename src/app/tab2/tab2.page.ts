@@ -72,11 +72,10 @@ export class Tab2Page {
       }
 
       if ((+this.channel.second - this.passedTIme) == 0) {
-
+        this.passedTIme = 0;
         clearInterval(this.interval);
         // alert('fff')
         await this.storage.set('channel' , this.channel.key)
-          console.log(await this.storage.keys());
           window.open('https://www.youtube.com/watch?v=' + this.channel.channel.video)
       }
 

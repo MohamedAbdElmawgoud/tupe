@@ -27,6 +27,7 @@ const { PushNotifications, Modals } = Plugins;
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { YoutubeService } from './firebase/youtube';
 import { subscribesService } from './firebase/subscripe';
+import { ValdaiteService } from './firebase/valdaite.service';
 
 @Component({
   selector: 'app-root',
@@ -57,9 +58,10 @@ export class AppComponent {
     private storage: StorageService,
     public alertController: AlertController,
     private admob: AdMobPro,
-    private appVersion : AppVersion,
-    private YoutubeService : YoutubeService,
-    private subscribes: subscribesService
+    private appVersion: AppVersion,
+    private YoutubeService: YoutubeService,
+    private subscribes: subscribesService,
+    private ValdaiteService : ValdaiteService
 
     // private fcm: FCM
 
@@ -78,12 +80,14 @@ export class AppComponent {
     });
 
   }
-  ionViewWillEnter(){
-
+  async ionViewWillEnter() {
+    await this.isSubscribe()
   }
-  async isSubscribe(){
-    let lastChannel ;
-
+  validate(){
+    this.ValdaiteService.validate()
+  }
+  async isSubscribe() {
+    let lastChannel;
     this.subscribes.getsubscribesList((res => res.orderByChild('expired').equalTo(null))).snapshotChanges().pipe(
       map((changes: Array<any>) =>
         changes.map(c =>
@@ -91,29 +95,29 @@ export class AppComponent {
         )
       )
     ).subscribe(async camping => {
-     lastChannel = await this.storage.storage.get('channel')
-        
-      let camp = camping.filter(ele=>{
+      lastChannel = await this.storage.storage.get('channel')
+
+      let camp = camping.filter(ele => {
         return ele.key == lastChannel;
       })
 
-      if(camp[0]){
-              let channels = (<any> await this.YoutubeService.getUserChannels()).items;
-      let isSubscribes = channels.filter(element => {
-        
-        return element.snippet.resourceId.channelId == camp[0].channel.channelId
-      })[0];
-      if(isSubscribes && lastChannel){
-        await this.storage.storage.remove('channel')
-        await this.updateCamping(camp[0])
+      if (camp[0]) {
+        let channels = (<any>await this.YoutubeService.getUserChannels()).items;
+        let isSubscribes = channels.filter(element => {
+
+          return element.snippet.resourceId.channelId == camp[0].channel.channelId
+        })[0];
+        if (isSubscribes && lastChannel) {
+          await this.storage.storage.remove('channel')
+          await this.updateCamping(camp[0])
+        }
       }
-      }
-      
-      
+
+
 
 
     });
-    
+
 
   }
 
@@ -125,22 +129,22 @@ export class AppComponent {
       video.expired = true;
 
     await this.subscribes.updateSubscripe(video.key, video)
-    
-    await this.UpdateUSerPoints((+video.point / +video.view) - ((+video.point / +video.view) * 0.2));
+
+    await this.UpdateUSerPoints((+video.point / +video.view) - ((+video.point / +video.view) * 0.2 ) , video.channel.channelId);
 
   }
 
 
 
   async ngOnInit() {
-
+    await this.validate()
     await this.isSubscribe()
     this.getUser();
-    document.addEventListener('onAdDismiss', (data : any) => {
-      if(data.adType=="rewardvideo"){
-      this.UpdateUSerPoints(20)
+    document.addEventListener('onAdDismiss', (data: any) => {
+      if (data.adType == "rewardvideo") {
+        this.UpdateUSerPoints(20)
 
-        
+
       }
     });
     setInterval(() => {
@@ -210,36 +214,43 @@ export class AppComponent {
 
 
     await this.firebaseService.getVersion().subscribe(async version => {
-     let versionOnServer = (<any>version[0].payload.doc.data()).number;
-    // alert(())
-    let appVersion = await this.appVersion.getVersionNumber();
-    if(appVersion != versionOnServer){
-      // this.presentAlert('')
-      const alert = await this.alertController.create({
-        header: 'Alert',
-        message: 'there is a new version you must update it ',
-        backdropDismiss :false,
-        buttons: [{
-          text : 'Update now',
-          handler : ()=>{
-            window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
-          }
-        }]
+      let versionOnServer = (<any>version[0].payload.doc.data()).number;
+      // alert(())
+      let appVersion = await this.appVersion.getVersionNumber();
+      if (appVersion != versionOnServer) {
+        // this.presentAlert('')
+        const alert = await this.alertController.create({
+          header: 'Alert',
+          message: 'there is a new version you must update it ',
+          backdropDismiss: false,
+          buttons: [{
+            text: 'Update now',
+            handler: () => {
+              window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
+            }
+          }]
 
-      });
-  
-      await alert.present();
-    }
+        });
+
+        await alert.present();
+      }
 
 
     })
     // this.firebaseService.getDataOfUser()
   }
-  UpdateUSerPoints(point) {
+  UpdateUSerPoints(point , video?) {
     this.firebaseService.getDataOfUser(this.user).then(e => {
+      let user = e.docs[0].data();
+      if(video){
+        user.videos = user.videos ? user.videos : [];
+        user.videos.push(video)  
+        user.points = user.points ? user.points : {};
+        user.points[video] = point;
 
+      }
       let UserEdited = {
-        ...e.docs[0].data(),
+        ...user,
         point: e.docs[0].data().point + point
       }
       // document.getElementById('point').textContent = e.docs[0].data().point + point;

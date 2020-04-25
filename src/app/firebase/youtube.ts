@@ -23,9 +23,9 @@ export class YoutubeService {
     }
     async getUserChannels() {
         let access = await this.storage.get('accessToken')
-        return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`, {
+        return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&maxResults=50&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`, {
             headers: {
-                Authorization: 'Bearer ya29.a0Ae4lvC3aximGqNNH153WFwK-Lpc8_IOwOtDOgfIEwq33S2lhQwS3w0gh5SUysLvmSeTUTdnhyvWjURmhpATEjQM1UsjS8-2WI5UX65RDn22TNj_DN7UD_D18CI9rrqOvMlUvWqvsf50AViTQDcFTEdQDWf4J7vPytNJ0'
+                Authorization: 'Bearer ' + 'ya29.a0Ae4lvC1vL3KjVTzUA3Na_no_mMZ8S-gca8CpaX2NROQJbaoaE0jNh0Dn_AVp-q6xY1IsB4C2UzszjFI_gvHKoEFXWvQeb9vJ0VCSn3N-4-3DNda9jKA8GxOzL3piRDQVDZJvX-GTHfaKmuhNZuaT-SHrqy26Zty-k4qO'
             }
         }).toPromise()
 

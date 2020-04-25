@@ -35,11 +35,10 @@ export class CreateSubscripePage implements OnInit {
 
   async ngOnInit() {
     this.user = (await this.userService.getDataOfUser()).docs[0].data()
-
+    this.user.channel = null;
     if (!this.user.channel) {
       this.step = 1;
     } else {
-      this.step = 2;
       this.userChannel = this.user.channel
 
     }
@@ -53,7 +52,6 @@ export class CreateSubscripePage implements OnInit {
     this.userChannel.video = scrubbed;
     if (videoData.items[0]) {
       let channelData: any = await this.youtube.getChannelData(videoData.items[0].snippet.channelId)
-      console.log(channelData.items[0]);
     this.userChannel.channelId= videoData.items[0].snippet.channelId;
 
       this.userChannel.channel = channelData.items[0].snippet;
