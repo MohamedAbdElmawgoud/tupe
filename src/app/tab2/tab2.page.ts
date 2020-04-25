@@ -14,11 +14,13 @@ export class Tab2Page {
   showPoint: any;
   user: any;
   campings;
-  noVideos;
-  lengthOfArrayOfVideo = 0;
+  noVideos = false;
+  interval;
+  lengthOfArrayOfVideo = -1;
   channel;
   step;
-  passedTIme = 0
+  passedTIme = 0;
+  lastTime = 0;
   constructor(public router : Router,
     private firebaseService: FirebaseService,  
     private storage: Storage    ,
@@ -46,11 +48,11 @@ export class Tab2Page {
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
-      }).splice(0, 5)
-      // console.log(this.campings);
+      })
       if(this.campings.length == 0){
         this.noVideos = true
       }
+      console.log(this.campings , this.noVideos);
       
       await this.showMore()
       
@@ -59,7 +61,29 @@ export class Tab2Page {
     this.getPoint()
   
   }
+  async savePlayer($event) {
 
+
+
+    this.interval = setInterval(async () => {
+      if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
+        this.passedTIme++;
+        this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
+      }
+
+      if ((+this.channel.second - this.passedTIme) == 0) {
+
+        clearInterval(this.interval);
+        // alert('fff')
+        await this.storage.set('channel' , this.channel.key)
+          console.log(await this.storage.keys());
+          window.open('https://www.youtube.com/watch?v=' + this.channel.channel.video)
+      }
+
+    }, 1000)
+
+
+  }
   async showMore() {
     this.lengthOfArrayOfVideo++
     let channel = this.campings[this.lengthOfArrayOfVideo];

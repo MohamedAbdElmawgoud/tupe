@@ -25,6 +25,8 @@ import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 const { PushNotifications, Modals } = Plugins;
 // import { FCM } from '@ionic-native/fcm/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { YoutubeService } from './firebase/youtube';
+import { subscribesService } from './firebase/subscripe';
 
 @Component({
   selector: 'app-root',
@@ -55,7 +57,10 @@ export class AppComponent {
     private storage: StorageService,
     public alertController: AlertController,
     private admob: AdMobPro,
-    private appVersion : AppVersion
+    private appVersion : AppVersion,
+    private YoutubeService : YoutubeService,
+    private subscribes: subscribesService
+
     // private fcm: FCM
 
   ) {
@@ -73,15 +78,67 @@ export class AppComponent {
     });
 
   }
-  ads() {
+  ionViewWillEnter(){
 
   }
+  async isSubscribe(){
+    let lastChannel ;
+
+    this.subscribes.getsubscribesList((res => res.orderByChild('expired').equalTo(null))).snapshotChanges().pipe(
+      map((changes: Array<any>) =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(async camping => {
+     lastChannel = await this.storage.storage.get('channel')
+        
+      let camp = camping.filter(ele=>{
+        return ele.key == lastChannel;
+      })
+
+      if(camp[0]){
+              let channels = (<any> await this.YoutubeService.getUserChannels()).items;
+      let isSubscribes = channels.filter(element => {
+        
+        return element.snippet.resourceId.channelId == camp[0].channel.channelId
+      })[0];
+      if(isSubscribes && lastChannel){
+        await this.storage.storage.remove('channel')
+        await this.updateCamping(camp[0])
+      }
+      }
+      
+      
+
+
+    });
+    
+
+  }
+
+  async updateCamping(video) {
+
+    video.done = video.done ? video.done : [];
+    video.done.push(this.user)
+    if (video.done.length == video.view)
+      video.expired = true;
+
+    await this.subscribes.updateSubscripe(video.key, video)
+    
+    await this.UpdateUSerPoints((+video.point / +video.view) - ((+video.point / +video.view) * 0.2));
+
+  }
+
+
+
   async ngOnInit() {
 
+    await this.isSubscribe()
     this.getUser();
     document.addEventListener('onAdDismiss', (data : any) => {
       if(data.adType=="rewardvideo"){
-      this.UpdateUSerPoints()
+      this.UpdateUSerPoints(20)
 
         
       }
@@ -157,25 +214,39 @@ export class AppComponent {
     // alert(())
     let appVersion = await this.appVersion.getVersionNumber();
     if(appVersion != versionOnServer){
-      this.presentAlert('there is a new version you must update it ')
+      // this.presentAlert('')
+      const alert = await this.alertController.create({
+        header: 'Alert',
+        message: 'there is a new version you must update it ',
+        backdropDismiss :false,
+        buttons: [{
+          text : 'Update now',
+          handler : ()=>{
+            window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
+          }
+        }]
+
+      });
+  
+      await alert.present();
     }
 
 
     })
     // this.firebaseService.getDataOfUser()
   }
-  UpdateUSerPoints() {
+  UpdateUSerPoints(point) {
     this.firebaseService.getDataOfUser(this.user).then(e => {
 
       let UserEdited = {
         ...e.docs[0].data(),
-        point: e.docs[0].data().point + 20
+        point: e.docs[0].data().point + point
       }
-      document.getElementById('point').textContent = e.docs[0].data().point + 20;
+      // document.getElementById('point').textContent = e.docs[0].data().point + point;
 
       // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      this.presentAlert("you have got " + 20 + " points")
+      this.presentAlert("you have got " + point + " points")
 
     });
   }

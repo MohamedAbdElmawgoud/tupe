@@ -52,7 +52,6 @@
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-extension": "^1.5.4",
     "cordova-plugin-googleplus": "8.4.0",
-    "cordova-plugin-inappbrowser": "^3.2.0",
     "cordova-plugin-youtube-video-player": "^2.4.0",
     "cordova-support-android-plugin": "^1.0.2",
     "cordova-support-google-services": "^1.4.0",
@@ -105,7 +104,6 @@
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-inappbrowser": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-admobpro": {
         "PLAY_SERVICES_VERSION": "16.0.0",

@@ -54,6 +54,8 @@ export class CreateSubscripePage implements OnInit {
     if (videoData.items[0]) {
       let channelData: any = await this.youtube.getChannelData(videoData.items[0].snippet.channelId)
       console.log(channelData.items[0]);
+    this.userChannel.channelId= videoData.items[0].snippet.channelId;
+
       this.userChannel.channel = channelData.items[0].snippet;
 
     } else {

@@ -120,6 +120,8 @@ export class FirebaseService {
       }
 
       this.storage.saveUserId(user.userId);
+      this.storage.storage.set('accessToken' , user.accessToken);
+
       this.router.navigate(['']);
       // window.location.reload()
 
