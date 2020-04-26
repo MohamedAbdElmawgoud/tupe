@@ -56,5 +56,15 @@
     "Account":"الحساب",  
     "Details Campaign":"تفاصيل الحملة",
     "created Time":"تاريخ الانشاء",
-    "list of people watched your video":"قائمة الأشخاص الذين شاهدوا الفيديو الخاص بك"
+    "list of people watched your video":"قائمة الأشخاص الذين شاهدوا الفيديو الخاص بك",        
+    "please add a youtube url":"الرجاء إضافة عنوان URL لـ youtube",
+    "You must choose valid duration":"يجب أن تختار مدة صالحة",
+    "You don't have enough points":"ليس لديك نقاط كافية",
+    "You have maximum Of compaign":"لديك حد أقصى للحملة",
+    "Added success":"تمت الاضافه بنجاح",
+    "please play your video":"الرجاء تشغيل الفيديو الخاص بك",
+    "you have got":"لديك",
+    "Update now":"التحديث الآن",
+    "there is a new version you must update it":"هناك إصدار جديد يجب تحديثه",
+    "Error on registration":"خطأ في التسجيل"
 }

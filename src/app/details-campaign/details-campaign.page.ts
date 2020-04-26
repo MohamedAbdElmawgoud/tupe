@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-details-campaign',
@@ -28,6 +29,7 @@ export class DetailsCampaignPage implements OnInit {
   constructor(
     private firebase: FirebaseService,
     private router: Router,
+    public translate: TranslateService,
     private alertController: AlertController,
     private campingsService: CampingsService,
     private route: ActivatedRoute,
@@ -87,8 +89,8 @@ export class DetailsCampaignPage implements OnInit {
   }
   deleteComp() {
     this.campingsService.deletecamping(this.campId)
-
-    this.presentAlert('compaign deleted')
+    let text = this.translate.instant('compaign deleted')
+    this.presentAlert(text)
     this.router.navigate([''])
   }
 

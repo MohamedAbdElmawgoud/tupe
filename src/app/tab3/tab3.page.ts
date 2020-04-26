@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2'
 import { AlertController } from '@ionic/angular';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab3',
@@ -69,6 +70,7 @@ export class Tab3Page {
     private alertController: AlertController,
     private firebaseService: FirebaseService,
     private storage: Storage,
+    public translate: TranslateService,    
     private route: Router
 
   ) { }
@@ -179,7 +181,9 @@ export class Tab3Page {
       this.firebaseService.updateUser(UserEdited)
       // if (this.status){
       this.showPoint = this.showPoint + points
-      this.presentAlert("you have got " + points + " points")
+      let title = this.translate.instant('you have got')
+      let point = this.translate.instant('points')
+      this.presentAlert(title + points + point)
       this.point = this.showPoint
       document.getElementById('point').textContent = this.showPoint;
       this.showMore()

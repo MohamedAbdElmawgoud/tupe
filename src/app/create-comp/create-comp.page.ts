@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-comp',
@@ -49,6 +50,7 @@ export class CreateCompPage implements OnInit {
     private router: ActivatedRoute,
     private storage: Storage,
     private route: Router,
+    private translate: TranslateService,
     private firebase: FirebaseService,
   ) { }
 
@@ -86,7 +88,8 @@ export class CreateCompPage implements OnInit {
       this.videoId = scrubbed;
       console.log('video is ', scrubbed)
     } else {
-      this.presentAlert('please add a youtube url')
+      let title = this.translate.instant('please add a youtube url')
+      this.presentAlert(title)
 
     }
 
@@ -119,13 +122,15 @@ export class CreateCompPage implements OnInit {
 
 
     if (this.duration < this.sec) {
-      this.presentAlert("You must choose valid duration ")
+      let title = this.translate.instant("You must choose valid duration")
+      this.presentAlert(title) 
       return
 
     }
     if (this.status == true) {
       if (this.user.point < this.point) {
-        this.presentAlert("You don't have enough points")
+        let title = this.translate.instant("You don't have enough points")
+        this.presentAlert(title)
         return
       }
       let user = await this.storage.get('User');
@@ -155,7 +160,8 @@ export class CreateCompPage implements OnInit {
           ).subscribe(e => {
             lenOfComp = e.length;
             if (lenOfComp == 5) {
-              this.presentAlert('You have maximum Of compaign')
+              let title = this.translate.instant('You have maximum Of compaign')
+              this.presentAlert(title)
             }
 
 
@@ -163,12 +169,14 @@ export class CreateCompPage implements OnInit {
 
       //  
       this.comp.createcamping(this.camping);
-      this.presentAlert('Added success');
+      let title = this.translate.instant('Added success')
+      this.presentAlert(title);
       this.route.navigate([''])
 
     }
     else {
-      this.presentAlert('please play your video')
+      let title = this.translate.instant('please play your video')
+      this.presentAlert(title)
     }
 
   }

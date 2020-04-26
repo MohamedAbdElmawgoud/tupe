@@ -27,7 +27,7 @@ export class CampingsService {
    deletecamping(data): Promise<void> {
     return  this.db.database.ref(`/campings/${data}`).remove()
 
-   }
+   } 
   
    getcampingsList(query ): AngularFireList<camping> {
      

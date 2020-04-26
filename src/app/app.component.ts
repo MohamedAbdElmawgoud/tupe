@@ -19,7 +19,7 @@ import {
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed
-} from '@capacitor/core';
+} from '@capacitor/core'; 
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 const { PushNotifications, Modals } = Plugins;
@@ -61,6 +61,7 @@ export class AppComponent {
     private appVersion: AppVersion,
     private YoutubeService: YoutubeService,
     private subscribes: subscribesService,
+    
     private ValdaiteService : ValdaiteService
 
     // private fcm: FCM
@@ -77,7 +78,7 @@ export class AppComponent {
       else {
         this.textDir = 'ltr';
       }
-    });
+    }); 
 
   }
   async ionViewWillEnter() {
@@ -180,9 +181,10 @@ export class AppComponent {
     );
 
     // Some issue with our setup and push will not work
+    let title = this.translate.instant('Error on registration')
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        alert(title + JSON.stringify(error));
       }
     );
 
@@ -220,12 +222,14 @@ export class AppComponent {
       let appVersion = await this.appVersion.getVersionNumber();
       if (appVersion != versionOnServer) {
         // this.presentAlert('')
+        let title = this.translate.instant('there is a new version you must update it')
+        let text = this.translate.instant('Update now')
         const alert = await this.alertController.create({
           header: 'Alert',
-          message: 'there is a new version you must update it ',
+          message: title,
           backdropDismiss: false,
           buttons: [{
-            text: 'Update now',
+            text: text,
             handler: () => {
               window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
             }
@@ -258,7 +262,9 @@ export class AppComponent {
 
       // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      this.presentAlert("you have got " + point + " points")
+      let title = this.translate.instant('you have got')
+      let points = this.translate.instant('points')
+      this.presentAlert(title + point + points)
 
     });
   }

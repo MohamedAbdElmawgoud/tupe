@@ -55,5 +55,17 @@
     "Account":"Account",  
      "Details Campaign":"Details Campaign",
      "created Time":"created Time",
-     "list of people watched your video":"list of people watched your video"
-}
+     "list of people watched your video":"list of people watched your video",        
+      "please add a youtube url":"please add a youtube url",
+      "You must choose valid duration":"You must choose valid duration",
+      "You don't have enough points":"You don't have enough points",
+      "You have maximum Of compaign":"You have maximum Of compaign",
+      "Added success":"Added success",   
+      "please play your video":"please play your video",
+      "you have got":"you have got",
+      "Update now":"Update now",
+      "there is a new version you must update it":"there is a new version you must update it",
+      "Error on registration":"Error on registration"
+      
+
+    }
