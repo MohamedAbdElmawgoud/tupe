@@ -5,6 +5,7 @@ import { subscribesService } from '../firebase/subscripe';
 import { countryList, videos } from './country'
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-create-subscripe',
   templateUrl: './create-subscripe.page.html',
@@ -22,12 +23,15 @@ export class CreateSubscripePage implements OnInit {
     480, 510, 540, 570, 600, 900, 1200, 1500, 1800,
     2100, 2400, 2700, 3000, 3300, 3600
   ];
+  
   points = 3000;
-
+  durations;
   constructor(private userService: FirebaseService, private youtube: YoutubeService,
     private alertController: AlertController,
     private subscribes: subscribesService,
-    private route: Router
+    private route: Router,
+    private translate: TranslateService,
+
 
   ) {
 
@@ -49,11 +53,13 @@ export class CreateSubscripePage implements OnInit {
       scrubbed = e.target.value.slice(e.target.value.indexOf('be/') + 3)
     }
     let videoData: any = await this.youtube.getVideoData(scrubbed)
+    console.log("videoData" , videoData);
+    
     this.userChannel.video = scrubbed;
     if (videoData.items[0]) {
       let channelData: any = await this.youtube.getChannelData(videoData.items[0].snippet.channelId)
     this.userChannel.channelId= videoData.items[0].snippet.channelId;
-
+      this.durations = this.convert_time(videoData.items[0].contentDetails.duration)
       this.userChannel.channel = channelData.items[0].snippet;
 
     } else {
@@ -62,7 +68,38 @@ export class CreateSubscripePage implements OnInit {
 
 
   }
+  convert_time(duration) {
+    var a = duration.match(/\d+/g);
 
+    if (duration.indexOf('M') >= 0 && duration.indexOf('H') == -1 && duration.indexOf('S') == -1) {
+        a = [0, a[0], 0];
+    }
+
+    if (duration.indexOf('H') >= 0 && duration.indexOf('M') == -1) {
+        a = [a[0], 0, a[1]];
+    }
+    if (duration.indexOf('H') >= 0 && duration.indexOf('M') == -1 && duration.indexOf('S') == -1) {
+        a = [a[0], 0, 0];
+    }
+
+    duration = 0;
+
+    if (a.length == 3) {
+        duration = duration + parseInt(a[0]) * 3600;
+        duration = duration + parseInt(a[1]) * 60;
+        duration = duration + parseInt(a[2]);
+    }
+
+    if (a.length == 2) {
+        duration = duration + parseInt(a[0]) * 60;
+        duration = duration + parseInt(a[1]);
+    }
+
+    if (a.length == 1) {
+        duration = duration + parseInt(a[0]);
+    }
+    return duration
+}
   async saveStepOne(c, v) {
 
     if (this.userChannel.channel) {
@@ -86,6 +123,11 @@ export class CreateSubscripePage implements OnInit {
 
     if (this.user.point < this.points) {
       this.presentAlert("You don't have enough points")
+      return
+    }
+
+    if (this.durations < +sec.el.value) {
+      this.presentAlert(this.translate.instant("You must choose valid duration"))
       return
     }
     let user = await this.user;

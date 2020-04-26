@@ -15,18 +15,21 @@ export class YoutubeService {
     constructor(private http: HttpClient, private storage: Storage, private router: Router,
         private firebase: FirebaseService
     ) {
-        window['plugins'].googleplus.trySilentLogin(
-            {
+        if(window['plugins']){
+            window['plugins'].googleplus.trySilentLogin(
+                {
+    
+                },
+                async (obj) => {
+                    this.firebase.updateUserData(obj)
+    
+                },
+                function (msg) {
+                    // alert('error: ' + msg);
+                }
+            );
+        }
 
-            },
-            async (obj) => {
-                this.firebase.updateUserData(obj)
-
-            },
-            function (msg) {
-                alert('error: ' + msg);
-            }
-        );
     }
 
     async getVideoData(id) {

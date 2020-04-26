@@ -22,7 +22,11 @@ export class ValdaiteService {
   }
 
   validate() {
+
     this.storage.getUserId().then(user => {
+      if(!user){
+        return;
+      }
       this.firebaseService.getDataOfUser(user).then( async _user => {
         let alert = await this.alertController.create({
           header : " we will validate your subscribes if you remove any one will report you and remove your points  ",
