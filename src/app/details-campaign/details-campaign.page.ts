@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { FirebaseService } from "src/app/firebase/firebase.service";
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-details-campaign',
@@ -28,12 +29,13 @@ export class DetailsCampaignPage implements OnInit {
   constructor(
     private firebase: FirebaseService,
     private router: Router,
-    private alertController: AlertController,  
+    public translate: TranslateService,
+    private alertController: AlertController,
     private campingsService: CampingsService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private storage: Storage) { }
 
- async ngOnInit() {
+  async ngOnInit() {
     this.user = await this.storage.get('User');
     this.getPoint()
     this.data = this.route
@@ -45,8 +47,8 @@ export class DetailsCampaignPage implements OnInit {
       });
   }
 
-  getPoint(){
-    this.firebase.getDataOfUser(this.user).then(point =>{
+  getPoint() {
+    this.firebase.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point
     })
     return this.showPoint
@@ -60,35 +62,42 @@ export class DetailsCampaignPage implements OnInit {
               ({ key: c.payload.key, ...c.payload.val() })
             )
           )
-        ).subscribe(comp => {
-        this.compInfo = comp[0];
-        console.log('cscsc',this.compInfo)
+        ).subscribe(async comp => {
+          this.compInfo = comp[0];
           this.getUser(comp[0].ownerId)
           this.done = comp[0].done.length
           this.compdata = comp[0].createdData;
-         this.key = comp[0].key
+          this.key = comp[0].key
           this.view = comp[0].view
-            comp[0].done.forEach( async (ele) => {
-             let user =  await this.getUser(ele)
-             this.viewers.push(user.docs[0].data())
-             
-          })
+          // comp[0].done.forEach( async (ele) => {
+
+          for (const ele of comp[0].done) {
+            console.log(ele);
+            
+            let user = await this.getUser(ele)
+            if(user.docs[0]){
+              this.viewers.push(user.docs[0].data())
+            }            
+          }
+
+
+          // })
         });
   }
-   getUser(id) {
+  getUser(id) {
     return this.firebase.getDataOfUser(id);
   }
-  deleteComp(){
+  deleteComp() {
     this.campingsService.deletecamping(this.campId)
-    
-    this.presentAlert('compaign deleted')
-   this.router.navigate([''])
+    let text = this.translate.instant('compaign deleted')
+    this.presentAlert(text)
+    this.router.navigate([''])
   }
 
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-     // subHeader: 'Subtitle',
+      // subHeader: 'Subtitle',
       message: title,
       buttons: ['OK']
     });

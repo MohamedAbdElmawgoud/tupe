@@ -11,7 +11,9 @@ import { Storage } from '@ionic/storage';
 export class CurrencyPage implements OnInit {
   user: any;
   showPoint: any;
-
+  ionViewWillEnter() {
+    this.getPoint()
+  }
   constructor(public router: Router,
     private admob: AdMobPro,
     private storage: Storage,
@@ -22,11 +24,6 @@ export class CurrencyPage implements OnInit {
 
     this.user = await this.storage.get('User');
     this.getPoint()
-    this.admob.createBanner({
-      adId:
-        "ca-app-pub-7175438051295681/3187780553"
-    })
-      .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
 
 
   }
@@ -48,12 +45,33 @@ export class CurrencyPage implements OnInit {
   subscribe() {
     this.router.navigate(['subscription']);
   }
-  ShowVideo() {
-    this.admob.prepareRewardVideoAd({adId: 
-      "ca-app-pub-7175438051295681/5622372208",
-    })
-    .then(() => { this.admob.showRewardVideoAd() 
-    })
+  async ShowVideo() {
+    let lastClick = await this.storage.get('last click');
+    let passed
+    if (lastClick) {
+      passed = (+new Date() - +new Date(lastClick))  / 1000;
+
+    } else {
+      passed = 3001;
+    }
+
+
+    if (passed >= 300) {
+          await this.storage.set('last click', new Date());
+
+      this.admob.prepareRewardVideoAd({
+        adId:
+          "ca-app-pub-1732462268437559/3908268613",
+      })
+        .then(async() => {
+
+          this.admob.showRewardVideoAd()
+        })
+
+    } else {
+      alert('you must wait ' + (300 - passed).toFixed(0) + ' second to try agian')
+    }
+
   }
 
 }

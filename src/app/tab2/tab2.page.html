@@ -1,22 +1,77 @@
-<ion-header [translucent]="true" >
-    <ion-toolbar color="tertiary">
-      
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>{{ 'Fog tube' | translate}}
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'Fog tube' | translate}}
       <strong>{{showPoint}}</strong>
     </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
+  <div *ngIf="noVideos">
     <ion-icon name="person" class="icon"></ion-icon>
     <p> {{ 'There is no channel' | translate}}</p>
-  <button (click)="Reload()">
-    {{ 'Reloading' | translate}}
-  </button>
-  <button class="btn" (click)="ShowVideo()">
-    {{ 'watch video to earn point' | translate}}
+    <button (click)="Reload()">
+      {{ 'Reloading' | translate}}
     </button>
+    <button class="btn" (click)="ShowVideo()">
+      {{ 'watch video to earn point' | translate}}
+    </button>
+  </div>
+
+
+  <div *ngIf="!noVideos">
+    <div style="margin-top: 35%;" *ngIf="step == 1">
+      <div class="channel" *ngIf="channel">
+        <img src="{{channel.channel.channel.thumbnails.medium.url}}" alt="">
+        <h3>
+          {{channel.channel.channel.title}}
+        </h3>
+  
+  
+      </div>
+      <button class="btn" (click)="subscribe()">
+        {{ 'subscribe' | translate}}
+      </button>
+      <button class="btn" (click)="showMore()">
+        {{ 'Show more' | translate}}
+      </button>
+
+      <p style="padding: 20px;" >
+        {{'* note if you remove the like or the subscribe we will block your account *' | translate}}
+      </p>
+    </div>
+
+    <div  *ngIf="step == 2">
+      <ion-card click="StartTimer()">
+        <youtube-player 
+        [videoId]="channel.channel.video"
+        suggestedQuality="medium"
+       
+        (change)="change($event)"
+        [height]="430"
+        [width]="390"
+        [startSeconds]="0"
+        (ready)="savePlayer($event)"
+        > 
+        <!-- [endSeconds]="60" -->
+      </youtube-player>
+    </ion-card>
+    <ion-item class="main"  lines="none">
+      <label class="left">
+         <p  class="sec"> {{+channel.second - passedTIme}}</p>
+        {{ 'Second' | translate}}
+    </label>
+    <div class="vl"></div>
+    <label class="right">
+        <p class="sec"> {{(channel.point / channel.view )- ((channel.point / channel.view )* 0.2)}}</p>
+      {{ 'Points' | translate}}
+          </label>
+    </ion-item>
+
+    </div>
+  </div>
 </ion-content>

@@ -35,3 +35,92 @@ p{
 strong{
   float: right;
 }
+
+.channel {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 13px;
+  box-shadow: 1px 1px 12px 5px #00000030;
+  img{
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+  }
+}
+
+ion-content ion-toolbar {
+  --background: translucent;
+}
+ion-card{
+height: 70%;
+--background: black;
+//pointer-events: none //This line is the key!
+
+}
+.vl {
+  border-left: 2px solid #C6C6C6;
+  height: 40px;
+ // position: absolute;
+  //left: 50%;
+  margin-left: 5px;
+  margin-right: 5px;
+ // top: 0;
+}
+.left{
+  width:230px;
+  float:left;
+  text-align:center;
+  // margin-left: 15px; 
+  
+  }
+.right{
+  width:230px;
+  float:right;
+  text-align:center;
+  //margin-right: 15px; 
+  }
+.main{
+      // width:90%;
+      // margin-right: 5%;
+      // margin-left: 5%;
+      font-size: 20px;
+      text-align: center;
+}
+hr {
+  border-top: 4px solid #fd4081;
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+
+p{
+  //margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  display: absolute
+}
+button{
+  background: #fd4081;
+  margin-top: 20px;
+  margin-right: 5%;
+  margin-left:5%;
+  color: white;
+  font-size: 15px;
+  display: inline-block;
+  padding: 10px;
+  width: 90%;
+}
+.sec{
+display: inline;
+}
+.video{
+  height: 100%;
+}
+strong{
+  float: right;
+}

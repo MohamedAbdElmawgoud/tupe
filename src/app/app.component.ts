@@ -24,6 +24,10 @@ import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 const { PushNotifications, Modals } = Plugins;
 // import { FCM } from '@ionic-native/fcm/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { YoutubeService } from './firebase/youtube';
+import { subscribesService } from './firebase/subscripe';
+import { ValdaiteService } from './firebase/valdaite.service';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +58,12 @@ export class AppComponent {
     private storage: StorageService,
     public alertController: AlertController,
     private admob: AdMobPro,
+    private appVersion: AppVersion,
+    private YoutubeService: YoutubeService,
+    private subscribes: subscribesService,
+    
+    private ValdaiteService : ValdaiteService
+
     // private fcm: FCM
 
   ) {
@@ -71,51 +81,93 @@ export class AppComponent {
     }); 
 
   }
-  ads() {
-    this.clicks++;
-    if (this.clicks % 25 == 0) {
+  async ionViewWillEnter() {
+    await this.isSubscribe()
+  }
+  validate(){
+    this.ValdaiteService.validate()
+  }
+  async isSubscribe() {
+    let lastChannel;
+    this.subscribes.getsubscribesList((res => res.orderByChild('expired').equalTo(null))).snapshotChanges().pipe(
+      map((changes: Array<any>) =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(async camping => {
+      lastChannel = await this.storage.storage.get('channel')
+
+      let camp = camping.filter(ele => {
+        return ele.key == lastChannel;
+      })
+
+      if (camp[0]) {
+        let channels = (<any>await this.YoutubeService.getUserChannels()).items;
+        let isSubscribes = channels.filter(element => {
+
+          return element.snippet.resourceId.channelId == camp[0].channel.channelId
+        })[0];
+        if (isSubscribes && lastChannel) {
+          await this.storage.storage.remove('channel')
+          await this.updateCamping(camp[0])
+        }
+      }
+
+
+
+
+    });
+
+
+  }
+
+  async updateCamping(video) {
+
+    video.done = video.done ? video.done : [];
+    video.done.push(this.user)
+    if (video.done.length == video.view)
+      video.expired = true;
+
+    await this.subscribes.updateSubscripe(video.key, video)
+
+    await this.UpdateUSerPoints((+video.point / +video.view) - ((+video.point / +video.view) * 0.2 ) , video.channel.channelId);
+
+  }
+
+
+
+  async ngOnInit() {
+    await this.validate()
+    await this.isSubscribe()
+    this.getUser();
+    document.addEventListener('onAdDismiss', (data: any) => {
+      if (data.adType == "rewardvideo") {
+        this.UpdateUSerPoints(20)
+
+
+      }
+    });
+    setInterval(() => {
       this.admob.prepareInterstitial({
         adId:
-          "ca-app-pub-7175438051295681/1087590199"
+          "ca-app-pub-1732462268437559/9160595297"
       })
         .then(() => { this.admob.showInterstitial(); });
-    } else if (this.clicks % 32 == 0) {
+    }, 6 * 60 * 1000)
+
+    setInterval(() => {
       this.admob.prepareRewardVideoAd({
         adId:
-          "ca-app-pub-7175438051295681/5622372208"
+          "ca-app-pub-1732462268437559/3908268613"
       })
         .then(() => {
           this.admob.showRewardVideoAd()
 
         });
-    }
-  }
-  async ngOnInit() {
-    // ads 
-    window['overApps'].checkPermission(function (msg) {
-      alert(JSON.stringify(msg))
-    });
-    var options = {
-      path: "test.html",          // file path to display as view content.
-      hasHead: false,              // display over app head image which open the view up on click.
-      dragToSide: false,          // enable auto move of head to screen side after dragging stop. 
-      enableBackBtn: false,       // enable hardware back button to close view.
-      enableCloseBtn: false,      //  whether to show native close btn or to hide it.
-      verticalPosition: "top",    // set vertical alignment of view.
-      horizontalPosition: "left"  // set horizontal alignment of view. 
-    };
+    }, 10 * 60 * 1000)
 
-    // window['overApps'].startOverApp(options, function (success) {
-    //   alert(JSON.stringify(success))
 
-    // }, function (err) {
-    //   console.log(err);
-    //   alert(JSON.stringify(err))
-    // });
-
-    document.addEventListener('onAdDismiss', (data) => {
-      // this.presentAlert(JSON.stringify(data))
-    });
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
 
@@ -123,14 +175,15 @@ export class AppComponent {
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
-        console.log('Push registration success, token: ' + token.value);
+        // console.log('Push registration success, token: ' + token.value);
       }
     );
 
     // Some issue with our setup and push will not work
+    let title = this.translate.instant('Error on registration')
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        // alert('Error on registration: ' + JSON.stringify(error));
+        alert(title + JSON.stringify(error));
       }
     );
 
@@ -163,61 +216,73 @@ export class AppComponent {
 
 
     await this.firebaseService.getVersion().subscribe(async version => {
-      this.versionId = (<any>version.payload.data()).numberOfVersion
-      this.versionId.forEach(element => {
-        id = element
-      });
-      let currentVersion = await this.storage.getVersionId()
-      console.log('version', id, currentVersion)
-      if (currentVersion == null) {
+      let versionOnServer = (<any>version[0].payload.doc.data()).number;
+      // alert(())
+      let appVersion = await this.appVersion.getVersionNumber();
+      if (appVersion != versionOnServer) {
+        // this.presentAlert('')
+        let title = this.translate.instant('there is a new version you must update it')
+        let text = this.translate.instant('Update now')
+        const alert = await this.alertController.create({
+          header: 'Alert',
+          message: title,
+          backdropDismiss: false,
+          buttons: [{
+            text: text,
+            handler: () => {
+              window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
+            }
+          }]
 
+        });
 
-        this.storage.saveVersionId(id)
+        await alert.present();
       }
-      else {
-        if (id != currentVersion) {
-          this.presentAlert("there is a new update please install first ")
-          this.storage.saveVersionId(id)
 
-        }
-
-      }
 
     })
-    this.getUser();
     // this.firebaseService.getDataOfUser()
   }
+  UpdateUSerPoints(point , video?) {
+    this.firebaseService.getDataOfUser(this.user).then(e => {
+      let user = e.docs[0].data();
+      if(video){
+        user.videos = user.videos ? user.videos : [];
+        user.videos.push(video)  
+        user.points = user.points ? user.points : {};
+        user.points[video] = point;
 
+      }
+      let UserEdited = {
+        ...user,
+        point: e.docs[0].data().point + point
+      }
+      // document.getElementById('point').textContent = e.docs[0].data().point + point;
+
+      // e.docs[0].data().point + points;
+      this.firebaseService.updateUser(UserEdited)
+      let title = this.translate.instant('you have got')
+      let points = this.translate.instant('points')
+      this.presentAlert(title + point + points)
+
+    });
+  }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.notificationSetup();
-
     });
   }
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      // subHeader: 'Subtitle',
       message: title,
-      //  buttons: ['OK']
     });
 
     await alert.present();
 
   }
-  private notificationSetup() {
-    // this.firebaseService.getToken();
-    // this.firebaseService.onNotifications().subscribe(
-    //   (msg) => {
-    //     if (this.platform.is('ios')) {
-    //       this.presentToast(msg.aps.alert);
-    //     } else {
-    //       this.presentToast(msg.body);
-    //     }
-    //   });
-  }
+
   async presentToast(message) {
     const toast = await this.toastController.create({
       message,
@@ -228,20 +293,23 @@ export class AppComponent {
   getUser() {
 
     this.storage.getUserId().then(user => {
-      console.log(!user, user, 'user');
+      this.user = user;
+      this.firebaseService.getDataOfUser(user).then(_user => {
+        // if(user)
+        let user = _user.docs[0].data()
+        if (!user) {
+          console.log('go to logIn')
+          this.router.navigate(['log-in']);
 
-      if (!user) {
-        console.log('go to logIn')
-        this.router.navigate(['log-in']);
+        }
+        else {
+          this.profilePhoto = user.photoURL || "https://fogtube.store/profile.svg";
+          this.displayName = user.displayName;
+          this.email = user.email
+          this.points = user.points
+        }
+      })
 
-      }
-      else {
-        this.profilePhoto = user.photoURL;
-        this.displayName = user.displayName;
-        this.email = user.email
-        this.points = user.points
-        console.log('point', this.points)
-      }
       //return user;
     })
   }
@@ -277,9 +345,13 @@ export class AppComponent {
   Translate(type: string) {
     this.translate.use(type);// ar or en    
   }
-  logout() {
-    this.firebaseService.logout();
-    window.location.reload()
+  async logout() {
+    await this.storage.clear();
+    this.router.navigate(['/log-in'])
+
+    window['plugins'].googleplus.disconnect(() => {
+
+    })
 
 
   }

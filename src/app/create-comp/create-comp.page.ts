@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-comp',
@@ -20,13 +21,13 @@ export class CreateCompPage implements OnInit {
   showPoint: any;
 
   id: string;
-  Views = [10, 50,  100,150, 200,250, 300,350, 400,450
-    , 500,550, 600,650, 700,750, 800,850, 900,950, 1000]
-    seconds= [45,
-      60,90,120,150,180,210,240,270,300,330,360,390,420,450,
-      480,510,540,570,600,900,1200,1500,1800,
-      2100,2400,2700,3000,3300,3600
-    ]
+  Views = [10, 50, 100, 150, 200, 250, 300, 350, 400, 450
+    , 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000]
+  seconds = [45,
+    60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450,
+    480, 510, 540, 570, 600, 900, 1200, 1500, 1800,
+    2100, 2400, 2700, 3000, 3300, 3600
+  ]
   likes = 10;
   Subscribe = 10;
   view = 10;
@@ -40,19 +41,21 @@ export class CreateCompPage implements OnInit {
   videoId;
   userTotalPoint;
   user;
-  status= false;
+  status = false;
+  duration;
   constructor(private firebaseService: FirebaseService,
-    private alertController: AlertController,    
+    private alertController: AlertController,
     private datePipe: DatePipe,
     private comp: CampingsService,
     private router: ActivatedRoute,
-    private storage : Storage,
-    private route : Router,
+    private storage: Storage,
+    private route: Router,
+    private translate: TranslateService,
     private firebase: FirebaseService,
   ) { }
 
- async ngOnInit() {
-  this.getPoint()
+  async ngOnInit() {
+    this.getPoint()
     this.router.queryParamMap.subscribe(res => {
       this.type = res.get('type');
     })
@@ -61,21 +64,21 @@ export class CreateCompPage implements OnInit {
     document.body.appendChild(tag);
     let user = await this.storage.get('User');
 
-    this.user =( await this.firebaseService.getDataOfUser(user)).docs[0].data()
+    this.user = (await this.firebaseService.getDataOfUser(user)).docs[0].data()
     console.log(this.user);
-    
+
   }
 
-  getPoint(){
-    this.firebaseService.getDataOfUser(this.user).then(point =>{
+  getPoint() {
+    this.firebaseService.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point
     })
     return this.showPoint
   }
 
   getVideo(video) {
-    if(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/.test(video.el.value)){
-    this.video = video.el.value;
+    if (/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/.test(video.el.value)) {
+      this.video = video.el.value;
 
       let scrubbed = this.video.slice(this.video.indexOf('=') + 1)
       if (this.video.search('=') == -1) {
@@ -84,8 +87,9 @@ export class CreateCompPage implements OnInit {
       // abc 123 Howdy
       this.videoId = scrubbed;
       console.log('video is ', scrubbed)
-    }else{
-      this.presentAlert('please add a youtube url')
+    } else {
+      let title = this.translate.instant('please add a youtube url')
+      this.presentAlert(title)
 
     }
 
@@ -115,11 +119,20 @@ export class CreateCompPage implements OnInit {
   }
   async  createComp() {
     let lenOfComp;
-    if (this.status== true){
-    if(this.user.point < this.point){
-      this.presentAlert("You don't have enough points")
+
+
+    if (this.duration < this.sec) {
+      let title = this.translate.instant("You must choose valid duration")
+      this.presentAlert(title) 
       return
+
     }
+    if (this.status == true) {
+      if (this.user.point < this.point) {
+        let title = this.translate.instant("You don't have enough points")
+        this.presentAlert(title)
+        return
+      }
       let user = await this.storage.get('User');
 
       this.camping = {
@@ -133,7 +146,7 @@ export class CreateCompPage implements OnInit {
         point: this.point,
         videoUrl: this.videoId,
         createdData: Date.now(),
-        ownerId : user
+        ownerId: user
       }
       this.UpdateUSerPoints(-this.point)
       this.comp.getcampingsList((res =>
@@ -144,39 +157,43 @@ export class CreateCompPage implements OnInit {
                 ({ key: c.payload.key, ...c.payload.val() })
               )
             )
-          ).subscribe(e=>{
-            lenOfComp =e.length;
-            if(lenOfComp==5){
-               this.presentAlert('You have maximum Of compaign')
+          ).subscribe(e => {
+            lenOfComp = e.length;
+            if (lenOfComp == 5) {
+              let title = this.translate.instant('You have maximum Of compaign')
+              this.presentAlert(title)
             }
-           
-             
+
+
           })
 
-    //  
-    this.comp.createcamping(this.camping);
-    this.presentAlert('Added success');
-    this.route.navigate([''])
-    
+      //  
+      this.comp.createcamping(this.camping);
+      let title = this.translate.instant('Added success')
+      this.presentAlert(title);
+      this.route.navigate([''])
+
     }
-    else{
-this.presentAlert('please play your video')
+    else {
+      let title = this.translate.instant('please play your video')
+      this.presentAlert(title)
     }
 
   }
-  changeStatus($event){
-    setInterval(()=>{
-    if(this.status==false){
-     if($event.target.playerInfo.currentTime>0){
-        console.log('event is',$event.target.playerInfo.currentTime)
-        this.status = true;
+  changeStatus($event) {
+    this.duration = $event.target.playerInfo.duration;
+    setInterval(() => {
+      if (this.status == false) {
+        if ($event.target.playerInfo.currentTime > 0) {
+          console.log('event is', $event.target.playerInfo.currentTime)
+          this.status = true;
+        }
       }
-    }
-   
-    },1000)
+
+    }, 1000)
   }
   UpdateUSerPoints(points) {
-    console.log('updatePoint',points)
+    console.log('updatePoint', points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
 
       let UserEdited = {
@@ -190,7 +207,7 @@ this.presentAlert('please play your video')
   async presentAlert(title) {
     const alert = await this.alertController.create({
       header: 'Alert',
-     // subHeader: 'Subtitle',
+      // subHeader: 'Subtitle',
       message: title,
       buttons: ['OK']
     });

@@ -83,32 +83,51 @@ export class FirebaseService {
 
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    // const credential = await this.afAuth.signInWithEmailAndPassword();
+    provider.addScope('https://www.googleapis.com/auth/youtube')
+    provider.addScope('https://www.googleapis.com/auth/youtube.readonly')
 
-    // return this.updateUserData(credential.user);
+    const credential = await this.afAuth.signInWithPopup(provider);
+    console.log(credential);
+    
+    return this.updateUserData(credential.user);
   }
 
   updateUserData(user) {
+    console.log(user);
+    
+    if(!user.userId){
+      user.userId = user.uid
+    }
 
+    
     // Sets user data to firestore on login
     this.firestore.collection('users').ref.where('uid', '==', user.userId).get().then(_user => {
-
-
+      
       if (!_user.docs[0]) {
         this.firestore.collection('users').add({
           uid: user.userId,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.imageUrl,
+          photoURL: user.imageUrl || '',
           point: 0
+        }).then(u=>{
+          console.log(u);
+          
         })
+
       } else {
 
       }
 
+      this.storage.saveUserId(user.userId);
+      this.storage.storage.set('accessToken' , user.accessToken);
+
+      this.router.navigate(['']);
+      // window.location.reload()
+
     })
 
-    this.storage.saveUserId(user.uid);
+
 
   }
 
@@ -174,9 +193,10 @@ export class FirebaseService {
     return this.afAuth.authState
   }
 
-  async getDataOfUser(id) {
+  async getDataOfUser(id?) {
+    let _id = await this.storage.getUserId()
     return this.firestore.collection('users')
-      .ref.where('uid', '==', id).get()
+      .ref.where('uid', '==', id || _id).get()
   }
   UserId() {
     this.getCurrentUser().subscribe(user => {
@@ -188,7 +208,7 @@ export class FirebaseService {
   }
 
   getVersion(){
-    return  this.firestore.collection('version').doc('1').snapshotChanges()
+    return  this.firestore.collection('version').snapshotChanges()
   }
 
   async presentAlert(title) {

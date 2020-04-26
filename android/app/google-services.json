@@ -2,18 +2,26 @@
   "project_info": {
     "project_number": "693510009864",
     "firebase_url": "https://fog-tube.firebaseio.com",
-    "project_id": "fog.tube.app",
+    "project_id": "fog-tube",
     "storage_bucket": "fog-tube.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:693510009864:android:0faba01d784b5c34fc4dbd",
+        "mobilesdk_app_id": "1:693510009864:android:7555e31ebc568125fc4dbd",
         "android_client_info": {
           "package_name": "fog.tube.app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "693510009864-csgj326c0hurr2h3ben42podtrs9lapb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fog.tube.app",
+            "certificate_hash": "e932206603633d50472631eca9e47cdaf82433fe"
+          }
+        },
         {
           "client_id": "693510009864-nfc3o2efil4n36h6mdrb5jpn2srd4oh1.apps.googleusercontent.com",
           "client_type": 3

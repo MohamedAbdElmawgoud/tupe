@@ -4,9 +4,8 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ 'Fog tube' | translate}}
-<strong *ngIf="!status">{{showPoint}}</strong>
+<strong id="point" >{{showPoint}}</strong>
 
-<strong *ngIf="status">{{point}}</strong>
         
       </ion-title>
       
@@ -22,7 +21,7 @@
     suggestedQuality="medium"
    
     (change)="change($event)"
-    [height]="430"
+    [height]="400"
     [width]="390"
     [startSeconds]="0"
     (ready)="savePlayer($event)"

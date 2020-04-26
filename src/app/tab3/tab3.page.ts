@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2'
 import { AlertController } from '@ionic/angular';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab3',
@@ -34,7 +35,8 @@ export class Tab3Page {
   noVideos = false;
   user;
   showPoint;
-  clickViewTime = 0; 
+  clickViewTime = 0;
+  lock;
   play(player) {
 
     this.player = player;
@@ -68,26 +70,25 @@ export class Tab3Page {
     private alertController: AlertController,
     private firebaseService: FirebaseService,
     private storage: Storage,
-    private route : Router
+    public translate: TranslateService,    
+    private route: Router
 
   ) { }
 
   async ngOnInit() {
-    
-    this.route.events.subscribe(event=>{
-      if(this.event && event instanceof NavigationStart){
-        this.event.target.pauseVideo()        
+
+    this.route.events.subscribe(event => {
+      if (this.event && event instanceof NavigationStart) {
+        this.event.target.pauseVideo()
       }
-      
+
     })
     const tag = document.createElement('script');
     this.user = await this.storage.get('User');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
     this.getVideoID();
-    if(this.status==false){
     this.getPoint()
-    }
   }
   startTime() {
     this.StartTimer();
@@ -106,14 +107,13 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) == 0 ) {
-        this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
+      if ((this.maxTime - this.passedTIme) == 0 && !this.lock) {
         this.updateCamping({ ...this.video })
-        // window.location.reload()
-
+        this.getPoint();
+        this.lock = true;
         clearInterval(this.interval);
-
-        // await this.ngOnInit()
+        // await this.showMore()
+ 
 
       }
 
@@ -130,35 +130,34 @@ export class Tab3Page {
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
-    ).subscribe(camping => {
+    ).subscribe(async camping => {
       // this.camping = camping;
 
       this.videoUrls = camping.filter(ele => {
-        
+
         if (!ele.done)
-          return ele        
+          return ele
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
       })
-      this.showMore()
+      console.log(this.videoUrls , this.user);
+      
+      await this.showMore()
+
     });
 
 
 
   }
 
-  showMore() {
+  async showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-    this.clickViewTime ++;
-    
-    if(this.clickViewTime == 4 ){
-      window.location.reload()
-    }
+
     if (video != undefined) {
       this.video = video;
-
+      this.lock = false
       this.videoId = video.videoUrl;
       this.points = +video.second;
 
@@ -167,7 +166,6 @@ export class Tab3Page {
       this.lastTime = 0;
       this.savePlayer(this.event);
     } else {
-      // window.location.reload();
       this.noVideos = true;
     }
   }
@@ -179,37 +177,24 @@ export class Tab3Page {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-     // e.docs[0].data().point + points;
+      // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      if (this.status){
+      // if (this.status){
       this.showPoint = this.showPoint + points
-      this.presentAlert("you have got " + points + " points")
+      let title = this.translate.instant('you have got')
+      let point = this.translate.instant('points')
+      this.presentAlert(title + points + point)
       this.point = this.showPoint
-        this.status = true;
-     // this.ionViewCanLeave(this.showPoint)
-      
-      // this.ionViewWillLeave(this.showPoint)
+      document.getElementById('point').textContent = this.showPoint;
+      this.showMore()
 
-
-      }
+      // }
     });
 
 
 
   }
-  // ionViewCanLeave(point) {
-  //     if (this.status!= true){
-  //   this.point = point
-  //   this.status = true;
-  //   return false;
-  //       }
-      
-  
-  // }
-  // ionViewWillLeave(point)
-  // {
-  //   this.showPoint = point
-  // }
+
   getPoint() {
     this.firebaseService.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point
@@ -223,7 +208,8 @@ export class Tab3Page {
     if (video.done.length == video.view)
       video.expired = true;
 
-    this.comp.updatecamping(video.key, video)
+    await this.comp.updatecamping(video.key, video)
+    await this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
 
   }
 
@@ -233,9 +219,11 @@ export class Tab3Page {
       header: 'Alert',
       // subHeader: 'Subtitle',
       message: title,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
-
+    setTimeout(() => {
+      this.alertController.dismiss()
+    }, 3000)
     await alert.present();
   }
   Reload() {
