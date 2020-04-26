@@ -49,7 +49,11 @@ export class CurrencyPage implements OnInit {
     this.router.navigate(['subscription']);
   }
   ShowVideo() {
-
+    this.admob.prepareRewardVideoAd({adId: 
+      "ca-app-pub-7175438051295681/5622372208",
+    })
+    .then(() => { this.admob.showRewardVideoAd() 
+    })
   }
 
 }

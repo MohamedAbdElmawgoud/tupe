@@ -25,10 +25,7 @@ export class CampingsService {
    }
   
    deletecamping(data): Promise<void> {
-    // return this.db.object(this.dbPath + '/' + key).remove()
-     // this.db.list(`/campigns/${data.key}`).remove(data.key)
-   //   this.db.database.ref().child(`/campigns/${data.key}`).remove()e
-   return this.db.database.ref(`/campigns/${data.key}`).remove()
+    return  this.db.database.ref(`/campings/${data}`).remove()
 
    } 
   

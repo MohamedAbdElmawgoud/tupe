@@ -46,10 +46,10 @@ export class Tab1Page {
     
   // })
 
-  // this.admob.createBanner({adId: 
-  //   "ca-app-pub-7175438051295681/3187780553"
-  // })
-  // .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
+  this.admob.createBanner({adId: 
+    "ca-app-pub-7175438051295681/3187780553"
+  })
+  .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
     this.user = await this.storage.getUserId();
     this.getPoint()
     // this.firebase.getDataOfUser().subscribe(e=>{

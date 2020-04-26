@@ -34,6 +34,7 @@ export class Tab3Page {
   noVideos = false;
   user;
   showPoint;
+  clickViewTime = 0; 
   play(player) {
 
     this.player = player;
@@ -105,7 +106,7 @@ export class Tab3Page {
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
-      if ((this.maxTime - this.passedTIme) == 0 && this.status==false) {
+      if ((this.maxTime - this.passedTIme) == 0 ) {
         this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
         this.updateCamping({ ...this.video })
         // window.location.reload()
@@ -133,12 +134,12 @@ export class Tab3Page {
       // this.camping = camping;
 
       this.videoUrls = camping.filter(ele => {
-
+        
         if (!ele.done)
-          return ele
+          return ele        
         if (ele.done.indexOf(this.user) == -1)
           return ele
-        return false
+        return null
       })
       this.showMore()
     });
@@ -150,7 +151,11 @@ export class Tab3Page {
   showMore() {
     this.lengthOfArrayOfVideo++
     let video = this.videoUrls[this.lengthOfArrayOfVideo];
-
+    this.clickViewTime ++;
+    
+    if(this.clickViewTime == 4 ){
+      window.location.reload()
+    }
     if (video != undefined) {
       this.video = video;
 
@@ -160,9 +165,7 @@ export class Tab3Page {
       this.maxTime = +video.second;
       this.passedTIme = 0;
       this.lastTime = 0;
-
-      this.savePlayer(this.event)
-        ;
+      this.savePlayer(this.event);
     } else {
       // window.location.reload();
       this.noVideos = true;
@@ -178,7 +181,7 @@ export class Tab3Page {
       }
      // e.docs[0].data().point + points;
       this.firebaseService.updateUser(UserEdited)
-      if (this.status!= true){
+      if (this.status){
       this.showPoint = this.showPoint + points
       this.presentAlert("you have got " + points + " points")
       this.point = this.showPoint

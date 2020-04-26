@@ -46,9 +46,22 @@ export class LogInPage implements OnInit {
     // })
 
   }
- async googleSignin(email , password){
+ async googleSignin(){
     // console.log();
-    this.firebase.login(email.el.value , password.el.value)
+    // this.firebase.login(email.el.value , password.el.value)
+    window['plugins'].googleplus.login(
+      {
+        // 'webClientId': 'client id of the web app/server side', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+      },
+       (obj)=> {
+        alert(JSON.stringify(obj)); // do something useful instead of alerting
+
+        this.firebase.updateUserData(obj)
+      },
+      function (msg) {
+        // alert('error: ' + msg);
+      }
+  );
     // let googleUser = await Plugins.GoogleAuth.signIn();
     // // const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken); 
     // alert(JSON.stringify(googleUser))
