@@ -16,7 +16,10 @@ export class ValdaiteService {
     private subscribes: subscribesService,
     private storage: StorageService,
     public alertController: AlertController,
-  ) { }
+  ) { 
+
+    
+  }
 
   validate() {
     this.storage.getUserId().then(user => {
@@ -84,4 +87,6 @@ export class ValdaiteService {
 
     });
   }
+
+  
 }

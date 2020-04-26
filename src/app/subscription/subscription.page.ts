@@ -16,7 +16,10 @@ export class SubscriptionPage implements OnInit {
     private ValdaiteService : ValdaiteService,
     private storage: Storage ,
     private router : Router
-    ) { }
+    ) { 
+
+      
+    }
 
  async ngOnInit() {
    await this.ValdaiteService.validate()

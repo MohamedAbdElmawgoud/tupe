@@ -89,9 +89,9 @@ export class Tab1Page {
                 )
               )
             ).subscribe(comp => {
-         
-              comp.forEach(ele=>{
-                let views = `${ele.view}/${ele.done? ele.done.length : 0}`
+
+              comp.forEach(ele => {
+                let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
                 ele['viewStat'] = views;
                 this.compaignValue.push(ele)
 
@@ -109,9 +109,9 @@ export class Tab1Page {
               )
             ).subscribe(subscribes => {
 
-              subscribes.forEach(ele=>{
-                
-                let views = `${ele.view}/${ele.done? ele.done.length : 0}`
+              subscribes.forEach(ele => {
+
+                let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
                 ele['viewStat'] = views;
                 ele['image'] = ele.channel.channel.thumbnails.default.url;
 
@@ -140,6 +140,14 @@ export class Tab1Page {
 
   }
   async createCompinge() {
+    if (this.compaignValue.length >= 5) {
+      const alert = await this.alertController.create({
+        header: this.translate.instant('you have reached your limit'),
+      });
+
+      await alert.present();
+      return;
+    }
     const alert = await this.alertController.create({
       header: this.translate.instant('select the camping type'),
       inputs: [

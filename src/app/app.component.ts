@@ -137,6 +137,7 @@ export class AppComponent {
 
 
   async ngOnInit() {
+    
     await this.validate()
     await this.isSubscribe()
     this.getUser();
