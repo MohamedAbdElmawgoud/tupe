@@ -61,7 +61,7 @@ export class CurrencyPage implements OnInit {
 
       this.admob.prepareRewardVideoAd({
         adId:
-          "ca-app-pub-1732462268437559/3908268613",
+          "ca-app-pub-3736449894948823/7211480575",
       })
         .then(async() => {
 

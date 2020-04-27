@@ -152,7 +152,7 @@ export class AppComponent {
     setInterval(() => {
       this.admob.prepareInterstitial({
         adId:
-          "ca-app-pub-1732462268437559/9160595297"
+          "ca-app-pub-3736449894948823/8716133932"
       })
         .then(() => { this.admob.showInterstitial(); });
     }, 6 * 60 * 1000)
@@ -160,7 +160,7 @@ export class AppComponent {
     setInterval(() => {
       this.admob.prepareRewardVideoAd({
         adId:
-          "ca-app-pub-1732462268437559/3908268613"
+          "ca-app-pub-3736449894948823/7211480575"
       })
         .then(() => {
           this.admob.showRewardVideoAd()

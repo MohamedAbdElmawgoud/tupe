@@ -47,7 +47,7 @@ export class Tab1Page {
 
     this.admob.createBanner({
       adId:
-        "ca-app-pub-1732462268437559/8107174552"
+        "ca-app-pub-3736449894948823/3846950634"
     })
       .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
     this.user = await this.storage.getUserId();
