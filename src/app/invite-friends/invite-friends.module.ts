@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -17,6 +18,9 @@ import { TranslateModule } from  '@ngx-translate/core';
     TranslateModule,        
     InviteFriendsPageRoutingModule
   ],
-  declarations: [InviteFriendsPage]
+  declarations: [InviteFriendsPage],
+  providers : [
+    Clipboard
+  ]
 })
 export class InviteFriendsPageModule {}

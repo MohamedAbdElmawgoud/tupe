@@ -112,7 +112,6 @@ export class Tab3Page {
         this.getPoint();
         this.lock = true;
         clearInterval(this.interval);
-        // await this.showMore()
  
 
       }

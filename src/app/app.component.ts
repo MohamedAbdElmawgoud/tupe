@@ -155,7 +155,7 @@ export class AppComponent {
           "ca-app-pub-3736449894948823/8716133932"
       })
         .then(() => { this.admob.showInterstitial(); });
-    }, 6 * 60 * 1000)
+    }, 7 * 60 * 1000)
 
     setInterval(() => {
       this.admob.prepareRewardVideoAd({
@@ -166,7 +166,7 @@ export class AppComponent {
           this.admob.showRewardVideoAd()
 
         });
-    }, 10 * 60 * 1000)
+    }, 11 * 60 * 1000)
 
 
     // Register with Apple / Google to receive push via APNS/FCM

@@ -14,13 +14,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-card> 
+  <ion-card style="text-align: center;" > 
     <ion-card-title>{{ 'invite Your Friends' | translate}}</ion-card-title>
     <label>
-    <a href="https://play.google.com/store/apps/details?id=com.knowladge.hadeas">https://play.google.com/store/apps/details?id=com.knowladge.hadeas</a>
+    <a href="https://fogtube.app.link/NwuabRc8Z5?ref={{user}}">https://fogtube.app.link/NwuabRc8Z5?ref={{user}}</a>
   </label>
   <br>
-    <button class="btn">{{ 'copy link' | translate}}</button>
-    <button>{{ 'invite friend' | translate}}</button>
+  <div style="text-align: center;" >
+    <button class="btn" (click)="copy()" >{{ 'copy link' | translate}}</button>
+
+  </div>
+    <!-- <button>{{ 'invite friend' | translate}}</button> -->
   </ion-card>
 </ion-content>
