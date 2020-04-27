@@ -77,6 +77,10 @@ const routes: Routes = [
     loadChildren: () => import('./create-subscripe/create-subscripe.module').then( m => m.CreateSubscripePageModule),
     canActivate : [AuthGuard]
 
+  },
+  {
+    path: 'reedem-invite',
+    loadChildren: () => import('./reedem-invite/reedem-invite.module').then( m => m.ReedemInvitePageModule)
   }
 ];
 @NgModule({

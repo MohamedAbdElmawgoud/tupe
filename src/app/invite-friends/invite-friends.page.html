@@ -26,4 +26,12 @@
   </div>
     <!-- <button>{{ 'invite friend' | translate}}</button> -->
   </ion-card>
+
+  <div *ngFor="let user of viewers">
+
+    <h4> {{user.displayName}}
+    </h4>
+    <img src="{{user.photoURL || 'https://fogtube.store/profile.svg'}}">
+
+  </div>
 </ion-content>

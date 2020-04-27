@@ -34,6 +34,12 @@
       
     </ion-card>
 
+    <ion-card *ngIf="!invited" (click)="redeem()">
+      <ion-icon  style="color: #000; font-size: 30px; margin: 0 10px;" name="cash-outline"></ion-icon>
+            <ion-card-title>{{ 'invite points' | translate}}</ion-card-title>
+    
+  </ion-card>
+
     
     <ion-card (click)="subscribe()">
         <img src="assets\icon\play.png">

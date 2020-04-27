@@ -116,7 +116,7 @@ export class Tab3Page {
 
       }
 
-    }, 1000)
+    },2000)
 
 
   }
@@ -139,7 +139,7 @@ export class Tab3Page {
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
-      })
+      }).splice(0 , 15)
       console.log(this.videoUrls , this.user);
       
       await this.showMore()
@@ -208,7 +208,7 @@ export class Tab3Page {
       video.expired = true;
 
     await this.comp.updatecamping(video.key, video)
-    await this.UpdateUSerPoints(this.maxTime - (this.maxTime * 0.2));
+    await this.UpdateUSerPoints((+video.point / +video.view) - ((+video.point / +video.view) * 0.2));
 
   }
 

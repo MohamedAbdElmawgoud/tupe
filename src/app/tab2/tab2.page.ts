@@ -97,7 +97,7 @@ export class Tab2Page {
 
       }
 
-    }, 1000)
+    }, 2000)
 
 
   }
