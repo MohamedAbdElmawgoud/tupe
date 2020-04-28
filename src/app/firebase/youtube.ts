@@ -33,18 +33,18 @@ export class YoutubeService {
     }
 
     async getVideoData(id) {
-        return await this.http.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`).toPromise()
+        return await this.http.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyDZNmSiy47pKIsiBI1WeoKhdRvwixaxLL0`).toPromise()
 
     }
     async getChannelData(id) {
-        return await this.http.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`).toPromise()
+        return await this.http.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyDZNmSiy47pKIsiBI1WeoKhdRvwixaxLL0`).toPromise()
 
     }
     async getUserChannels() {
 
         try {
             let access = await this.storage.get('accessToken')
-            return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&maxResults=50&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`, {
+            return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&maxResults=50&key=AIzaSyDZNmSiy47pKIsiBI1WeoKhdRvwixaxLL0`, {
                 headers: {
                     Authorization: 'Bearer ' + access
                 }

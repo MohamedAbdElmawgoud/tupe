@@ -103,7 +103,7 @@ export class Tab3Page {
 
     this.interval = setInterval(async () => {
       if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
-        this.passedTIme++;
+        this.passedTIme = this.passedTIme+ 2;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 

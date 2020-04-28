@@ -26,7 +26,7 @@ export class InviteFriendsPage implements OnInit {
       this.showPoint = point.docs[0].data().point
       console.log(point);
 
-      for (const ele of point.docs[0].data().invited) {
+      for (const ele of point.docs[0].data().invitedUser) {
         
         let user = await this.getUser(ele);
         // console.log(user);
