@@ -33,29 +33,18 @@ export class YoutubeService {
     }
 
     async getVideoData(id) {
-        return await this.http.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyDCkKxVlrW7YFvjCHVkwfBUcH5r915E-Rs`).toPromise()
+        return await this.http.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`).toPromise()
 
     }
     async getChannelData(id) {
-        return await this.http.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyDCkKxVlrW7YFvjCHVkwfBUcH5r915E-Rs`).toPromise()
+        return await this.http.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`).toPromise()
 
     }
     async getUserChannels() {
-        window['plugins'].googleplus.trySilentLogin(
-            {
 
-            },
-            async (obj) => {
-                this.firebase.updateUserData(obj)
-
-            },
-            function (msg) {
-                alert('error: ' + msg);
-            }
-        );
         try {
             let access = await this.storage.get('accessToken')
-            return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&maxResults=50&key=AIzaSyDCkKxVlrW7YFvjCHVkwfBUcH5r915E-Rs`, {
+            return await this.http.get(`https://www.googleapis.com/youtube/v3/subscriptions?mine=true&part=snippet&maxResults=50&key=AIzaSyCfb6JjRl78H45si1Jmetf2bDIwOcNg9oY`, {
                 headers: {
                     Authorization: 'Bearer ' + access
                 }
