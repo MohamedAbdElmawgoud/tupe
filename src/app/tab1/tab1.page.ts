@@ -113,6 +113,7 @@ export class Tab1Page {
 
                 let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
                 ele['viewStat'] = views;
+                ele['type'] = 'subscribe'
                 ele['image'] = ele.channel.channel.thumbnails.default.url;
 
                 this.compaignValue.push(ele)
@@ -134,7 +135,7 @@ export class Tab1Page {
 
   }
   getDetailsOfComp(createdate) {
-    this.router.navigate(['details-campaign'], { queryParams: { data: createdate.key } });
+    this.router.navigate(['details-campaign'], { queryParams: { data: createdate.key , type : createdate.type  } });
   }
   getUserId() {
 

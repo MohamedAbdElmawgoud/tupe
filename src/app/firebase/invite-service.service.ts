@@ -36,8 +36,8 @@ if(ref == userId){
 
   this.firebaseService.getDataOfUser(ref).then(e => {
     let user = e.docs[0].data();
-    user.invited = user.invited ? user.invited : [];
-    user.invited.push(userId)
+    user.invitedUser = user.invitedUser ? user.invitedUser : [];
+    user.invitedUser.push(userId)
     let UserEdited = {
       ...user,
       point: e.docs[0].data().point + 1000

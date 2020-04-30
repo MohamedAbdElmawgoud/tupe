@@ -19,6 +19,6 @@
   },
   "GoogleAuth": {
     "scopes": ["profile", "email" , "https://www.googleapis.com/auth/youtube.readonly"],
-    "serverClientId": "111084768406-cutos3mb9nqdcqfp6f1mor37e58i7ort.apps.googleusercontent.com"
+    "serverClientId": "976154150242-6gvss25f4c2bc9nv0mpg3bmgdon1ie1k.apps.googleusercontent.com"
   }
 }
