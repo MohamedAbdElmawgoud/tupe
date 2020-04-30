@@ -145,7 +145,7 @@ export class AppComponent {
     document.addEventListener('onAdDismiss', (data: any) => {
       if (data.adType == "rewardvideo") {
         this.UpdateUSerPoints(20)
-
+ 
 
       }
     });
@@ -176,7 +176,7 @@ export class AppComponent {
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
-        // console.log('Push registration success, token: ' + token.value);
+         console.log('Push registration success, token: ' + token.value);
       }
     );
 
