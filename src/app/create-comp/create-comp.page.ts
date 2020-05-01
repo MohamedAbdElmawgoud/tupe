@@ -148,7 +148,17 @@ export class CreateCompPage implements OnInit {
         createdData: Date.now(),
         ownerId: user
       }
-      this.UpdateUSerPoints(-this.point)
+      let status;
+      this.firebase.getDataOfUser(user).then(status =>{
+        status = status.docs[0].data().vip.status
+        if(status){
+          this.UpdateUSerPoints(-(this.point*0.9))
+        }
+        else{
+          this.UpdateUSerPoints(-this.point)
+        }
+      })
+     
       this.comp.getcampingsList((res =>
         res.orderByChild('ownerId')
           .equalTo(this.user.uid))).snapshotChanges().pipe(

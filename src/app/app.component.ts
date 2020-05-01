@@ -61,6 +61,7 @@ export class AppComponent {
     private appVersion: AppVersion,
     private YoutubeService: YoutubeService,
     private subscribes: subscribesService,
+    private firebase: FirebaseService,
     
     private ValdaiteService : ValdaiteService
 
@@ -145,29 +146,39 @@ export class AppComponent {
     document.addEventListener('onAdDismiss', (data: any) => {
       if (data.adType == "rewardvideo") {
         this.UpdateUSerPoints(20)
-
+ 
 
       }
     });
-    setInterval(() => {
-      this.admob.prepareInterstitial({
-        adId:
-          "ca-app-pub-3736449894948823/8716133932"
-      })
-        .then(() => { this.admob.showInterstitial(); });
-    }, 7 * 60 * 1000)
-
-    setInterval(() => {
-      this.admob.prepareRewardVideoAd({
-        adId:
-          "ca-app-pub-3736449894948823/7211480575"
-      })
-        .then(() => {
-          this.admob.showRewardVideoAd()
-
-        });
-    }, 11 * 60 * 1000)
-
+    let status= false;
+    this.firebase.getDataOfUser(this.user).then(user =>{
+       status = user.docs[0].data().vip.status
+       console.log('vip is ' ,status)
+      if(status == false){
+       
+        setInterval(() => {
+          this.admob.prepareInterstitial({
+            adId:
+              "ca-app-pub-3736449894948823/8716133932"
+          })
+            .then(() => { this.admob.showInterstitial(); });
+        }, 7 * 60 * 1000)
+    
+        setInterval(() => {
+          this.admob.prepareRewardVideoAd({
+            adId:
+              "ca-app-pub-3736449894948823/7211480575"
+          })
+            .then(() => {
+              this.admob.showRewardVideoAd()
+    
+            });
+        }, 11 * 60 * 1000)
+    
+       
+      }
+    })
+   
 
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
@@ -176,8 +187,7 @@ export class AppComponent {
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
-        // console.log('Push registration success, token: ' + token.value);
-        this.UpdateUSerPoints(0 , null , token.value )
+         console.log('Push registration success, token: ' + token.value);
       }
     );
 

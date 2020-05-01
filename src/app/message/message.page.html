@@ -11,35 +11,19 @@
 </ion-header>
 
 <ion-content>
-<ion-card>
+<ion-card *ngFor="let message of Allmessage">
+  <div>
   <img src="assets/icon/message.png">
+  <label> {{ message.header}} </label>
+  </div>
 <ion-card-title>
     
-you should subscibe or view or like channel and videos to 
-increase your point ❤️❤️❤️
+  {{ message.body}} 
 </ion-card-title>  
 <button>{{ 'copy' | translate}}</button>
+
 </ion-card>
 
 
-<ion-card>
-    <img src="assets/icon/message.png">
-  <ion-card-title>
-      
-  you should subscibe or view or like channel and videos to 
-  increase your point ❤️❤️❤️
-  </ion-card-title>  
-  <button>{{ 'copy' | translate}}</button>
-  </ion-card>
 
-
-  <ion-card>
-      <img src="assets/icon/message.png">
-    <ion-card-title>
-        
-    you should subscibe or view or like channel and videos to 
-    increase your point ❤️❤️❤️
-    </ion-card-title>  
-    <button>{{ 'copy' | translate}}</button>
-    </ion-card>
 </ion-content>

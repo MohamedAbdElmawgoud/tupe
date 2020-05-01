@@ -45,16 +45,26 @@ export class Tab1Page {
   async ngOnInit() {
 
 
-    this.admob.createBanner({
-      adId:
-        "ca-app-pub-3736449894948823/3846950634"
-    })
-      .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
-    this.user = await this.storage.getUserId();
+   
     this.getPoint()
 
     this.getUserId()
-
+    this.user = await this.storage.getUserId();
+    let status= false;
+    this.firebase.getDataOfUser(this.user).then(user =>{
+       status = user.docs[0].data().vip.status
+       console.log('vip is ' ,status)
+      if(status == false){
+       
+        this.admob.createBanner({
+          adId:
+            "ca-app-pub-3736449894948823/3846950634"
+        })
+          .then(() => { this.admob.showBanner(this.admob.AD_POSITION.BOTTOM_CENTER); });
+       
+      }
+    })
+   
   }
 
   getPoint() {
@@ -71,7 +81,7 @@ export class Tab1Page {
     this.getPoint()
   }
   getCompinge() {
-    this.compaignValue = []
+   
     let done = 0;
     this.storage.getUserId().then(user => {
       if (!user) {
@@ -79,7 +89,7 @@ export class Tab1Page {
         this.router.navigate(['log-in']);
       }
       else {
-        this.compaignValue = [];
+       
         this.campingsService.getcampingsList((res =>
           res.orderByChild('ownerId')
             .equalTo(user))).snapshotChanges().pipe(
@@ -89,7 +99,7 @@ export class Tab1Page {
                 )
               )
             ).subscribe(comp => {
-
+              this.compaignValue = [];
               comp.forEach(ele => {
                 let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
                 ele['viewStat'] = views;
@@ -141,14 +151,35 @@ export class Tab1Page {
 
   }
   async createCompinge() {
-    if (this.compaignValue.length >= 5) {
-      const alert = await this.alertController.create({
-        header: this.translate.instant('you have reached your limit'),
-      });
+    let status;
+   await this.firebase.getDataOfUser(this.user).then(status=> {
+      status = status.docs[0].data().vip.status
+     
+   
+ 
+  if(status){
+    console.log('status for vip',status)
+    if (this.compaignValue.length >= 20) {
+      // const alert =  this.alertController.create({
+      //   header: this.translate.instant('you have reached your limit'),
+      // });
 
-      await alert.present();
+      //  alert.present();
       return;
     }
+    else {
+    if (this.compaignValue.length >= 5) {
+      // const alert =  this.alertController.create({
+      //   header: this.translate.instant('you have reached your limit'),
+      // });
+ 
+      //   alert.present();
+      return;
+    }
+  }
+  }
+})
+  
     const alert = await this.alertController.create({
       header: this.translate.instant('select the camping type'),
       inputs: [

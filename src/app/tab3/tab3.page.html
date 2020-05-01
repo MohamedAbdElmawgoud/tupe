@@ -13,18 +13,17 @@
   </ion-header>
 
 <ion-content [fullscreen]="true" >
-  
+  <!-- suggestedQuality="default" -->
 <div *ngIf="!noVideos" class="video">
   <ion-card click="StartTimer()">
     <youtube-player 
     [videoId]="videoId"
-    suggestedQuality="medium"
-   
     (change)="change($event)"
-    [height]="400"
-    [width]="390"
+    [height]="370"
+    [width]="400"
     [startSeconds]="0"
     (ready)="savePlayer($event)"
+    suggestedQuality="default"
     > 
     <!-- [endSeconds]="60" -->
   </youtube-player>
