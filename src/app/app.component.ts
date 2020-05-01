@@ -205,9 +205,8 @@ export class AppComponent {
         var audio1 = new Audio('assets/audio.mp3');
         console.log('Audio');
         audio1.play();
-        // alert('Push received: ' + JSON.stringify(notification));
         console.log('Push received: ', notification);
-
+        this.UpdateUSerPoints(0 , null , null , notification)
         let alertRet = Modals.alert({
           title: notification.title,
           message: notification.body
@@ -255,7 +254,7 @@ export class AppComponent {
     })
     // this.firebaseService.getDataOfUser()
   }
-  UpdateUSerPoints(point , video?) {
+  UpdateUSerPoints(point , video? , token ? , message ? ) {
     this.firebaseService.getDataOfUser(this.user).then(e => {
       let user = e.docs[0].data();
       if(video){
@@ -265,8 +264,14 @@ export class AppComponent {
         user.points[video] = point;
 
       }
+
+      if(message){
+        user.messages = user.messages ? user.messages : [];
+        user.messages.push(message)  
+      }
       let UserEdited = {
         ...user,
+        token,
         point: e.docs[0].data().point + point
       }
       // document.getElementById('point').textContent = e.docs[0].data().point + point;
@@ -275,7 +280,10 @@ export class AppComponent {
       this.firebaseService.updateUser(UserEdited)
       let title = this.translate.instant('you have got')
       let points = this.translate.instant('points')
-      this.presentAlert(title + point + points)
+      if(point){
+        this.presentAlert(title + ' ' + point + ' ' + points)
+
+      }
 
     });
   }

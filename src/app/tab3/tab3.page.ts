@@ -47,25 +47,7 @@ export class Tab3Page {
   change(event) {
     console.log('player state is ', event.data)
   }
-  StartTimer() {
-    setTimeout(x => {
-      if (this.maxTime <= 0) { }
-      this.maxTime -= 1;
 
-      if (this.maxTime > 0) {
-        this.hidevalue = false;
-        this.StartTimer();
-      }
-
-      else {
-
-        this.hidevalue = true;
-      }
-
-    }, 1000);
-
-
-  }
   constructor(private comp: CampingsService,
     private alertController: AlertController,
     private firebaseService: FirebaseService,
@@ -90,10 +72,7 @@ export class Tab3Page {
     this.getVideoID();
     this.getPoint()
   }
-  startTime() {
-    this.StartTimer();
 
-  }
   async savePlayer($event) {
 
     this.event = $event;
@@ -103,7 +82,7 @@ export class Tab3Page {
 
     this.interval = setInterval(async () => {
       if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
-        this.passedTIme = this.passedTIme+ 2;
+        this.passedTIme ++;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
@@ -116,7 +95,7 @@ export class Tab3Page {
 
       }
 
-    },2000)
+    },1000)
 
 
   }

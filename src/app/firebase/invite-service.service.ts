@@ -10,50 +10,60 @@ export class InviteServiceService {
 
   constructor(private firebaseService: FirebaseService,
     public alertController: AlertController,
-    private storage : Storage
+    private storage: Storage
 
   ) { }
 
- async inviteWithRef(ref) {
-    ref = ref.split('ref=')[1];
-let userId = await this.storage.get('User');
-if(ref == userId){
-  this.presentAlert('you can\'t invite your self ')
+  async inviteWithRef(ref) {
+    ref = ref.split('ref=')[1] || ref;
+    // if(!ref)
+    let userId = await this.storage.get('User');
+    if (ref == userId) {
+      this.presentAlert('you can\'t invite your self ')
 
-}else {
-  this.firebaseService.getDataOfUser(userId).then(e => {
-    let user = e.docs[0].data();
- 
-    let UserEdited = {
-      ...user,
-      point: e.docs[0].data().point + 1000,
-      invited : true
+    } else {
+      this.firebaseService.getDataOfUser(userId).then(e => {
+        let user = e.docs[0].data();
+
+        let _UserEdited = {
+          ...user,
+          point: e.docs[0].data().point + 1000,
+          invited: true
+        }
+        if (user) {
+          this.firebaseService.getDataOfUser(ref).then(e => {
+            
+            if (e.docs[0].data().uid == ref) {
+              let user = e.docs[0].data();
+              user.invitedUser = user.invitedUser ? user.invitedUser : [];
+              user.invitedUser.push(userId)
+              let UserEdited = {
+                ...user,
+                point: e.docs[0].data().point + 1000
+              }
+
+              this.firebaseService.updateUser(UserEdited)
+              this.firebaseService.updateUser(_UserEdited)
+              this.presentAlert('you have got 1000 point')
+            }else{
+              this.presentAlert('code is wrong')
+              
+            }
+
+
+          });
+        }
+
+      });
+
+
+
+
     }
-
-    this.firebaseService.updateUser(UserEdited)
-
-  });
-
-  this.firebaseService.getDataOfUser(ref).then(e => {
-    let user = e.docs[0].data();
-    user.invitedUser = user.invitedUser ? user.invitedUser : [];
-    user.invitedUser.push(userId)
-    let UserEdited = {
-      ...user,
-      point: e.docs[0].data().point + 1000
-    }
-
-    this.firebaseService.updateUser(UserEdited)
-
-  });
-
-  this.presentAlert('you have got 1000 point')
-
-}
   }
 
 
-  
+
 
   async presentAlert(title) {
     const alert = await this.alertController.create({
