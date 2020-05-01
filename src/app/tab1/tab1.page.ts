@@ -160,20 +160,18 @@ export class Tab1Page {
   if(status){
     console.log('status for vip',status)
     if (this.compaignValue.length >= 20) {
-      // const alert =  this.alertController.create({
-      //   header: this.translate.instant('you have reached your limit'),
-      // });
-
-      //  alert.present();
+     
+      let  header= this.translate.instant('you have reached your limit')
+     
+this.presentAlert(header)
+     
       return;
     }
     else {
     if (this.compaignValue.length >= 5) {
-      // const alert =  this.alertController.create({
-      //   header: this.translate.instant('you have reached your limit'),
-      // });
- 
-      //   alert.present();
+     
+      let  header= this.translate.instant('you have reached your limit')
+      this.presentAlert(header)
       return;
     }
   }
@@ -232,5 +230,16 @@ export class Tab1Page {
 
 
   }
-
+  async presentAlert(title) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      // subHeader: 'Subtitle',
+      message: title,
+      buttons: ['OK'],
+    });
+    setTimeout(() => {
+      this.alertController.dismiss()
+    }, 3000)
+    await alert.present();
+  }
 }
