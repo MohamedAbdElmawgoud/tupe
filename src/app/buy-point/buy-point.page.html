@@ -11,58 +11,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="main">
+  <ion-card class="main" *ngFor="let offer of AllOffers">
     <label class="left">
-      3000 {{ 'Points' | translate}}
+        {{ offer.point}}  {{ 'Points' | translate}}
       
     </label>
     <label class="right">
-      0.99$
+        {{ offer.cash}} $
     </label>
   </ion-card>
 
 
-  <ion-card class="main">
-      <label class="left">
-        7000 {{ 'Points' | translate}}
-        
-      </label>
-      <label class="right">
-        1.99$
-      </label>
-    </ion-card>
-
-
-    <ion-card class="main">
-        <label class="left">
-          20000 {{ 'Points' | translate}}
-          
-        </label>
-        <label class="right">
-          4.99$
-        </label>
-      </ion-card>
-
-
-
-      <ion-card class="main">
-          <label class="left">
-            50000 {{ 'Points' | translate}}
-            
-          </label>
-          <label class="right">
-            9.99$
-          </label>
-        </ion-card>
-
-
-        <ion-card class="main">
-            <label class="left lastLabel">
-              60000 {{ 'Points' | translate}}
-              
-            </label>
-            <label class="right" >
-              99.99$
-            </label>
-          </ion-card>
+  
 </ion-content>

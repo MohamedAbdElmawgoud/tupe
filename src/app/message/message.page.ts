@@ -32,7 +32,7 @@ export class MessagePage implements OnInit {
   }
   getmessage(){
     this.messageService.getmessageList((res => 
-      res.orderByChild('point'))).snapshotChanges().pipe(
+      res)).snapshotChanges().pipe(
         map((changes: Array<any>) =>
           changes.map(c =>
             ({ key: c.payload.key, ...c.payload.val() })

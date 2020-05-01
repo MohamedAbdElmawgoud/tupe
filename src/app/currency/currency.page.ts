@@ -64,7 +64,6 @@ export class CurrencyPage implements OnInit {
       passed = 3001;
     }
 
-
     if (passed >= 300) {
           await this.storage.set('last click', new Date());
 
