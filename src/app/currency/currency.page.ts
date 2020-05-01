@@ -37,7 +37,7 @@ export class CurrencyPage implements OnInit {
   getPoint() {
     this.firebaseService.getDataOfUser(this.user).then(point => {
       this.showPoint = point.docs[0].data().point;
-      this.invited = point.docs[0].data().invited;
+      // this.invited = point.docs[0].data().invited;
       // console.log();
       
     })

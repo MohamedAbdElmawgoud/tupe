@@ -78,7 +78,7 @@ export class Tab2Page {
 
     this.interval = setInterval(async () => {
       if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
-        this.passedTIme++;
+        this.passedTIme ++ ;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
 
@@ -97,7 +97,7 @@ export class Tab2Page {
 
       }
 
-    }, 2000)
+    }, 1000)
 
 
   }
