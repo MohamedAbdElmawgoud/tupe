@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { SettingService } from "src/app/firebase/setting.service";
 
 @Component({
   selector: 'app-create-comp',
@@ -52,6 +53,8 @@ export class CreateCompPage implements OnInit {
     private route: Router,
     private translate: TranslateService,
     private firebase: FirebaseService,
+    private setting :SettingService,
+    
   ) { }
 
   async ngOnInit() {
@@ -152,7 +155,19 @@ export class CreateCompPage implements OnInit {
       this.firebase.getDataOfUser(user).then(status =>{
         status = status.docs[0].data().vip.status
         if(status){
-          this.UpdateUSerPoints(-(this.point*0.9))
+          this.setting.getsettingsList((res => 
+            res)).snapshotChanges().pipe(
+              map((changes: Array<any>) =>
+                changes.map(c =>
+                  ({ key: c.payload.key, ...c.payload.val() })
+                )
+              )
+            ).subscribe( async res =>{
+             let discountVip= 1- res[res.length-1].discountVip/100
+           
+          
+          this.UpdateUSerPoints(-(this.point*discountVip))
+        });
         }
         else{
           this.UpdateUSerPoints(-this.point)

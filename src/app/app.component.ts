@@ -28,6 +28,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { YoutubeService } from './firebase/youtube';
 import { subscribesService } from './firebase/subscripe';
 import { ValdaiteService } from './firebase/valdaite.service';
+import { SettingService } from "src/app/firebase/setting.service";
 
 @Component({
   selector: 'app-root',
@@ -62,7 +63,7 @@ export class AppComponent {
     private YoutubeService: YoutubeService,
     private subscribes: subscribesService,
     private firebase: FirebaseService,
-    
+    private setting :SettingService,
     private ValdaiteService : ValdaiteService
 
     // private fcm: FCM
@@ -139,15 +140,25 @@ export class AppComponent {
 
 
   async ngOnInit() {
-    
+   
+
     await this.validate()
     await this.isSubscribe()
     this.getUser();
     document.addEventListener('onAdDismiss', (data: any) => {
       if (data.adType == "rewardvideo") {
-        this.UpdateUSerPoints(20)
+        this.setting.getsettingsList((res => 
+          res)).snapshotChanges().pipe(
+            map((changes: Array<any>) =>
+              changes.map(c =>
+                ({ key: c.payload.key, ...c.payload.val() })
+              )
+            )
+          ).subscribe( async res =>{
+          let point = res[res.length-1].point
+            this.UpdateUSerPoints(point)
+          });
  
-
       }
     });
     let status= false;
@@ -224,15 +235,29 @@ export class AppComponent {
     );
 
     let id
-
-
-    await this.firebaseService.getVersion().subscribe(async version => {
-      let versionOnServer = (<any>version[0].payload.doc.data()).number;
+    this.setting.getsettingsList((res => 
+      res)).snapshotChanges().pipe(
+        map((changes: Array<any>) =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe( async res =>{
+      
+  
+      
+       
+    
+      let versionOnServer = res[res.length-1].version;
+      console.log('setting is ', res )
       // alert(())
       let appVersion = await this.appVersion.getVersionNumber();
       if (appVersion != versionOnServer) {
         // this.presentAlert('')
-        let title = this.translate.instant('there is a new version you must update it')
+        // this.translate.instant('there is a new version you must update it')
+        let title = res[res.length-1].message
+        let link = res[res.length-1].AppURl
+      //  console.log('link is' , link)
         let text = this.translate.instant('Update now')
         const alert = await this.alertController.create({
           header: 'Alert',
@@ -241,7 +266,7 @@ export class AppComponent {
           buttons: [{
             text: text,
             handler: () => {
-              window.open('https://play.google.com/store/apps/details?id=fog.tube.app')
+              window.open(link)
             }
           }]
 
@@ -249,9 +274,9 @@ export class AppComponent {
 
         await alert.present();
       }
+    }); 
 
-
-    })
+  
     // this.firebaseService.getDataOfUser()
   }
   UpdateUSerPoints(point , video? , token ? , message ? ) {
