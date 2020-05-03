@@ -29,6 +29,8 @@ import { YoutubeService } from './firebase/youtube';
 import { subscribesService } from './firebase/subscripe';
 import { ValdaiteService } from './firebase/valdaite.service';
 import { SettingService } from "src/app/firebase/setting.service";
+import { Analytics } from 'capacitor-analytics';
+const analytics = new Analytics();
 
 @Component({
   selector: 'app-root',
@@ -190,8 +192,17 @@ export class AppComponent {
       }
     })
    
+    analytics.setUserID({ value: '' + new Date().getTime() });
 
-    // Register with Apple / Google to receive push via APNS/FCM
+    //
+    // user attributes
+    // google don't allow use of sensitive data
+    // like names, emails, card numbers, etc.
+    // analytics.setUserProp({
+    //   key: 'city',
+    //   value: 'San Francisco'
+    // });
+    // // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register();
 
     // On succcess, we should be able to receive notifications
