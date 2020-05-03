@@ -118,8 +118,7 @@ export class Tab3Page {
         if (ele.done.indexOf(this.user) == -1)
           return ele
         return null
-      }).splice(0 , 15)
-      console.log(this.videoUrls , this.user);
+      })
       
       await this.showMore()
 

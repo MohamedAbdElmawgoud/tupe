@@ -153,7 +153,7 @@ export class Tab1Page {
   async createCompinge() {
     let status;
    await this.firebase.getDataOfUser(this.user).then(status=> {
-      status = status.docs[0].data().vip.status
+      status = (status.docs[0].data().vip || {}).status
      
    
  

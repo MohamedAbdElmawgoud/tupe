@@ -29,8 +29,8 @@ import { YoutubeService } from './firebase/youtube';
 import { subscribesService } from './firebase/subscripe';
 import { ValdaiteService } from './firebase/valdaite.service';
 import { SettingService } from "src/app/firebase/setting.service";
-import { Analytics } from 'capacitor-analytics';
-const analytics = new Analytics();
+// import { Analytics } from 'capacitor-analytics';
+// const analytics = new Analytics();
 
 @Component({
   selector: 'app-root',
@@ -192,7 +192,7 @@ export class AppComponent {
       }
     })
    
-    analytics.setUserID({ value: '' + new Date().getTime() });
+    // analytics.setUserID({ value: '' + new Date().getTime() });
 
     //
     // user attributes
@@ -210,7 +210,7 @@ export class AppComponent {
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
          console.log('Push registration success, token: ' + token.value);
-         this.presentAlert('Push registration success, token: ' + token.value)
+        //  this.presentAlert('Push registration success, token: ' + token.value)
       }
     );
 
