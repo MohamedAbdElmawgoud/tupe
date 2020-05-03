@@ -210,6 +210,7 @@ export class AppComponent {
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
          console.log('Push registration success, token: ' + token.value);
+         this.presentAlert('Push registration success, token: ' + token.value)
       }
     );
 
@@ -242,6 +243,7 @@ export class AppComponent {
       (notification: PushNotificationActionPerformed) => {
         // alert('Push action performed: ' + JSON.stringify(notification));
         console.log('Push action performed: ' + notification);
+      
       }
     );
 

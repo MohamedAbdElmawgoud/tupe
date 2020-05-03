@@ -163,14 +163,28 @@ export class CreateCompPage implements OnInit {
                 )
               )
             ).subscribe( async res =>{
-             let discountVip= 1- res[res.length-1].discountVip/100
-           
-          
+              let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
           this.UpdateUSerPoints(-(this.point*discountVip))
         });
         }
-        else{
+       else{
+        this.setting.getsettingsList((res => 
+          res)).snapshotChanges().pipe(
+            map((changes: Array<any>) =>
+              changes.map(c =>
+                ({ key: c.payload.key, ...c.payload.val() })
+              )
+            )
+          ).subscribe( async res =>{
+            let discount= 1- res[res.length-1].discountAll/100
+         if (discount){
+          this.UpdateUSerPoints(-(this.point*discount))
+         }
+         else{
           this.UpdateUSerPoints(-this.point)
+         }
+          
+        });
         }
       })
      

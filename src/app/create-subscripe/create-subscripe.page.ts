@@ -6,6 +6,7 @@ import { countryList, videos } from './country'
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { SettingService } from "src/app/firebase/setting.service";
 @Component({
   selector: 'app-create-subscripe',
   templateUrl: './create-subscripe.page.html',
@@ -31,7 +32,7 @@ export class CreateSubscripePage implements OnInit {
     private subscribes: subscribesService,
     private route: Router,
     private translate: TranslateService,
-
+    private setting :SettingService,
 
   ) {
 
@@ -141,7 +142,42 @@ export class CreateSubscripePage implements OnInit {
       createdData: Date.now(),
       ownerId: user.uid
     }
-    this.UpdateUSerPoints(-this.points)
+    let status;
+      this.userService.getDataOfUser(user).then(status =>{
+        status = status.docs[0].data().vip.status
+        if(status){
+          this.setting.getsettingsList((res => 
+            res)).snapshotChanges().pipe(
+              map((changes: Array<any>) =>
+                changes.map(c =>
+                  ({ key: c.payload.key, ...c.payload.val() })
+                )
+              )
+            ).subscribe( async res =>{
+             let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
+          this.UpdateUSerPoints(-(this.points*discountVip))
+        });
+        }
+       else{
+        this.setting.getsettingsList((res => 
+          res)).snapshotChanges().pipe(
+            map((changes: Array<any>) =>
+              changes.map(c =>
+                ({ key: c.payload.key, ...c.payload.val() })
+              )
+            )
+          ).subscribe( async res =>{
+            let discount= 1- res[res.length-1].discountAll/100
+         if (discount){
+          this.UpdateUSerPoints(-(this.points*discount))
+         }
+         else{
+          this.UpdateUSerPoints(-this.points)
+         }
+          
+        });
+        }
+      })
 
 
     //  
