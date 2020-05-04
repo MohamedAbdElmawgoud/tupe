@@ -145,6 +145,47 @@ export class AppComponent {
     await this.validate()
     await this.isSubscribe()
     this.getUser();
+
+    this.setting.getsettingsList((res => 
+      res)).snapshotChanges().pipe(
+        map((changes: Array<any>) =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe( async res =>{
+      
+  
+    
+      let versionOnServer = res[res.length-1].version;
+      console.log('setting is ', res )
+      // alert(())
+      let appVersion = await this.appVersion.getVersionNumber();
+      if (appVersion != versionOnServer) {
+        // this.presentAlert('')
+        // this.translate.instant('there is a new version you must update it')
+        let title = res[res.length-1].message
+        let link = res[res.length-1].AppURl
+      // console.log('link is' , link, '\n','message is ' , title)
+        let text = this.translate.instant('Update now')
+        const alert = await this.alertController.create({
+          header: 'Alert',
+          message: title,
+          backdropDismiss: false,
+          buttons: [{
+            text: text,
+            handler: () => {
+              window.open(link)
+            }
+          }]
+
+        });
+
+        await alert.present();
+      }
+    }); 
+
+
     document.addEventListener('onAdDismiss', (data: any) => {
       if (data.adType == "rewardvideo") {
         this.setting.getsettingsList((res => 
@@ -208,7 +249,7 @@ export class AppComponent {
     PushNotifications.addListener('registrationError',
       (error: any) => {
         alert(title + JSON.stringify(error));
-      }
+      } 
     );
 
     // Show us the notification payload if the app is open on our device
@@ -237,47 +278,7 @@ export class AppComponent {
     );
 
     let id
-    this.setting.getsettingsList((res => 
-      res)).snapshotChanges().pipe(
-        map((changes: Array<any>) =>
-          changes.map(c =>
-            ({ key: c.payload.key, ...c.payload.val() })
-          )
-        )
-      ).subscribe( async res =>{
-      
   
-      
-       
-    
-      let versionOnServer = res[res.length-1].version;
-      console.log('setting is ', res )
-      // alert(())
-      let appVersion = await this.appVersion.getVersionNumber();
-      if (appVersion != versionOnServer) {
-        // this.presentAlert('')
-        // this.translate.instant('there is a new version you must update it')
-        let title = res[res.length-1].message
-        let link = res[res.length-1].AppURl
-      //  console.log('link is' , link)
-        let text = this.translate.instant('Update now')
-        const alert = await this.alertController.create({
-          header: 'Alert',
-          message: title,
-          backdropDismiss: false,
-          buttons: [{
-            text: text,
-            handler: () => {
-              window.open(link)
-            }
-          }]
-
-        });
-
-        await alert.present();
-      }
-    }); 
-
   
     // this.firebaseService.getDataOfUser()
   }
