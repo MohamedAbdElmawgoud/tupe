@@ -16,7 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { HttpClientModule, HttpClient } from  '@angular/common/http';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+// import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 import { TranslateModule, TranslateLoader, TranslateService } from  '@ngx-translate/core';
 import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
@@ -60,7 +60,7 @@ export  function  HttpLoaderFactory(http:  HttpClient) {
     SplashScreen,
     TranslateService,
     AppVersion,
-    Deeplinks,
+    // Deeplinks,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [TranslateModule],    
