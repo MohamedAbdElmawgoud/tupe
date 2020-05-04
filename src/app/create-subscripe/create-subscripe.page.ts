@@ -7,6 +7,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingService } from "src/app/firebase/setting.service";
+import { map } from "rxjs/operators";
 @Component({
   selector: 'app-create-subscripe',
   templateUrl: './create-subscripe.page.html',
@@ -140,7 +141,8 @@ export class CreateSubscripePage implements OnInit {
       point: this.points,
       channel: this.userChannel,
       createdData: Date.now(),
-      ownerId: user.uid
+      ownerId: user.uid,
+      type : 'sub'
     }
     let status;
       this.userService.getDataOfUser(user).then(status =>{
