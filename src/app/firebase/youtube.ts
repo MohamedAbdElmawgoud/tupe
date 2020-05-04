@@ -50,7 +50,7 @@ export class YoutubeService {
                 }
             }).toPromise()
         } catch (e) {
-            // alert('youtube token is expired ')
+            // alert(JSON.stringify(e))
             // this.storage.clear();
             // this.router.navigate(['log-in'])
 

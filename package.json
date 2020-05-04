@@ -59,7 +59,6 @@
     "core-js": "^2.5.4",
     "firebase": "^7.14.0",
     "ionic-admob": "^0.19.7",
-    "ionic-plugin-deeplinks": "^1.0.20",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
     "sweetalert2": "^9.10.12",
