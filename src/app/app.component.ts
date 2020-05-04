@@ -160,13 +160,15 @@ export class AppComponent {
       let versionOnServer = res[res.length-1].version;
       console.log('setting is ', res )
       // alert(())
-      let appVersion = await this.appVersion.getVersionNumber();
-      if (appVersion != versionOnServer) {
+      let appVersion = await this.appVersion.getVersionNumber().then(async (version) => {
+       
+      
+      if (version != versionOnServer) {
         // this.presentAlert('')
         // this.translate.instant('there is a new version you must update it')
         let title = res[res.length-1].message
         let link = res[res.length-1].AppURl
-      // console.log('link is' , link, '\n','message is ' , title)
+       console.log('link is' , link)
         let text = this.translate.instant('Update now')
         const alert = await this.alertController.create({
           header: 'Alert',
@@ -183,6 +185,7 @@ export class AppComponent {
 
         await alert.present();
       }
+    });
     }); 
 
 
