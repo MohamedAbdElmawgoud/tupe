@@ -154,6 +154,7 @@ export class CreateCompPage implements OnInit {
       let status;
       this.firebase.getDataOfUser(user).then(status =>{
         status = status.docs[0].data().vip.status
+        
         if(status){
           this.setting.getsettingsList((res => 
             res)).snapshotChanges().pipe(
@@ -164,6 +165,7 @@ export class CreateCompPage implements OnInit {
               )
             ).subscribe( async res =>{
               let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
+             // console.log('discount vip',discountVip)
           this.UpdateUSerPoints(-(this.point*discountVip))
         });
         }
@@ -177,6 +179,7 @@ export class CreateCompPage implements OnInit {
             )
           ).subscribe( async res =>{
             let discount= 1- res[res.length-1].discountAll/100
+          //  console.log('discount',discount)
          if (discount){
           this.UpdateUSerPoints(-(this.point*discount))
          }
@@ -186,6 +189,7 @@ export class CreateCompPage implements OnInit {
           
         });
         }
+       
       })
      
       this.comp.getcampingsList((res =>
