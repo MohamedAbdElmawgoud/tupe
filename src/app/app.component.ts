@@ -409,12 +409,13 @@ export class AppComponent {
   }
   async logout() {
     await this.storage.clear();
-    this.router.navigate(['/log-in'])
+    
 
     window['plugins'].googleplus.disconnect(() => {
 
     })
 
-
+    this.router.navigate(['/log-in'])
+    window.location.reload()
   }
 }

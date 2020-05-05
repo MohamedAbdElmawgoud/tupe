@@ -43,7 +43,8 @@ export class LogInPage implements OnInit {
       }
     );
 
-
+    window.location.reload()
+    
   }
   async login(){
     await this.firebase.googleSignin();
