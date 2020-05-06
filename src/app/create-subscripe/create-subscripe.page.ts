@@ -172,7 +172,7 @@ export class CreateSubscripePage implements OnInit {
             )
           ).subscribe( async res =>{
             let discount= 1- res[res.length-1].discountAll/100
-         if (discount){
+         if (discount<1){
           this.UpdateUSerPoints(-(this.points*discount))
           
          }
