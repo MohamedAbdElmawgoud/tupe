@@ -131,7 +131,7 @@ export class CreateCompPage implements OnInit {
 
     }
     if (this.status == true) {
-      if (this.user.point <= this.point) {
+      if (this.user.point < this.point) {
         let title = this.translate.instant("You don't have enough points")
         this.presentAlert(title)
         return

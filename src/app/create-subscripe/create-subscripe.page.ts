@@ -123,7 +123,7 @@ export class CreateSubscripePage implements OnInit {
 
   async createComp(sec, view) {
 
-    if (this.user.point <= this.points) {
+    if (this.user.point < this.points) {
       this.presentAlert("You don't have enough points")
       return
     }
