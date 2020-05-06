@@ -158,6 +158,8 @@ export class CreateSubscripePage implements OnInit {
             ).subscribe( async res =>{
              let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
           this.UpdateUSerPoints(-(this.points*discountVip))
+          this.subscribes.createSubscribe(camping);
+          this.presentAlert('Added success');
         });
         }
        else{
@@ -172,9 +174,13 @@ export class CreateSubscripePage implements OnInit {
             let discount= 1- res[res.length-1].discountAll/100
          if (discount){
           this.UpdateUSerPoints(-(this.points*discount))
+          this.subscribes.createSubscribe(camping);
+          this.presentAlert('Added success');
          }
          else{
           this.UpdateUSerPoints(-this.points)
+          this.subscribes.createSubscribe(camping);
+          this.presentAlert('Added success');
          }
           
         });
@@ -183,8 +189,7 @@ export class CreateSubscripePage implements OnInit {
 
 
     //  
-    this.subscribes.createSubscribe(camping);
-    this.presentAlert('Added success');
+   
     this.route.navigate([''])
 
 

@@ -146,8 +146,18 @@ export class AppComponent {
 
     await this.validate()
     await this.isSubscribe()
+    
+    this.firebaseService.getDataOfUser().then(user => {
+      this.user =user;
+      this.profilePhoto = user.docs[0].data().photoURL || "https://fogtube.store/profile.svg";
+      this.displayName = user.docs[0].data().displayName;
+      this.email = user.docs[0].data().email
+      this.points = user.docs[0].data().points
+     console.log('profilePhoto',this.profilePhoto)
+    })
     this.getUser();
 
+    
     this.setting.getsettingsList((res => 
       res)).snapshotChanges().pipe(
         map((changes: Array<any>) =>
@@ -292,10 +302,8 @@ export class AppComponent {
     );
 
     let id
-    this.storage.getUserId().then(user => {
-      this.user = user;
-    })
   
+    //this.getUser();
     // this.firebaseService.getDataOfUser()
   }
   // ionViewWillUnload  () {
@@ -360,11 +368,11 @@ export class AppComponent {
     });
     toast.present();
   }
-  getUser() {
+ async getUser() {
 
-    this.storage.getUserId().then(user => {
+    this.storage.getUserId().then(async user => {
       this.user = user;
-      this.firebaseService.getDataOfUser(user).then(_user => {
+     await this.firebaseService.getDataOfUser(user).then(_user => {
         // if(user)
         let user = _user.docs[0].data()
         if (!user) {

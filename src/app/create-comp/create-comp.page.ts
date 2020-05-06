@@ -166,7 +166,10 @@ export class CreateCompPage implements OnInit {
             ).subscribe( async res =>{
               let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
              // console.log('discount vip',discountVip)
-          this.UpdateUSerPoints(-(this.point*discountVip))
+          this.UpdateUSerPoints(-(this.point*discountVip));
+          this.comp.createcamping(this.camping);
+          let title = this.translate.instant('Added success')
+          this.presentAlert(title);
         });
         }
        else{
@@ -181,10 +184,16 @@ export class CreateCompPage implements OnInit {
             let discount= 1- res[res.length-1].discountAll/100
           //  console.log('discount',discount)
          if (discount){
-          this.UpdateUSerPoints(-(this.point*discount))
+          this.UpdateUSerPoints(-(this.point*discount));
+          this.comp.createcamping(this.camping);
+          let title = this.translate.instant('Added success')
+          this.presentAlert(title);
          }
          else{
-          this.UpdateUSerPoints(-this.point)
+          this.UpdateUSerPoints(-this.point);
+          this.comp.createcamping(this.camping);
+          let title = this.translate.instant('Added success')
+          this.presentAlert(title);
          }
           
         });
@@ -211,9 +220,8 @@ export class CreateCompPage implements OnInit {
           })
 
       //  
-      this.comp.createcamping(this.camping);
-      let title = this.translate.instant('Added success')
-      this.presentAlert(title);
+      
+      
       this.route.navigate([''])
 
     }
