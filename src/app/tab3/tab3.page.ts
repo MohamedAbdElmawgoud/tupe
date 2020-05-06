@@ -25,7 +25,7 @@ export class Tab3Page {
   hidePoint = false;
   // timer: NodeJS.Timer;
   status = false
-  maxTime = 30;
+  maxTime :any;
   time = 30;
   videoId;
   passedTIme = 0;
