@@ -80,19 +80,19 @@ export class Tab3Page {
       return
     }
 
-    this.interval = setInterval(async () => {
+    this.interval = setInterval( () => {
       if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
         this.passedTIme ++;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
-
-      if ((this.maxTime - this.passedTIme) == 0 && !this.lock) {
+//&& !this.lock
+      if ((this.maxTime - this.passedTIme) == 0 ) {
         this.updateCamping({ ...this.video })
         this.getPoint();
         this.lock = true;
         clearInterval(this.interval);
  
-
+ 
       }
 
     },1000)
@@ -163,7 +163,7 @@ export class Tab3Page {
       this.presentAlert(title + points + point)
       this.point = this.showPoint
       document.getElementById('point').textContent = this.showPoint;
-      this.showMore()
+   //   this.showMore()
 
       // }
     });

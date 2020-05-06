@@ -121,7 +121,7 @@ export class CreateCompPage implements OnInit {
     //  console.log('selecte is ', event.target.value)
   }
   async  createComp() {
-    let lenOfComp;
+    
 
 
     if (this.duration < this.sec) {
@@ -167,9 +167,7 @@ export class CreateCompPage implements OnInit {
               let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
              // console.log('discount vip',discountVip)
           this.UpdateUSerPoints(-(this.point*discountVip));
-          this.comp.createcamping(this.camping);
-          let title = this.translate.instant('Added success')
-          this.presentAlert(title);
+        
         });
         }
        else{
@@ -185,15 +183,11 @@ export class CreateCompPage implements OnInit {
           //  console.log('discount',discount)
          if (discount){
           this.UpdateUSerPoints(-(this.point*discount));
-          this.comp.createcamping(this.camping);
-          let title = this.translate.instant('Added success')
-          this.presentAlert(title);
+         
          }
          else{
           this.UpdateUSerPoints(-this.point);
-          this.comp.createcamping(this.camping);
-          let title = this.translate.instant('Added success')
-          this.presentAlert(title);
+         
          }
           
         });
@@ -201,24 +195,7 @@ export class CreateCompPage implements OnInit {
        
       })
      
-      this.comp.getcampingsList((res =>
-        res.orderByChild('ownerId')
-          .equalTo(this.user.uid))).snapshotChanges().pipe(
-            map((changes: Array<any>) =>
-              changes.map(c =>
-                ({ key: c.payload.key, ...c.payload.val() })
-              )
-            )
-          ).subscribe(e => {
-            lenOfComp = e.length;
-            if (lenOfComp == 5) {
-              let title = this.translate.instant('You have maximum Of compaign')
-              this.presentAlert(title)
-            }
-
-
-          })
-
+    
       //  
       
       
@@ -244,6 +221,7 @@ export class CreateCompPage implements OnInit {
     }, 1000)
   }
   UpdateUSerPoints(points) {
+    let lenOfComp;
     console.log('updatePoint', points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
 
@@ -251,9 +229,30 @@ export class CreateCompPage implements OnInit {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      this.firebaseService.updateUser(UserEdited)
+      this.firebaseService.updateUser(UserEdited);
+      this.comp.createcamping(this.camping);
+      let title = this.translate.instant('Added success')
+      this.presentAlert(title);
     });
+    this.comp.getcampingsList((res =>
+      res.orderByChild('ownerId')
+        .equalTo(this.user.uid))).snapshotChanges().pipe(
+          map((changes: Array<any>) =>
+            changes.map(c =>
+              ({ key: c.payload.key, ...c.payload.val() })
+            )
+          )
+        ).subscribe(e => {
+          lenOfComp = e.length;
+          if (lenOfComp == 5) {
+            let title = this.translate.instant('You have maximum Of compaign')
+            this.presentAlert(title)
+          }
 
+
+        })
+
+  
   }
   async presentAlert(title) {
     const alert = await this.alertController.create({
