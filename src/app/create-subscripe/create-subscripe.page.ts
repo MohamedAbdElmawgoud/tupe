@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./create-subscripe.page.scss'],
 })
 export class CreateSubscripePage implements OnInit {
+  camping: { view: any; ListOfUserDoneIt: {}; second: any; point: number; channel: any; createdData: any; ownerId: any; type: string; };
   user;
   step = 0;
   countries = countryList;
@@ -134,7 +135,7 @@ export class CreateSubscripePage implements OnInit {
     }
     let user = await this.user;
 
-    let camping = {
+    this.camping = {
       view: view.el.value,
       ListOfUserDoneIt: [],
       second: sec.el.value,
@@ -158,8 +159,7 @@ export class CreateSubscripePage implements OnInit {
             ).subscribe( async res =>{
              let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
           this.UpdateUSerPoints(-(this.points*discountVip))
-          this.subscribes.createSubscribe(camping);
-          this.presentAlert('Added success');
+       
         });
         }
        else{
@@ -174,13 +174,11 @@ export class CreateSubscripePage implements OnInit {
             let discount= 1- res[res.length-1].discountAll/100
          if (discount){
           this.UpdateUSerPoints(-(this.points*discount))
-          this.subscribes.createSubscribe(camping);
-          this.presentAlert('Added success');
+          
          }
          else{
           this.UpdateUSerPoints(-this.points)
-          this.subscribes.createSubscribe(camping);
-          this.presentAlert('Added success');
+         
          }
           
         });
@@ -218,7 +216,9 @@ export class CreateSubscripePage implements OnInit {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      this.userService.updateUser(UserEdited)
+      this.userService.updateUser(UserEdited);
+      this.subscribes.createSubscribe(this.camping);
+      this.presentAlert('Added success');
     });
 
   }
