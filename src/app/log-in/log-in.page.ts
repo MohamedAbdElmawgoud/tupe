@@ -39,6 +39,7 @@ export class LogInPage implements OnInit {
       (obj) => {
         this.firebase.updateUserData(obj)
       },
+      
       function (msg) {
       }
     );
@@ -48,6 +49,7 @@ export class LogInPage implements OnInit {
   }
   async login(){
     await this.firebase.googleSignin();
+    
   }
 
 }

@@ -292,10 +292,18 @@ export class AppComponent {
     );
 
     let id
-  
+    this.storage.getUserId().then(user => {
+      this.user = user;
+    })
   
     // this.firebaseService.getDataOfUser()
   }
+  // ionViewWillUnload  () {
+  //   this.storage.getUserId().then(user => {
+  //     this.user = user;
+  //     console.log('user is',user)
+  //   })
+  // }
   UpdateUSerPoints(point , video? , token ? , message ? ) {
     this.firebaseService.getDataOfUser(this.user).then(e => {
       let user = e.docs[0].data();
