@@ -5,5 +5,5 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 include ':capacitor-analytics'
 project(':capacitor-analytics').projectDir = new File('../node_modules/capacitor-analytics/android')
 
-include ':capacitor-youtube-player'
-project(':capacitor-youtube-player').projectDir = new File('../node_modules/capacitor-youtube-player/android/capacitor-youtube-player')
+// include ':capacitor-youtube-player'
+// project(':capacitor-youtube-player').projectDir = new File('../node_modules/capacitor-youtube-player/android/capacitor-youtube-player')
