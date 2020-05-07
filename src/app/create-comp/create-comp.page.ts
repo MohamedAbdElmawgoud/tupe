@@ -153,10 +153,9 @@ export class CreateCompPage implements OnInit {
       }
       let status;
       this.firebase.getDataOfUser(user).then(status =>{
-        if( status.docs[0].data().vip ){
-        status = status.docs[0].data().vip.status 
-        console.log('status',status)
-        if(status ){
+        status = status.docs[0].data().vip.status
+        
+        if(status){
           this.setting.getsettingsList((res => 
             res)).snapshotChanges().pipe(
               map((changes: Array<any>) =>
@@ -171,7 +170,7 @@ export class CreateCompPage implements OnInit {
         
         });
         }
-       if(!status ){
+       if(!status){
         this.setting.getsettingsList((res => 
           res)).snapshotChanges().pipe(
             map((changes: Array<any>) =>
@@ -191,14 +190,9 @@ export class CreateCompPage implements OnInit {
         
          }
           
-
-         
         });
         }
-      }
-      else{
-        this.UpdateUSerPoints(-this.point);
-      }
+       
       })
      
     
