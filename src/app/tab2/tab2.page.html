@@ -50,7 +50,7 @@
         <youtube-player 
         [videoId]="channel.channel.video"
         suggestedQuality="medium"
-       
+    [endSeconds]="3600"
         (change)="change($event)"
         [height]="430"
         [width]="390"
