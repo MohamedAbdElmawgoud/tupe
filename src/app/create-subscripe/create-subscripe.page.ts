@@ -148,7 +148,7 @@ export class CreateSubscripePage implements OnInit {
     let status;
       this.userService.getDataOfUser(user).then(status =>{
         status = status.docs[0].data().vip.status
-        if(status){
+        if(!status){
           this.setting.getsettingsList((res => 
             res)).snapshotChanges().pipe(
               map((changes: Array<any>) =>
