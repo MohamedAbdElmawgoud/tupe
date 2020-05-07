@@ -1,0 +1,24 @@
+{
+  "appId": "fog.tube.app",
+  "appName": "Fog Tube",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "linuxAndroidStudioPath" : "/home/nader/Downloads/android-studio/bin/studio.sh", 
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "android-minSdkVersion": "19",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "300",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "3000"
+    }
+  },
+  "GoogleAuth": {
+    "scopes": ["profile", "email" , "https://www.googleapis.com/auth/youtube.readonly"],
+    "serverClientId": "111084768406-536tpq2a6avna3l0u43okoti2474inda.apps.googleusercontent.com"
+  }
+}

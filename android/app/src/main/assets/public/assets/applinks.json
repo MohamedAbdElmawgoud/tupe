@@ -1,0 +1,5 @@
+﻿[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "fog.tube.app",
+               "sha256_cert_fingerprints": ["3D:ED:9B:BE:A5:2E:B5:CA:02:95:4A:54:F7:CD:CA:AF:C2:C7:45:75:48:41:98:0E:24:68:B2:1B:81:73:71:09"] }
+}]
