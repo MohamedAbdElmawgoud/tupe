@@ -153,7 +153,7 @@ export class CreateSubscripePage implements OnInit {
         if( status.docs[0].data().vip ){
           console.log('account is vip')
         status = status.docs[0].data().vip.status
-        if(status){
+        if(!status){
           this.setting.getsettingsList((res => 
             res)).snapshotChanges().pipe(
               map((changes: Array<any>) =>
