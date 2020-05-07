@@ -17,6 +17,7 @@ import { subscribesService } from '../firebase/subscripe';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  compaignView =[]
   showPoint: any;
   user: any;
   view = [];
@@ -90,24 +91,6 @@ export class Tab1Page {
       }
       else {
        
-        this.campingsService.getcampingsList((res =>
-          res.orderByChild('ownerId')
-            .equalTo(user))).snapshotChanges().pipe(
-              map((changes: Array<any>) =>
-                changes.map(c =>
-                  ({ key: c.payload.key, ...c.payload.val() })
-                )
-              )
-            ).subscribe(comp => {
-              this.compaignValue = [];
-              comp.forEach(ele => {
-                let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
-                ele['viewStat'] = views;
-                this.compaignValue.push(ele)
-
-              })
-              console.log('compaignValue is', this.compaignValue)
-            });
 
         this.subscribes.getsubscribesList((res =>
           res.orderByChild('ownerId')
@@ -118,7 +101,7 @@ export class Tab1Page {
                 )
               )
             ).subscribe(subscribes => {
-
+              this.compaignValue =[]              
               subscribes.forEach(ele => {
 
                 let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
@@ -133,7 +116,24 @@ export class Tab1Page {
 
             });
 
+            this.campingsService.getcampingsList((res =>
+              res.orderByChild('ownerId')
+                .equalTo(user))).snapshotChanges().pipe(
+                  map((changes: Array<any>) =>
+                    changes.map(c =>
+                      ({ key: c.payload.key, ...c.payload.val() })
+                    )
+                  )
+                ).subscribe(comp => {
+                  this.compaignView =[]
+                  comp.forEach(ele => {
+                    let views = `${ele.view}/${ele.done ? ele.done.length : 0}`
+                    ele['viewStat'] = views;
+                    this.compaignView.push(ele)
 
+                  })
+                  console.log('compaignView is', this.compaignView)
+                });
 
       }
       //return user;
