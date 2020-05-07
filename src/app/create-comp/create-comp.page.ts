@@ -122,7 +122,7 @@ export class CreateCompPage implements OnInit {
   }
   async  createComp() {
     
-    
+
 
     if (this.duration < this.sec) {
       let title = this.translate.instant("You must choose valid duration")
@@ -130,7 +130,6 @@ export class CreateCompPage implements OnInit {
       return
 
     }
-    
     if (this.status == true) {
       if (this.user.point < this.point) {
         let title = this.translate.instant("You don't have enough points")
@@ -140,10 +139,11 @@ export class CreateCompPage implements OnInit {
       let user = await this.storage.get('User');
 
       this.camping = {
-      
+        // likes: this.likes,
+        // Subscribe: this.Subscribe,
         view: this.view,
         type: 'view',
-        
+        // needed: this.Subscribe,
         ListOfUserDoneIt: [],
         second: this.sec,
         point: this.point,
@@ -165,12 +165,12 @@ export class CreateCompPage implements OnInit {
               )
             ).subscribe( async res =>{
               let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
-              console.log('discount vip',discountVip)
+             // console.log('discount vip',discountVip)
           this.UpdateUSerPoints(-(this.point*discountVip));
         
         });
         }
-       if(!status){
+       else{
         this.setting.getsettingsList((res => 
           res)).snapshotChanges().pipe(
             map((changes: Array<any>) =>
@@ -187,7 +187,7 @@ export class CreateCompPage implements OnInit {
          }
          else{
           this.UpdateUSerPoints(-this.point);
-        
+         
          }
           
         });
@@ -224,12 +224,11 @@ export class CreateCompPage implements OnInit {
     let lenOfComp;
     console.log('updatePoint', points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
-console.log('user before edit',e.docs[0].data())
+
       let UserEdited = {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      console.log('user Edit', UserEdited)
       this.firebaseService.updateUser(UserEdited);
       this.comp.createcamping(this.camping);
       let title = this.translate.instant('Added success')
