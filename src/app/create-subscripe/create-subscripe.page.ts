@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingService } from "src/app/firebase/setting.service";
 import { map } from 'rxjs/operators';
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-create-subscripe',
   templateUrl: './create-subscripe.page.html',
@@ -35,6 +37,7 @@ export class CreateSubscripePage implements OnInit {
     private route: Router,
     private translate: TranslateService,
     private setting :SettingService,
+    private storage: Storage,    
 
   ) {
 
@@ -133,8 +136,7 @@ export class CreateSubscripePage implements OnInit {
       this.presentAlert(this.translate.instant("You must choose valid duration"))
       return
     }
-    let user = await this.user;
-
+    let user = await this.user
     this.camping = {
       view: view.el.value,
       ListOfUserDoneIt: [],
@@ -145,8 +147,11 @@ export class CreateSubscripePage implements OnInit {
       ownerId: user.uid,
       type : 'sub'
     }
+    user = await this.storage.get('User');
     let status;
       this.userService.getDataOfUser(user).then(status =>{
+        if( status.docs[0].data().vip ){
+          console.log('account is vip')
         status = status.docs[0].data().vip.status
         if(status){
           this.setting.getsettingsList((res => 
@@ -178,11 +183,17 @@ export class CreateSubscripePage implements OnInit {
          }
          else{
           this.UpdateUSerPoints(-this.points)
-         
+         console.log('first statement')
          }
           
         });
         }
+      }
+      else{
+        this.UpdateUSerPoints(-this.points)
+        console.log('second statement')
+       
+       }
       })
 
 

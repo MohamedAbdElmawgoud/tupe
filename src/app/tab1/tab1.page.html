@@ -33,9 +33,24 @@
       
        <hr>
 </ion-card-title>
+
+
 </ion-card>
+<ion-card *ngFor="let data of compaignView; index as i">
+  <ion-card-title (click)="getDetailsOfComp(data)">
+    
+    <img src="{{data.image}}" >
+    <p class="view" style="display:flex">
+       
+       <strong> {{data.viewStat}} </strong> <strong>{{ 'view' | translate}}</strong>
+        <ion-icon name="checkmark-circle" class="mark"></ion-icon> 
+       </p>
+    
+     <hr>
+  </ion-card-title>
+  </ion-card>
   </div>
-  <div *ngIf="!compaignValue[0]">
+  <div *ngIf="!compaignValue">
   <ion-icon name="home" class="icon"></ion-icon>
     <p>{{ 'There is no campaign' | translate}}</p>
   

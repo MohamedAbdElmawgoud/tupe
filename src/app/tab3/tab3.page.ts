@@ -77,6 +77,7 @@ export class Tab3Page {
 
     this.event = $event;
     if (!$event) {
+      console.log('not eveeeeeennnt')
       return
     }
 
@@ -85,8 +86,8 @@ export class Tab3Page {
         this.passedTIme ++;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
       }
-//&& !this.lock
-      if ((this.maxTime - this.passedTIme) == 0 ) {
+//
+      if ((this.maxTime - this.passedTIme) == 0 && !this.lock) {
         this.updateCamping({ ...this.video })
         this.getPoint();
         this.lock = true;
