@@ -93,20 +93,21 @@ export class DetailsCampaignPage implements OnInit {
           });
     }else{
       this.campingsService.getcampingsList((res =>
-        res.orderByChild('key')
-          .equalTo(createdata))).snapshotChanges().pipe(
+        res.orderByChild('key')))
+        .snapshotChanges().pipe(
             map((changes: Array<any>) =>
               changes.map(c =>
                 ({ key: c.payload.key, ...c.payload.val() })
               )
             )
           ).subscribe(async comp => {
-            this.compInfo = comp[0];
-            this.getUser(comp[0].ownerId)
-            this.done = comp[0].done.length
-            this.compdata = comp[0].createdData;
-            this.key = comp[0].key
-            this.view = comp[0].view
+          this.compInfo = comp.filter(ele=>ele.key==createdata)[0];
+            this.campId = createdata;
+            this.getUser(this.compInfo.ownerId)
+            this.done = (this.compInfo.done || []).length
+            this.compdata = this.compInfo.createdData;
+            this.key = this.compInfo.key
+            this.view = this.compInfo.view
             // comp[0].done.forEach( async (ele) => {
   
             for (const ele of comp[0].done) {
