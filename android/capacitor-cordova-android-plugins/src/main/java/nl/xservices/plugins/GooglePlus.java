@@ -18,8 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -63,7 +61,6 @@ public class GooglePlus extends CordovaPlugin implements GoogleApiClient.OnConne
     public static final String ARGUMENT_SCOPES = "scopes";
     public static final String ARGUMENT_OFFLINE_KEY = "offline";
     public static final String ARGUMENT_HOSTED_DOMAIN = "hostedDomain";
-    public static  String TOKEN = "";
 
     public static final String TAG = "GooglePlugin";
     public static final int RC_GOOGLEPLUS = 1552; // Request Code to identify our plugin's activities
@@ -143,7 +140,6 @@ public class GooglePlus extends CordovaPlugin implements GoogleApiClient.OnConne
 
         // request the default scopes
         gso.requestEmail().requestProfile();
-        gso.requestScopes(new Scope("https://www.googleapis.com/auth/youtube.readonly"));
 
         // We're building the scopes on the Options object instead of the API Client
         // b/c of what was said under the "addScope" method here:
@@ -360,8 +356,6 @@ public class GooglePlus extends CordovaPlugin implements GoogleApiClient.OnConne
                         result.put("familyName", acct.getFamilyName());
                         result.put("givenName", acct.getGivenName());
                         result.put("imageUrl", acct.getPhotoUrl());
-                        result.put("token", TOKEN);
-
                         savedCallbackContext.success(result);
                     } catch (Exception e) {
                         savedCallbackContext.error("Trouble obtaining result, error: " + e.getMessage());
@@ -437,7 +431,6 @@ public class GooglePlus extends CordovaPlugin implements GoogleApiClient.OnConne
             "expires_in": 3595,
             "access_type": "offline"
         }*/
-        TOKEN = authToken;
 
         Log.d("AuthenticatedBackend", "token: " + authToken + ", verification: " + stringResponse);
         JSONObject jsonResponse = new JSONObject(

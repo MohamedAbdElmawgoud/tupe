@@ -9,9 +9,13 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    implementation "com.google.android.gms:play-services-ads:16.0.0"
-    implementation "com.google.android.gms:play-services-auth:16.0.0"
-    implementation "com.google.android.gms:play-services-identity:16.0.0"
+    implementation project(':capacitor-analytics')
+    implementation project(':capacitor-youtube-player')
+    implementation "com.google.android.gms:play-services-base:11.0.4"
+    implementation "com.google.android.gms:play-services-ads:11.0.4"
+    implementation "com.google.android.gms:play-services-ads:11.0.4"
+    implementation "com.google.android.gms:play-services-auth:11.0.4"
+    implementation "com.google.android.gms:play-services-identity:11.0.4"
 }
 apply from: "../../node_modules/cordova-plugin-badge/src/android/badge.gradle"
 apply from: "../../node_modules/cordova-plugin-extension/src/android/rjfun-libs.gradle"

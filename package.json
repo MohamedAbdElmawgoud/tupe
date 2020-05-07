@@ -41,11 +41,12 @@
     "@mobiscroll/angular-lite": "^4.10.2",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "android": "0.0.8",
     "angularx-social-login": "^2.2.1",
     "capacitor-analytics": "^2.0.1",
     "capacitor-youtube-player": "^1.0.0-alpha.1-52",
     "com.bunkerpalace.cordova.YoutubeVideoPlayer": "git+https://github.com/JonSmart/CordovaYoutubeVideoPlayer.git",
+    "cordova-admob-sdk": "^0.24.1",
+    "cordova-android": "^8.1.0",
     "cordova-browser": "6.0.0",
     "cordova-clipboard": "^1.3.0",
     "cordova-plugin-admobpro": "2.49.0",
@@ -55,6 +56,7 @@
     "cordova-plugin-extension": "^1.5.4",
     "cordova-plugin-googleplus": "8.4.0",
     "cordova-plugin-youtube-video-player": "^2.4.0",
+    "cordova-promise-polyfill": "0.0.2",
     "cordova-support-android-plugin": "^1.0.2",
     "cordova-support-google-services": "^1.4.0",
     "core-js": "^2.5.4",
@@ -112,6 +114,8 @@
       },
       "com.bunkerpalace.cordova.YoutubeVideoPlayer": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }

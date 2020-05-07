@@ -46,7 +46,6 @@ public class AdMobPlugin extends GenericAdPlugin {
   private static final String OPT_INMOBI = "InMobi";
   private static final String OPT_FACEBOOK = "Facebook";
   private static final String OPT_MOBFOX = "MobFox";
-  private static boolean  rewardDone = false;
 
   private static final String TEST_BANNER_ID = "ca-app-pub-3940256099942544/6300978111";
   private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1033173712";
@@ -329,7 +328,7 @@ protected void __showInterstitial(Object interstitial) {
   @Override
   protected void __showRewardVideoAd(Object rewardvideo) {
     if(rewardvideo == null) return;
-      rewardDone = false;
+
     if(rewardvideo instanceof RewardedVideoAd) {
       RewardedVideoAd ad = (RewardedVideoAd) rewardvideo;
       if(ad.isLoaded()){
@@ -674,19 +673,13 @@ protected void __showInterstitial(Object interstitial) {
 
     //@Override
     public void onRewardedVideoCompleted() {
-        rewardDone = true;
-      fireAdEvent("'RewardComplate'", ADTYPE_REWARDVIDEO);
+      fireAdEvent(EVENT_AD_WILLDISMISS, ADTYPE_REWARDVIDEO);
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
       rewardVideoAd = null; //<-- Added line before the fireAdEvent
-      Log.d("done" , String.valueOf(rewardDone));
-
-      if(rewardDone){
-        fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
-
-      }
+      fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
 
       // if focus on webview of banner, press back button will quit
       // force focus on main view, so that 'backbutton' override will work

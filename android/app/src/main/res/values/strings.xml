@@ -4,7 +4,4 @@
     <string name="title_activity_main">Fog Tube</string>
     <string name="package_name">fog.tube.app</string>
     <string name="custom_url_scheme">fog.tube.app</string>
-    <string name="ANDROID_DEFAULT_NOTIFICATION_ICON">test</string>
-    <string name="activity_name">video</string>
-
 </resources>
