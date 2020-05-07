@@ -162,7 +162,7 @@ export class CreateSubscripePage implements OnInit {
        
         });
         }
-       else{
+        if(!status){
         this.setting.getsettingsList((res => 
           res)).snapshotChanges().pipe(
             map((changes: Array<any>) =>
