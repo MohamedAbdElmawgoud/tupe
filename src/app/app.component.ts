@@ -431,7 +431,10 @@ export class AppComponent {
 
     })
 
-    this.router.navigate(['/log-in'])
-    window.location.reload()
+    // this.router.navigate(['/log-in'])
+    setTimeout(() => {
+      window.location.reload()
+   }, 500);
+    
   }
 }

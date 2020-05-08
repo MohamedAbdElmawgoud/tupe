@@ -76,18 +76,26 @@ export class Tab3Page {
   async savePlayer($event) {
 
     this.event = $event;
-    if (!$event) {
+    if (!$event ) {
+      console.log('event not found')
       return
     }
-
+if($event){
+  this.lastTime = 0;
+  this.lock = false
+  this.passedTIme = 0
+  console.log("event is", $event)
+  //this.lastTime != $event.target.playerInfo.currentTime.toFixed(0) ||
     this.interval = setInterval( () => {
-      if (this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
+      if ( !this.lock  && this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
         this.passedTIme ++;
         this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
+        console.log('last time is ',this.lastTime)
       }
-//&& !this.lock
+//&& !this.lock  
 if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
       {
+        console.log('get point done')
           this.updateCamping({ ...this.video })
         this.getPoint();
         this.lock = true;
@@ -97,7 +105,7 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
       }
 
     },1000)
-
+  }
 
   }
 
@@ -161,7 +169,8 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
       this.showPoint = this.showPoint + points
       let title = this.translate.instant('you have got')
       let point = this.translate.instant('points')
-      this.presentAlert(title + points + point)
+      let space = ' '
+      this.presentAlert(title +space+ points + space+ point)
       this.point = this.showPoint
       document.getElementById('point').textContent = this.showPoint;
    //   this.showMore()

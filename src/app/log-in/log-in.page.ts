@@ -44,12 +44,16 @@ export class LogInPage implements OnInit {
       }
     );
 
-    window.location.reload()
+    setTimeout(() => {
+      window.location.reload()
+   }, 500);
     
   }
   async login(){
     await this.firebase.googleSignin();
-    
+    setTimeout(() => {
+     window.location.reload()
+  }, 500);
   }
 
 }
