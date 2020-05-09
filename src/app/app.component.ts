@@ -144,6 +144,59 @@ export class AppComponent {
   async ngOnInit() {
    
 
+    //
+    // user attributes
+    // google don't allow use of sensitive data
+    // like names, emails, card numbers, etc.
+    // analytics.setUserProp({
+    //   key: 'city',
+    //   value: 'San Francisco'
+    // });
+    // // Register with Apple / Google to receive push via APNS/FCM
+    PushNotifications.register();
+
+    // On succcess, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token: PushNotificationToken) => {
+        // alert('Push registration success, token: ' + token.value);
+         console.log('Push registration success, token: ' + token.value);
+        //  this.presentAlert('Push registration success, token: ' + token.value)
+      }
+    );
+
+    // Some issue with our setup and push will not work
+    let title = this.translate.instant('Error on registration')
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        alert(title + JSON.stringify(error));
+      } 
+    );
+
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotification) => {
+        var audio1 = new Audio('assets/audio.mp3');
+        console.log('Audio');
+        audio1.play();
+        console.log('Push received: ', notification);
+        this.UpdateUSerPoints(0 , null , null , notification)
+        let alertRet = Modals.alert({
+          title: notification.title,
+          message: notification.body
+        });
+
+      }
+    );
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: PushNotificationActionPerformed) => {
+        // alert('Push action performed: ' + JSON.stringify(notification));
+        console.log('Push action performed: ' + notification);
+      
+      }
+    );
+
     await this.validate()
     await this.isSubscribe()
     
@@ -248,58 +301,6 @@ export class AppComponent {
    
     analytics.setUserID({ value: '' + new Date().getTime() });
 
-    //
-    // user attributes
-    // google don't allow use of sensitive data
-    // like names, emails, card numbers, etc.
-    // analytics.setUserProp({
-    //   key: 'city',
-    //   value: 'San Francisco'
-    // });
-    // // Register with Apple / Google to receive push via APNS/FCM
-    PushNotifications.register();
-
-    // On succcess, we should be able to receive notifications
-    PushNotifications.addListener('registration',
-      (token: PushNotificationToken) => {
-        // alert('Push registration success, token: ' + token.value);
-         console.log('Push registration success, token: ' + token.value);
-        //  this.presentAlert('Push registration success, token: ' + token.value)
-      }
-    );
-
-    // Some issue with our setup and push will not work
-    let title = this.translate.instant('Error on registration')
-    PushNotifications.addListener('registrationError',
-      (error: any) => {
-        alert(title + JSON.stringify(error));
-      } 
-    );
-
-    // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotification) => {
-        var audio1 = new Audio('assets/audio.mp3');
-        console.log('Audio');
-        audio1.play();
-        console.log('Push received: ', notification);
-        this.UpdateUSerPoints(0 , null , null , notification)
-        let alertRet = Modals.alert({
-          title: notification.title,
-          message: notification.body
-        });
-
-      }
-    );
-
-    // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: PushNotificationActionPerformed) => {
-        // alert('Push action performed: ' + JSON.stringify(notification));
-        console.log('Push action performed: ' + notification);
-      
-      }
-    );
 
     let id
   
