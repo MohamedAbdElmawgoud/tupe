@@ -77,11 +77,15 @@ export class Tab3Page {
    
     this.interval = setInterval( () => {
       if (this.event){
-        console.log('eventtt',this.event)
+      //  console.log('eventtt',this.event)
+        if ( this.event.target.playerInfo.currentTime.toFixed(0) == null){
+        //  console.log('event = null')
+          this.event.target.playerInfo.currentTime = 0
+        }
       if ( !this.lock  && this.lastTime != this.event.target.playerInfo.currentTime.toFixed(0))  {
         this.passedTIme ++;
         this.lastTime =  this.event.target.playerInfo.currentTime.toFixed(0)
-        console.log('last time is ',this.lastTime)
+     //   console.log('last time is ',this.lastTime)
       }
 //&& !this.lock  
 if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
@@ -103,15 +107,15 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
 
     this.event = $event;
     if (!$event ) {
-      console.log('event not found')
+     // console.log('event not found')
       return
     }
 
   this.lastTime = 0;
   this.lock = false
   this.passedTIme = 0
-  console.log("event is", $event)
-  console.log('max is', this.maxTime)
+ // console.log("event is", $event)
+ // console.log('max is', this.maxTime)
   
   //this.lastTime != $event.target.playerInfo.currentTime.toFixed(0) ||
  
