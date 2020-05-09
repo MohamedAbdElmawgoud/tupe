@@ -53,10 +53,13 @@ export class Tab3Page {
     private firebaseService: FirebaseService,
     private storage: Storage,
     public translate: TranslateService,    
-    private route: Router
+    private route: Router,
 
   ) { }
 
+
+
+  
   async ngOnInit() {
 
     this.route.events.subscribe(event => {
@@ -71,25 +74,13 @@ export class Tab3Page {
     document.body.appendChild(tag);
     this.getVideoID();
     this.getPoint()
-  }
-
-  async savePlayer($event) {
-
-    this.event = $event;
-    if (!$event ) {
-      console.log('event not found')
-      return
-    }
-if($event){
-  this.lastTime = 0;
-  this.lock = false
-  this.passedTIme = 0
-  console.log("event is", $event)
-  //this.lastTime != $event.target.playerInfo.currentTime.toFixed(0) ||
+   
     this.interval = setInterval( () => {
-      if ( !this.lock  && this.lastTime != $event.target.playerInfo.currentTime.toFixed(0)) {
+      if (this.event){
+        console.log('eventtt',this.event)
+      if ( !this.lock  && this.lastTime != this.event.target.playerInfo.currentTime.toFixed(0))  {
         this.passedTIme ++;
-        this.lastTime = $event.target.playerInfo.currentTime.toFixed(0)
+        this.lastTime =  this.event.target.playerInfo.currentTime.toFixed(0)
         console.log('last time is ',this.lastTime)
       }
 //&& !this.lock  
@@ -99,13 +90,32 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
           this.updateCamping({ ...this.video })
         this.getPoint();
         this.lock = true;
-        clearInterval(this.interval);
+     //   clearInterval(this.interval);
  
  
       }
-
+    }
     },1000)
+  
   }
+
+  async savePlayer($event) {
+
+    this.event = $event;
+    if (!$event ) {
+      console.log('event not found')
+      return
+    }
+
+  this.lastTime = 0;
+  this.lock = false
+  this.passedTIme = 0
+  console.log("event is", $event)
+  console.log('max is', this.maxTime)
+  
+  //this.lastTime != $event.target.playerInfo.currentTime.toFixed(0) ||
+ 
+  
 
   }
 
