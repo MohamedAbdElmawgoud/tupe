@@ -200,11 +200,22 @@ export class AppComponent {
        // console.log('Audio');
         audio1.play();
        // console.log('Push received: ', notification);
-        this.UpdateUSerPoints(0 , null , null , notification)
-        let alertRet = Modals.alert({
-          title: notification.title,
-          message: notification.body
-        });
+       this.firebaseService.getDataOfUser(this.user).then(e => {
+        let user = e.docs[0].data();
+
+  
+          user.messages = user.messages ? user.messages : [];
+          user.messages.push(notification)  
+        let UserEdited = {
+          ...user,
+        }
+        // document.getElementById('point').textContent = e.docs[0].data().point + point;
+  
+        // e.docs[0].data().point + points;
+        this.firebaseService.updateUser(UserEdited)
+
+  
+      });
 
       }
     );
@@ -303,7 +314,7 @@ export class AppComponent {
               "ca-app-pub-3736449894948823/8716133932"
           })
             .then(() => { this.admob.showInterstitial(); });
-        }, 7 * 60 * 1000)
+        }, 3 * 60 * 1000)
     
         setInterval(() => {
           this.admob.prepareRewardVideoAd({
@@ -314,7 +325,7 @@ export class AppComponent {
               this.admob.showRewardVideoAd()
     
             });
-        }, 11 * 60 * 1000)
+        }, 2 * 60 * 1000)
     
        
       }
@@ -351,7 +362,7 @@ export class AppComponent {
       }
       let UserEdited = {
         ...user,
-        token,
+        // token,
         point: e.docs[0].data().point + point
       }
       // document.getElementById('point').textContent = e.docs[0].data().point + point;
