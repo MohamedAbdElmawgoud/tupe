@@ -223,7 +223,7 @@ export class AppComponent {
   
     
       let versionOnServer = res[res.length-1].version;
-      console.log('setting is ', res )
+    //  console.log('setting is ', res )
       // alert(())
       let appVersion = await this.appVersion.getVersionNumber().then(async (version) => {
        
@@ -274,7 +274,7 @@ export class AppComponent {
     this.firebase.getDataOfUser(this.user).then(user =>{
        status = user.docs[0].data().vip.status
        console.log('vip is ' ,status)
-      if(status == false){
+      if(status == false || status == null){
        
         setInterval(() => {
           this.admob.prepareInterstitial({
@@ -425,6 +425,7 @@ export class AppComponent {
     this.translate.use(type);// ar or en    
   }
   async logout() {
+    this.menu.close();
     await this.storage.clear();
     
 

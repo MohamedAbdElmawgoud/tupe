@@ -11,6 +11,7 @@
 </ion-header>
 
 <ion-content>
+  
 <ion-card *ngFor="let message of Allmessage">
   <div>
   <img src="assets/icon/message.png">
@@ -25,5 +26,5 @@
 </ion-card>
 
 
-<ion-button *ngIf="Allmessage"(click)="deletMessage()">Delete All Message</ion-button>
+<!-- <ion-button *ngIf="Allmessage"(click)="deletMessage()">Delete All Message</ion-button> -->
 </ion-content>

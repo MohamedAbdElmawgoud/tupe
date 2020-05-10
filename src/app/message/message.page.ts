@@ -10,7 +10,7 @@ import { map } from "rxjs/operators";
   styleUrls: ['./message.page.scss'],
 })
 export class MessagePage implements OnInit {
-  Allmessage: any;
+  Allmessage=[];
   user: any;
   showPoint: any;
 
@@ -23,6 +23,7 @@ export class MessagePage implements OnInit {
     this.user = await this.storage.get('User');
     this.getPoint()
     this.getmessage()
+    this.getAllmessage()
   }
   getPoint(){
     this.firebaseService.getDataOfUser(this.user).then(point =>{
@@ -39,8 +40,37 @@ export class MessagePage implements OnInit {
           )
         )
       ).subscribe(message =>{
-        this.Allmessage =message
-  console.log(this.Allmessage)
+        this.storage.get('AllMessage').then(ele=>{
+          let i = 0
+          message.forEach(element => {
+           
+           ele.forEach(element => {
+            if (ele[i].key == element.key){
+            
+              console.log('stat',element)
+              console.log(i)
+              console.log('ele',ele[i])
+            }
+           else{
+            this.storage.set('messages',element)
+           }
+           
+           
+           });
+           i++
+          });
+        //  this.storage.set('AllMessage',message)
+          
+        })
+        
+       
+  
       }); 
+  }
+ async getAllmessage(){
+  await  this.storage.get('messages').then(ele=>{
+      this.Allmessage.push(ele)
+      console.log('all',this.Allmessage)
+    })
   }
 }
