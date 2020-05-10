@@ -25,7 +25,7 @@ export class Tab3Page {
   hidePoint = false;
   // timer: NodeJS.Timer;
   status = false
-  maxTime :any;
+  maxTime: any;
   time = 30;
   videoId;
   passedTIme = 0;
@@ -52,14 +52,14 @@ export class Tab3Page {
     private alertController: AlertController,
     private firebaseService: FirebaseService,
     private storage: Storage,
-    public translate: TranslateService,    
+    public translate: TranslateService,
     private route: Router,
 
   ) { }
 
 
 
-  
+
   async ngOnInit() {
 
     this.route.events.subscribe(event => {
@@ -74,52 +74,47 @@ export class Tab3Page {
     document.body.appendChild(tag);
     this.getVideoID();
     this.getPoint()
-   
-    this.interval = setInterval( () => {
-      if (this.event){
-      //  console.log('eventtt',this.event)
-        if ( this.event.target.playerInfo.currentTime.toFixed(0) == null){
-        //  console.log('event = null')
+
+    this.interval = setInterval(() => {
+      if (this.event) {
+        //  console.log('eventtt',this.event)
+        if (this.event.target.playerInfo.currentTime.toFixed(0) == null) {
+          //  console.log('event = null')
           this.event.target.playerInfo.currentTime = 0
         }
-      if ( !this.lock  && this.lastTime != this.event.target.playerInfo.currentTime.toFixed(0))  {
-        this.passedTIme ++;
-        this.lastTime =  this.event.target.playerInfo.currentTime.toFixed(0)
-     //   console.log('last time is ',this.lastTime)
-      }
-//&& !this.lock  
-if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
-      {
-        console.log('get point done')
+        if (!this.lock && this.lastTime != this.event.target.playerInfo.currentTime.toFixed(0)) {
+          this.passedTIme++;
+          this.lastTime = this.event.target.playerInfo.currentTime.toFixed(0)
+          //   console.log('last time is ',this.lastTime)
+        }
+        //&& !this.lock  
+        if ((this.maxTime - this.passedTIme) == 0 && !this.lock) {
           this.updateCamping({ ...this.video })
-        this.getPoint();
-        this.lock = true;
-     //   clearInterval(this.interval);
- 
- 
+          this.getPoint();
+          this.showMore()
+          this.lock = true;
+
+
+        }
       }
-    }
-    },1000)
-  
+    }, 1000)
+
   }
 
   async savePlayer($event) {
 
     this.event = $event;
-    if (!$event ) {
-     // console.log('event not found')
+    if (!$event) {
+      // console.log('event not found')
       return
     }
 
-  this.lastTime = 0;
-  this.lock = false
-  this.passedTIme = 0
- // console.log("event is", $event)
- // console.log('max is', this.maxTime)
-  
-  //this.lastTime != $event.target.playerInfo.currentTime.toFixed(0) ||
- 
-  
+    this.lastTime = 0;
+    this.lock = false
+    this.passedTIme = 0
+
+
+
 
   }
 
@@ -142,8 +137,9 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
           return ele
         return null
       })
-      
-      await this.showMore()
+
+      if(!this.video)
+        await this.showMore()
 
     });
 
@@ -164,7 +160,7 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
       this.maxTime = +video.second;
       this.passedTIme = 0;
       this.lastTime = 0;
-      this.savePlayer(this.event);
+      // this.savePlayer(this.event);
     } else {
       this.noVideos = true;
     }
@@ -184,10 +180,10 @@ if ((this.maxTime - this.passedTIme) == 0 && !this.lock)
       let title = this.translate.instant('you have got')
       let point = this.translate.instant('points')
       let space = ' '
-      this.presentAlert(title +space+ points + space+ point)
+      this.presentAlert(title + space + points + space + point)
       this.point = this.showPoint
       document.getElementById('point').textContent = this.showPoint;
-   //   this.showMore()
+      //   this.showMore()
 
       // }
     });

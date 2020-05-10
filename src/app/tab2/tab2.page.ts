@@ -4,7 +4,7 @@ import { FirebaseService } from "src/app/firebase/firebase.service";
 import { Storage } from '@ionic/storage';
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 import { subscribesService } from '../firebase/subscripe';
-import { map } from 'rxjs/operators';
+import { map, ignoreElements } from 'rxjs/operators';
 import { ValdaiteService } from '../firebase/valdaite.service';
 import { YoutubeService } from '../firebase/youtube';
 import { StorageService } from '../storageService/storage.service';
@@ -64,8 +64,10 @@ export class Tab2Page {
         this.noVideos = true
       }
       console.log(this.campings, this.noVideos);
+      if(this.channel){
+        await this.showMore()
 
-      await this.showMore()
+      }
 
 
     });
@@ -93,6 +95,7 @@ export class Tab2Page {
         await this.storage.storage.set('channel', this.channel.key)
 
         window.open('https://www.youtube.com/watch?v=' + this.channel.channel.video)
+        
         this.showMore()
 
       }
