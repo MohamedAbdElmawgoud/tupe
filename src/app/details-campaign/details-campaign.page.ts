@@ -60,7 +60,7 @@ export class DetailsCampaignPage implements OnInit {
     return this.showPoint
   }
   getCompain(createdata , type) {
-    if(type == 'subscribe'){
+    if(type == 'subscribe' || type== 'sub' || type == null){
       this.subscribes.getsubscribesList((res =>
         res.orderByChild('key')
           )).snapshotChanges().pipe(
@@ -79,14 +79,20 @@ export class DetailsCampaignPage implements OnInit {
             this.view = this.compInfo.view
             // comp[0].done.forEach( async (ele) => {
             
-            for (const ele of this.compInfo.done) {
-              console.log(ele);
+              this.compInfo.done.forEach(id => {
+                this.getUser(id).then(e=>{
+                  //console.log('user is',e.docs[0].data())
+                  this.viewers.push(e.docs[0].data())
+                })
+              });
+            // for (const ele of this.compInfo.done) {
+            //   console.log(ele);
               
-              let user = await this.getUser(ele)
-              if(user.docs[0]){
-                this.viewers.push(user.docs[0].data())
-              }            
-            }
+            //   let user = await this.getUser(ele)
+            //   if(user.docs[0]){
+            //     this.viewers.push(user.docs[0].data())
+            //   }            
+            // }
   
   
             // })
@@ -103,21 +109,27 @@ export class DetailsCampaignPage implements OnInit {
           ).subscribe(async comp => {
           this.compInfo = comp.filter(ele=>ele.key==createdata)[0];
             this.campId = createdata;
-            this.getUser(this.compInfo.ownerId)
+           this.getUser(this.compInfo.ownerId)
             this.done = (this.compInfo.done || []).length
             this.compdata = this.compInfo.createdData;
             this.key = this.compInfo.key
             this.view = this.compInfo.view
             // comp[0].done.forEach( async (ele) => {
-  
-            for (const ele of comp[0].done) {
-              console.log(ele);
+            console.log('done',this.compInfo)
+            this.compInfo.done.forEach(id => {
+              this.getUser(id).then(e=>{
+                //console.log('user is',e.docs[0].data())
+                this.viewers.push(e.docs[0].data())
+              })
+            });
+            // for (const ele of comp[0].done) {
+            //   console.log(ele);
               
-              let user = await this.getUser(ele)
-              if(user.docs[0]){
-                this.viewers.push(user.docs[0].data())
-              }            
-            }
+            //   let user = await this.getUser(ele)
+            //   if(user.docs[0]){
+            //     this.viewers.push(user.docs[0].data())
+            //   }            
+            // }
   
   
             // })
