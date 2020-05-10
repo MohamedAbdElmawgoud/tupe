@@ -163,6 +163,25 @@ export class AppComponent {
         //  this.presentAlert('Push registration success, token: ' + token.value)
         this.UpdateUSerPoints(0 , null , token.value )
 
+        this.firebaseService.getDataOfUser(this.user).then(e => {
+          let user = e.docs[0].data();
+
+    
+   
+          let UserEdited = {
+            ...user,
+            token,
+          }
+          // document.getElementById('point').textContent = e.docs[0].data().point + point;
+    
+          // e.docs[0].data().point + points;
+          this.firebaseService.updateUser(UserEdited)
+     
+    
+    
+        });
+        
+
       }
     );
 

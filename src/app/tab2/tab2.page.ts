@@ -64,7 +64,7 @@ export class Tab2Page {
         this.noVideos = true
       }
       console.log(this.campings, this.noVideos);
-      if(this.channel){
+      if(!this.channel){
         await this.showMore()
 
       }
