@@ -161,6 +161,8 @@ export class AppComponent {
         // alert('Push registration success, token: ' + token.value);
          console.log('Push registration success, token: ' + token.value);
         //  this.presentAlert('Push registration success, token: ' + token.value)
+        this.UpdateUSerPoints(0 , null , token.value )
+
       }
     );
 
