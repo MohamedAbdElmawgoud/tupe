@@ -51,9 +51,7 @@ export class LogInPage implements OnInit {
   }
   async login(){
     await this.firebase.googleSignin();
-    setTimeout(() => {
-     window.location.reload()
-  }, 500);
+
   }
 
 }
