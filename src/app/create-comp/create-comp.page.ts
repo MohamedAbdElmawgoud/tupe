@@ -171,7 +171,8 @@ export class CreateCompPage implements OnInit {
         
         });
         }
-       if(!status){
+       if(!status || status == null){
+         
         this.setting.getsettingsList((res => 
           res)).snapshotChanges().pipe(
             map((changes: Array<any>) =>
@@ -187,6 +188,7 @@ export class CreateCompPage implements OnInit {
          
          }
          else{
+           console.log('stat',status)
           this.UpdateUSerPoints(-this.point);
         
          }
@@ -226,14 +228,14 @@ export class CreateCompPage implements OnInit {
   }
   UpdateUSerPoints(points) {
     let lenOfComp;
-    console.log('updatePoint', points)
+    //console.log('updatePoint', points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
-console.log('user before edit',e.docs[0].data())
+   //console.log('user before edit',e.docs[0].data())
       let UserEdited = {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
       }
-      console.log('user Edit', UserEdited)
+    //  console.log('user Edit', UserEdited)
       this.firebaseService.updateUser(UserEdited);
       this.comp.createcamping(this.camping);
       let title = this.translate.instant('Added success')

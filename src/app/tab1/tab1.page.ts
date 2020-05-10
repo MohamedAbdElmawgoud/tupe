@@ -113,7 +113,7 @@ export class Tab1Page {
                 this.compaignValue.push(ele)
 
               })
-              console.log(this.compaignValue);
+           //   console.log(this.compaignValue);
 
             });
 
@@ -133,7 +133,7 @@ export class Tab1Page {
                     this.compaignView.push(ele)
 
                   })
-                  console.log('compaignView is', this.compaignView)
+              //    console.log('compaignView is', this.compaignView)
                 });
 
       }
