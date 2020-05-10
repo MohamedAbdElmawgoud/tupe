@@ -109,15 +109,20 @@ export class DetailsCampaignPage implements OnInit {
             this.key = this.compInfo.key
             this.view = this.compInfo.view
             // comp[0].done.forEach( async (ele) => {
-  
-            for (const ele of comp[0].done) {
-              console.log(ele);
+              this.compInfo.done.forEach(id => {
+                this.getUser(id).then(e=>{
+                  //console.log('user is',e.docs[0].data())
+                  this.viewers.push(e.docs[0].data())
+                })
+              });
+            // for (const ele of this.compInfo.done) {
+            //   console.log(ele);
               
-              let user = await this.getUser(ele)
-              if(user.docs[0]){
-                this.viewers.push(user.docs[0].data())
-              }            
-            }
+            //   let user = await this.getUser(ele)
+            //   if(user.docs[0]){
+            //     this.viewers.push(user.docs[0].data())
+            //   }            
+            // }
   
   
             // })

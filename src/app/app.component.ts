@@ -159,7 +159,7 @@ export class AppComponent {
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
-         console.log('Push registration success, token: ' + token.value);
+     //    console.log('Push registration success, token: ' + token.value);
         //  this.presentAlert('Push registration success, token: ' + token.value)
       }
     );
@@ -176,9 +176,9 @@ export class AppComponent {
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
         var audio1 = new Audio('assets/audio.mp3');
-        console.log('Audio');
+       // console.log('Audio');
         audio1.play();
-        console.log('Push received: ', notification);
+       // console.log('Push received: ', notification);
         this.UpdateUSerPoints(0 , null , null , notification)
         let alertRet = Modals.alert({
           title: notification.title,
@@ -192,7 +192,7 @@ export class AppComponent {
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
         // alert('Push action performed: ' + JSON.stringify(notification));
-        console.log('Push action performed: ' + notification);
+      //  console.log('Push action performed: ' + notification);
       
       }
     );
@@ -206,7 +206,7 @@ export class AppComponent {
       this.displayName = user.docs[0].data().displayName;
       this.email = user.docs[0].data().email
       this.points = user.docs[0].data().points
-     console.log('profilePhoto',this.profilePhoto)
+   //  console.log('profilePhoto',this.profilePhoto)
     })
     this.getUser();
 
@@ -233,7 +233,7 @@ export class AppComponent {
         // this.translate.instant('there is a new version you must update it')
         let title = res[res.length-1].message
         let link = res[res.length-1].AppURl
-       console.log('link is' , link)
+    //   console.log('link is' , link)
         let text = this.translate.instant('Update now')
         const alert = await this.alertController.create({
           header: 'Alert',
@@ -273,7 +273,7 @@ export class AppComponent {
     let status= false;
     this.firebase.getDataOfUser(this.user).then(user =>{
        status = user.docs[0].data().vip.status
-       console.log('vip is ' ,status)
+     //  console.log('vip is ' ,status)
       if(status == false || status == null){
        
         setInterval(() => {
@@ -377,7 +377,7 @@ export class AppComponent {
         // if(user)
         let user = _user.docs[0].data()
         if (!user) {
-          console.log('go to logIn')
+       //   console.log('go to logIn')
           this.router.navigate(['log-in']);
 
         }
