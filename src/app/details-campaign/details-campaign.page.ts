@@ -85,17 +85,7 @@ export class DetailsCampaignPage implements OnInit {
                   this.viewers.push(e.docs[0].data())
                 })
               });
-            // for (const ele of this.compInfo.done) {
-            //   console.log(ele);
-              
-            //   let user = await this.getUser(ele)
-            //   if(user.docs[0]){
-            //     this.viewers.push(user.docs[0].data())
-            //   }            
-            // }
-  
-  
-            // })
+           
           });
     }else{
       this.campingsService.getcampingsList((res =>
@@ -122,17 +112,7 @@ export class DetailsCampaignPage implements OnInit {
                 this.viewers.push(e.docs[0].data())
               })
             });
-            // for (const ele of comp[0].done) {
-            //   console.log(ele);
-              
-            //   let user = await this.getUser(ele)
-            //   if(user.docs[0]){
-            //     this.viewers.push(user.docs[0].data())
-            //   }            
-            // }
-  
-  
-            // })
+           
           });
     }
   }
