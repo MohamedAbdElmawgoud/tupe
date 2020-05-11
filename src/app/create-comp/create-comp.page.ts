@@ -177,10 +177,20 @@ export class CreateCompPage implements OnInit {
                 )
               )
             ).subscribe( async res =>{
-              let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
-              console.log('discount vip',discountVip)
-          this.UpdateUSerPoints(-(this.point*discountVip));
-        
+              let time = res[res.length-1].Time;
+              let discount= 1- res[res.length-1].discountAll/100
+              if (discount <1 && time >= Date.now()){
+                let discountVip= 1-( res[res.length-1].discountVip/100 +res[res.length-1].discountAll/100)
+                console.log('discount vip',discountVip)
+            this.UpdateUSerPoints(-(this.point*discountVip));
+              }
+              else{
+                let discountVip= 1-( res[res.length-1].discountVip/100)
+                console.log('discount vip',discountVip)
+            this.UpdateUSerPoints(-(this.point*discountVip));
+          
+              }
+             
         });
         }
        if(!status){
@@ -194,8 +204,9 @@ export class CreateCompPage implements OnInit {
             )
           ).subscribe( async res =>{
             let discount= 1- res[res.length-1].discountAll/100
+            let time = res[res.length-1].Time;
             console.log('discount',discount)
-         if (discount <1){
+         if (discount <1 && time >= Date.now()){
           this.UpdateUSerPoints(-(this.point*discount));
          
          }
