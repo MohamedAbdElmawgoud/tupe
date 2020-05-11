@@ -25,6 +25,7 @@ import { DatePipe } from '@angular/common';
 import { config } from 'src/environments/environment';
 import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 export  function  HttpLoaderFactory(http:  HttpClient) {
   return  new  TranslateHttpLoader(http, './assets/translate/', '.json');
@@ -60,6 +61,7 @@ export  function  HttpLoaderFactory(http:  HttpClient) {
     SplashScreen,
     TranslateService,
     AppVersion,
+    InAppPurchase2,    
     // Deeplinks,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

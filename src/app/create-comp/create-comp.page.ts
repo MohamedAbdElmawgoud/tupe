@@ -153,7 +153,19 @@ export class CreateCompPage implements OnInit {
       }
       let status;
       this.firebase.getDataOfUser(user).then(status =>{
-        if( status.docs[0].data().vip ){
+        let statOfVip = status.docs[0].data().vip;
+      
+
+        if (!status.docs[0].data().vip){
+          console.log('user',status.docs[0].data())
+         let userEdited = { 
+          ...status.docs[0].data(),
+          vip :{status:false}
+         }
+          this.firebaseService.updateUser(userEdited)
+          statOfVip = {status:false}
+        }
+        if( statOfVip ){
           status = status.docs[0].data().vip.status 
           console.log('status',status)
           if(status ){
@@ -171,7 +183,7 @@ export class CreateCompPage implements OnInit {
         
         });
         }
-       if(!status || status == null){
+       if(!status){
          
         this.setting.getsettingsList((res => 
           res)).snapshotChanges().pipe(
@@ -198,6 +210,7 @@ export class CreateCompPage implements OnInit {
       }
       else{
         this.UpdateUSerPoints(-this.point);
+        
       }
       })
      
@@ -231,6 +244,7 @@ export class CreateCompPage implements OnInit {
     //console.log('updatePoint', points)
     let user = this.firebaseService.getDataOfUser(this.user.uid).then(e => {
    //console.log('user before edit',e.docs[0].data())
+  
       let UserEdited = {
         ...e.docs[0].data(),
         point: e.docs[0].data().point + points
