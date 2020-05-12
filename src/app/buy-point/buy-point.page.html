@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="main" *ngFor="let offer of AllOffers" (click)="restorepurchase()">
+  <ion-card class="main" *ngFor="let offer of AllOffers" click="onGooglePayLoaded()">
     <label class="left">
         {{ offer.point}}  {{ 'Points' | translate}}
       

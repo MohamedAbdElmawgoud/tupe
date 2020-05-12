@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <title>Ionic App</title>
-
-  <base href="/" />
-
-  <meta name="color-scheme" content="light dark" />
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="msapplication-tap-highlight" content="no" />
-  <meta name="google-signin-client_id" content="111084768406-trr9hg5hivarm6mu7v44sc6cd0efaio6.apps.googleusercontent.com">
-
-  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
-
-  <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-
-  <!-- <script async
-  src="https://pay.google.com/gp/p/js/pay.js"
-  onload="onGooglePayLoaded()">
-</script>
-<script>
-
 let googlePayClient;
 function onGooglePayLoaded() {
     googlePayClient = new google.payments.api.PaymentsClient({
@@ -163,12 +135,3 @@ function onGooglePayLoaded() {
       googlePayClient.prefetchPaymentData(paymentDataRequest);
     }
   });
-</script> -->
-</head>
-
-<body>
-  <app-root></app-root>
-  <script src="https://www.youtube.com/iframe_api" ></script>
-</body>
-
-</html>
