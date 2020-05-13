@@ -1,20 +1,37 @@
 <ion-header>
   <ion-toolbar color="tertiary">
-    <ion-title>invite Friends</ion-title>
+    <ion-title>{{ 'invite friend' | translate}}
+      <strong>{{showPoint}}</strong>
+
+    </ion-title>
    
-    
+    <ion-buttons slot="start">
+        <ion-back-button ></ion-back-button>
+       
+      </ion-buttons>
     
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-title>invite Your Friends</ion-card-title>
+  <ion-card style="text-align: center;" > 
+    <ion-card-title>{{ 'invite Your Friends' | translate}}</ion-card-title>
     <label>
-    <a href="https://play.google.com/store/apps/details?id=com.knowladge.hadeas">https://play.google.com/store/apps/details?id=com.knowladge.hadeas</a>
+    <a href="https://fogtube.app.link/NwuabRc8Z5?ref={{user}}">https://fogtube.app.link/NwuabRc8Z5?ref={{user}}</a>
   </label>
   <br>
-    <button class="btn">copy link</button>
-    <button>invite friend</button>
+  <div style="text-align: center;" >
+    <button class="btn" (click)="copy()" >{{ 'copy link' | translate}}</button>
+
+  </div>
+    <!-- <button>{{ 'invite friend' | translate}}</button> -->
   </ion-card>
+
+  <div *ngFor="let user of viewers">
+
+    <h4> {{user.displayName}}
+    </h4>
+    <img src="{{user.photoURL || 'https://fogtube.store/profile.svg'}}">
+
+  </div>
 </ion-content>

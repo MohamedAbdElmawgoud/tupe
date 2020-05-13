@@ -7,14 +7,20 @@ import { IonicModule } from '@ionic/angular';
 import { CurrencyPageRoutingModule } from './currency-routing.module';
 
 import { CurrencyPage } from './currency.page';
+import { TranslateModule } from  '@ngx-translate/core';
+import { AdMobPro } from '@ionic-native/admob-pro/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,    
     IonicModule,
     CurrencyPageRoutingModule
   ],
-  declarations: [CurrencyPage]
+  declarations: [CurrencyPage],
+  providers : [
+    AdMobPro
+  ]
 })
 export class CurrencyPageModule {}

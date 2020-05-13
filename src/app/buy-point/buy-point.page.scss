@@ -2,7 +2,7 @@ ion-card{
     padding: 20px;
 }
 .left{
-    width:230px;
+    width:75%;
     float:left;
     text-align:left;
     }
@@ -17,3 +17,10 @@ ion-card{
     margin-left: 5%;
     font-size: 20px;
 }
+
+.lastLabel{
+    width:220px;
+}
+strong{
+    float: right;
+  }

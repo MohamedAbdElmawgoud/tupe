@@ -2,8 +2,10 @@
     <ion-toolbar color="tertiary">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Tube Mine</ion-title>
+      </ion-buttons> 
+      <ion-title>{{ 'Fog tube' | translate}}
+            <strong id="point" >{{showPoint}}</strong>
+      </ion-title>
       
     </ion-toolbar>
   </ion-header>
@@ -12,28 +14,37 @@
     <!--  -->
     <ion-card (click)="share()">
         <img src="assets\icon\share.png">
-        <ion-card-title>  invite friend</ion-card-title>
-        <p>Earn 1000 point from your friends</p>
+        <ion-card-title>  {{ 'invite friend' | translate}}</ion-card-title>
+        <br>
+        <p>{{ 'Earn 1000 point from your friends' | translate}}</p>
     </ion-card>
+    
 
-
-    <ion-card>
+    <ion-card (click)="ShowVideo()">
         <img src="assets\icon\play.png">
-        <ion-card-title>watch video</ion-card-title>
-        <p>watch video to earn point</p>
+        <ion-card-title>{{ 'watch video' | translate}}</ion-card-title> 
+        <br>
+        <p>{{ 'watch video to earn point' | translate}}</p>
     </ion-card>
 
 
     <ion-card (click)="buy()">
         <img src="assets\icon\cart.png">
-        <ion-card-title>buy points</ion-card-title>
+        <ion-card-title>{{ 'buy points' | translate}}</ion-card-title>
       
     </ion-card>
 
+    <ion-card *ngIf="!invited" (click)="redeem()">
+      <ion-icon  style="color: #000; font-size: 30px; margin: 0 10px;" name="cash-outline"></ion-icon>
+            <ion-card-title>{{ 'invite points' | translate}}</ion-card-title>
+    
+  </ion-card>
+
     
     <ion-card (click)="subscribe()">
-        <img src="assets\icon\subscribe.png">
-        <ion-card-title>Review subscription</ion-card-title>
-        <p>Review subscription to channels</p>
+        <img src="assets\icon\play.png">
+        <ion-card-title>{{ 'Review subscription' | translate}}</ion-card-title>
+        <br>
+        <p>{{ 'Review subscription to channels' | translate}}</p>
     </ion-card>
 </ion-content>

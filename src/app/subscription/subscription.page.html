@@ -1,22 +1,20 @@
 <ion-header>
   <ion-toolbar color="tertiary">
-    <ion-title>subscribtion</ion-title>
+    <ion-title>{{ 'subscribe' | translate}}
+
+      <strong>{{showPoint}}</strong>
+    </ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button ></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
+  <!-- <ion-item lines="none">
     <ion-icon name="checkmark-circle"></ion-icon>    
-   <p> 0 channel</p>
-  </ion-item>
+   <p> 0 {{ 'channel' | translate}}</p>
+  </ion-item> -->
   <hr>
-  <ion-item class="main">
-    <label class="left">
-     0 subscribe
-  </label>
-  <div class="vl"></div>
-  <label class="right">
-      0 unsubscribe
-        </label>
-  </ion-item>
+
 </ion-content>

@@ -1,0 +1,26 @@
+
+
+<body>
+  <div>
+    <img src="assets/icon/fog.png">
+    <h1> FogTube get subscribers, views and likes</h1>
+
+    <!-- <div padding>
+      <ion-item>
+        <ion-input name="email" type="email" placeholder="your@email.com" #email required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input name="password" type="password" placeholder="Password" #password required></ion-input>
+      </ion-item>
+    </div> -->
+  </div>
+    <button
+   
+    (click)="googleSignin()"
+    *ngIf="!userProfile"
+  >
+  <!-- {{userProfile | json}} -->
+    <ion-icon name="logo-google" style="margin-right:5px;"></ion-icon>
+    Login
+  </button>
+</body>

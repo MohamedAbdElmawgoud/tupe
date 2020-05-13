@@ -5,12 +5,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import { TranslateModule } from  '@ngx-translate/core';
+import { AdMobPro } from '@ionic-native/admob-pro/ngx';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
+    YouTubePlayerModule,      
     FormsModule,
+    TranslateModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab2Page }])
   ],

@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>message</ion-title>
+    <ion-toolbar color="tertiary">
+        <ion-title>{{ 'Message' | translate}}
+          <strong>{{showPoint}}</strong>
+          
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button ></ion-back-button>
+          </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  
+<!-- <ion-card *ngFor="let message of Allmessage">
+  <div>
+  <img src="assets/icon/message.png">
+  <label> {{ message.header}} </label>
+  </div>
+<ion-card-title>
+    
+  {{ message.body}} 
+</ion-card-title>  
+<button>{{ 'copy' | translate}}</button>
 
+</ion-card> -->
+
+
+<!-- <ion-button *ngIf="Allmessage"(click)="deletMessage()">Delete All Message</ion-button> -->
 </ion-content>

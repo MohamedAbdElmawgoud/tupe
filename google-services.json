@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "530734728931",
-    "firebase_url": "https://tube-app-f9dd4.firebaseio.com",
-    "project_id": "tube-app-f9dd4",
-    "storage_bucket": "tube-app-f9dd4.appspot.com"
+    "project_number": "693510009864",
+    "firebase_url": "https://fog-tube.firebaseio.com",
+    "project_id": "fog.tube.app",
+    "storage_bucket": "fog-tube.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:530734728931:android:ec764613b9efa31257e7d6",
+        "mobilesdk_app_id": "1:693510009864:android:0faba01d784b5c34fc4dbd",
         "android_client_info": {
-          "package_name": "com.tube.app"
+          "package_name": "fog.tube.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "530734728931-hr84v8hk0c2cbmpqeaibotvlle4h02gr.apps.googleusercontent.com",
+          "client_id": "693510009864-nfc3o2efil4n36h6mdrb5jpn2srd4oh1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhABfUjjAbbKwFZm7F0mrA1e_unhC0NhY"
+          "current_key": "AIzaSyDVdGn4UNaopO0TxrM2oBKfkDt0sTAN0b8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "530734728931-hr84v8hk0c2cbmpqeaibotvlle4h02gr.apps.googleusercontent.com",
+              "client_id": "693510009864-nfc3o2efil4n36h6mdrb5jpn2srd4oh1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

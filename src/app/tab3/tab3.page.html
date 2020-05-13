@@ -3,12 +3,60 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Tube Mine</ion-title>
+      <ion-title>{{ 'Fog tube' | translate}}
+<strong id="point" >{{showPoint}}</strong>
+
+        
+      </ion-title>
       
     </ion-toolbar>
   </ion-header>
 
-<ion-content [fullscreen]="true">
-  
+<ion-content [fullscreen]="true" >
+  <!-- suggestedQuality="default" -->
+<div *ngIf="!noVideos" class="video">
+  <ion-card click="StartTimer()">
+    <youtube-player 
+    [videoId]="videoId"
+    (change)="change($event)"
+    [height]="370"
+    [width]="400"
+    [startSeconds]="0"
+    [endSeconds]="3600"
+    (ready)="savePlayer($event)"
+    suggestedQuality="medium"
+    
+    > 
+    <!-- -->
+  </youtube-player>
+</ion-card>
+<ion-item class="main"  lines="none">
+  <label class="left">
+     <p *ngIf="hidevalue==false" class="sec"> {{maxTime - passedTIme}}</p>
+    {{ 'Second' | translate}}
+</label>
+<div class="vl"></div>
+<label class="right">
+    <p class="sec"> {{points - (points* 0.2)}}</p>
+  {{ 'Points' | translate}}
+      </label>
+</ion-item>
+<button (click)="showMore()">
+  {{ 'Show more' | translate}}
+</button>
+</div>
+
+<div *ngIf="noVideos" style="
+width: text-a;
+text-align: center;
+margin-top: 103px;
+" >
+  <p> {{ 'There is no channel' | translate}}</p>
+  <button  (click)="Reload()">
+    {{ 'Reloading' | translate}}
+  </button>
+</div>
+
+
 
 </ion-content>

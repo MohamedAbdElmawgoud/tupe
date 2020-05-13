@@ -10,6 +10,7 @@ hr {
     width: 90%;
     margin-right: 5%;
     margin-left: 5%;
+   // pointer-events: none //This line is the key!
   }
   label{
       width: 70%;
@@ -29,7 +30,7 @@ input {
     padding: 5px;
     border-radius: 10%;
 }
-datalist{
+ion-select-option{
     width: 10%;
 }
 button{
@@ -40,11 +41,33 @@ button{
     color: #696C6B;
 }
 .submit{
-    width: 90%; 
-    color:black;
-    margin-right: 5%;
-    margin-left: 5%;
+    width: 20%; 
+    color:#FFFFFF;
+    float: left;
+    margin-right: 3px;
+    margin-left: 3px;
     font-style: bold;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 12px;
+    background: #fd4081;
+    border-radius: 5%
 }
+
+ion-select{
+    display: inline;
+    width:70px;
+    height: 40px;
+    color: #696C6B;
+    background: #D0D0D0;
+    margin-left: 3%;
+}
+.done{
+    text-transform: uppercase;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: black;
+}
+strong{
+    float: right;
+  }
